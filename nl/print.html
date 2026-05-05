@@ -657,6 +657,49 @@
     .exp p.exp-lead { line-height: 1.6 !important; margin-bottom: 10px !important; }
     .exp ul li { line-height: 1.65 !important; margin-bottom: 7px !important; }
 
+
+    /* Extra mobile responsive for 1-pager */
+    @media (max-width: 760px) {
+      html, body { font-size: 11pt; }
+      .toolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        text-align: center;
+        gap: 8px !important;
+      }
+      .toolbar .links { justify-content: center !important; flex-wrap: wrap; }
+      .name { font-size: 22pt !important; }
+      .tagline { font-size: 10.5pt !important; }
+      .role-line { font-size: 10pt !important; }
+      .meta-pill { font-size: 9.5pt !important; padding: 6px 10px !important; }
+      .sec-h h2 { font-size: 9.5pt !important; letter-spacing: 0.06em !important; }
+      .sec-h .sec-ico { width: 30px !important; height: 30px !important; }
+      .triad-item h3 { font-size: 11pt !important; }
+      .triad-item p { font-size: 10pt !important; }
+      .skill-block { padding: 14px 16px !important; }
+      .skill-block h3 { font-size: 9.5pt !important; }
+      .skill-list { grid-template-columns: 1fr !important; }
+      .skill-list li { font-size: 10pt !important; }
+      .exp-title { font-size: 11.5pt !important; line-height: 1.25; }
+      .exp-meta { font-size: 9pt !important; margin-top: 2px; }
+      .exp { padding: 14px 16px !important; }
+      .exp p.exp-lead { font-size: 10pt !important; }
+      .exp ul li { font-size: 10pt !important; }
+      .venture-card { padding: 12px 14px !important; }
+      .venture-card .v-name { font-size: 10.5pt !important; }
+      .venture-card .v-desc { font-size: 9.5pt !important; }
+      .v-actions a, .v-actions .v-locked { font-size: 8.5pt !important; padding: 4px 8px !important; }
+      .closer { padding: 14px 16px !important; }
+      .closer p { font-size: 10pt !important; }
+      .company-logo { width: 14px !important; height: 14px !important; vertical-align: -2px !important; }
+      .company-logo-lg { width: 18px !important; height: 18px !important; vertical-align: -3px !important; }
+      .page > section:nth-of-type(2n) {
+        margin: 0 -18px !important;
+        padding-left: 18px !important;
+        padding-right: 18px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
