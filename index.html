@@ -1184,6 +1184,22 @@
       background: #000 !important;
     }
 
+
+    /* RPlay screenshot — show full image, no crop */
+    .card-shot.rplay-shot {
+      aspect-ratio: auto !important;
+      height: auto !important;
+      background: #000;
+    }
+    .card-shot.rplay-shot img {
+      object-fit: contain !important;
+      object-position: center !important;
+      width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      background: #000 !important;
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -1514,7 +1530,7 @@
         </p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <a href="https://rplay.be" target="_blank" rel="noopener" class="domain-card-dark domain-emerald group">
-            <div class="card-shot rplay-shot"><img src="shots/rplay.png?v=5" alt="" loading="lazy" /></div>
+            <div class="card-shot rplay-shot"><img src="shots/rplay.png?v=6" alt="" loading="lazy" /></div>
             <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Horeca SaaS · solo founder</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
             <h3 class="text-xl font-semibold">RPlay</h3>
             <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Built end-to-end by me</strong> — every line of code, the brand, the pricing, the gateway flash script. Kitchen temp + HACCP audit logs, BLE tags, PWA, plug-and-play gateway. Pre-launch sprint with first Bruges restaurant pilots.</p>
