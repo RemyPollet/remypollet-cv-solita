@@ -922,6 +922,22 @@
       .nav-toggle { display: flex !important; }
     }
 
+
+    /* Mobile tap-to-show tooltip */
+    .help-icon.show-tip::after {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+    .help-icon.show-tip::before {
+      opacity: 1 !important;
+    }
+    .fit-card .help-icon.show-tip::after {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -1740,6 +1756,27 @@
       </div>
     </div>
   </section>
+
+
+  <script>
+    // Mobile-friendly tooltip toggle for .help-icon
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.help-icon[data-tip]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          const wasOpen = btn.classList.contains('show-tip');
+          // Close all others
+          document.querySelectorAll('.help-icon.show-tip').forEach(b => b.classList.remove('show-tip'));
+          if (!wasOpen) btn.classList.add('show-tip');
+        });
+      });
+      // Close on outside tap
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.help-icon.show-tip').forEach(b => b.classList.remove('show-tip'));
+      });
+    });
+  </script>
 
 </body>
 </html>
