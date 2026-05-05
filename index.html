@@ -895,6 +895,33 @@
       .help-icon[data-tip]::before { display: none; }
     }
 
+
+    /* Hamburger fix — explicit display rules */
+    .nav-toggle-checkbox { position: absolute; opacity: 0; pointer-events: none; }
+    .nav-toggle {
+      display: none;
+      cursor: pointer;
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(52,211,153,0.3);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 16px; height: 2px;
+      background: #34d399;
+      border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    @media (max-width: 760px) {
+      .nav-toggle { display: flex !important; }
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -964,7 +991,7 @@
         </li>
         <li class="glass-dark rounded-2xl px-5 py-4 flex items-center justify-center gap-3" style="color:#f1f5f9">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          <span><span class="font-semibold" style="color:#f8fafc">This CV</span> · built in &lt; 2 h</span>
+          <span><span class="font-semibold" style="color:#f8fafc">Customer-facing</span> &times; architect</span>
         </li>
       </ul>
 
@@ -1221,7 +1248,7 @@
           <span class="text-sm italic font-medium tracking-tight" style="background:linear-gradient(120deg,#34d399 0%,#6ee7b7 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;"><span class="text-sm font-mono text-emerald-400 tracking-wider">— mdash; founded &amp; running · horeca temp monitoring</span>
         </div>
         <p class="text-base text-slate-300 leading-relaxed mb-5 max-w-3xl">
-          A separate company I founded for the horeca market. RPlay is HACCP-grade fridge &amp; freezer monitoring for restaurants, hotels and kitchens &mdash; standalone product, own brand, own pricing (€249 device + €24.99/mo), own fork of the platform.
+          A separate company I founded for the horeca market. RPlay is HACCP-grade fridge &amp; freezer monitoring for restaurants, hotels and kitchens &mdash; standalone product, own brand, own pricing (starter pack pricing), own fork of the platform.
         </p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <a href="https://rplay.be" target="_blank" rel="noopener" class="domain-card-dark domain-emerald group">
@@ -1316,7 +1343,7 @@
                 <g transform="translate(170 30)">
                   <rect width="124" height="120" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.2"/>
                   <text x="12" y="22" fill="#34d399" font-family="monospace" font-size="6" letter-spacing="2">RPLAY · STARTER</text>
-                  <text x="12" y="48" fill="#f8fafc" font-family="sans-serif" font-size="20" font-weight="700">€249</text>
+                  <text x="12" y="48" fill="#f8fafc" font-family="sans-serif" font-size="20" font-weight="700"></text>
                   <text x="58" y="48" fill="#94a3b8" font-family="sans-serif" font-size="7">device</text>
                   <text x="12" y="72" fill="#f8fafc" font-family="sans-serif" font-size="13" font-weight="600">€24.99 <tspan fill="#94a3b8" font-size="7">/ mo</tspan></text>
                   <line x1="12" y1="84" x2="112" y2="84" stroke="#1e293b"/>
@@ -1331,7 +1358,7 @@
             </div>
             <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">GTM &amp; pricing</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
             <h3 class="text-xl font-semibold">Brand · pricing · sales</h3>
-            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">What I do:</strong> brand identity, print &amp; mobile brochures, pricing model (€249 device + €24.99/mo), Stripe Checkout flow, and manual superadmin-driven onboarding for early pilots.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">I run the customer call, ship the configuration myself, and design the marketing piece they take home &mdash; same person, same day.</p><p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Solo founder.</strong></p>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">What I do:</strong> brand identity, print &amp; mobile brochures, pricing model (starter pack pricing), Stripe Checkout flow, and manual superadmin-driven onboarding for early pilots.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">I run the customer call, ship the configuration myself, and design the marketing piece they take home &mdash; same person, same day.</p><p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Solo founder.</strong></p>
             <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">rplay.be/#pricing</p>
           </a>
         </div>
@@ -1344,14 +1371,14 @@
           <span class="text-sm italic font-medium tracking-tight" style="background:linear-gradient(120deg,#34d399 0%,#6ee7b7 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;"><span class="text-sm font-mono text-emerald-400 tracking-wider">— mdash; co-founded · biosensor R&amp;D</span>
         </div>
         <p class="text-base text-slate-300 leading-relaxed mb-5 max-w-3xl">
-          GFET biosensor research with ML-driven analysis &mdash; bio-electronic nose for industrial fermentation and medical wound diagnostics. VLAIO funding application in preparation.
+          GFET biosensor research with ML-driven analysis &mdash; bio-electronic nose for industrial fermentation and medical wound diagnostics, in collaboration with <strong style="color:#f1f5f9">UGent</strong> and <strong style="color:#f1f5f9">UZ Leuven</strong>. VLAIO funding application in preparation.
         </p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <a href="https://scenti.ai" target="_blank" rel="noopener" class="domain-card-dark domain-violet group">
             <div class="card-shot"><img src="shots/scenti.png" alt="" loading="lazy" /></div>
             <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Biosensor R&amp;D</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
             <h3 class="text-xl font-semibold">scenti.ai</h3>
-            <p class="text-sm text-slate-300 leading-relaxed mt-2">GFET biosensors + ML classification for fermentation &amp; medical wound diagnostics. <strong style="color:#f1f5f9">In collaboration with UGent and UZ Leuven.</strong> VLAIO funding application in progress.</p>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">GFET biosensors + ML classification for fermentation &amp; medical wound diagnostics, <strong style="color:#f1f5f9">in collaboration with UGent and UZ Leuven</strong>. VLAIO funding application in progress.</p>
             <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">scenti.ai</p>
           </a>
           <a href="https://survey.scenti.ai" target="_blank" rel="noopener" class="domain-card-dark domain-violet group">
