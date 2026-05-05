@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remy Pollet — Head of Helpdesk @ Blyott · Application for Solita Data Architect</title>
+  <meta name="description" content="Multi-tenant SaaS architect, ships AI + IoT + data platforms in production." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950:"#0a0f1c", 900:"#0f172a", 800:"#1e293b", 700:"#334155", 600:"#475569", 500:"#64748b", 400:"#94a3b8", 300:"#cbd5e1", 200:"#e2e8f0", 100:"#f1f5f9", 50:"#f8fafc" },
+            paper: "#fafaf7",
+            "paper-2": "#f4f1ea",
+            emerald: { 400:"#34d399", 500:"#10b981", 600:"#059669", 700:"#047857" },
+            cyan: { 500:"#06b6d4", 600:"#0891b2" },
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+            mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", system-ui, sans-serif; background: #fafaf7; color: #0f172a; }
+
+    .gradient-emerald {
+      background: linear-gradient(120deg, #059669 0%, #10b981 50%, #06b6d4 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-emerald-dark {
+      background: linear-gradient(120deg, #34d399 0%, #6ee7b7 50%, #67e8f9 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* HERO grid */
+    .grid-glow {
+      background-image:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(16,185,129,0.18), transparent 70%),
+        radial-gradient(ellipse 40% 50% at 80% 100%, rgba(34,211,238,0.10), transparent 70%);
+    }
+    .grid-pattern-dark {
+      background-image:
+        linear-gradient(rgba(16,185,129,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+    }
+
+    /* Status orb */
+    .orb {
+      display: inline-block;
+      width: 0.55rem; height: 0.55rem;
+      border-radius: 9999px;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981, 0 0 0 4px rgba(16,185,129,0.12);
+    }
+    .orb-light { background: #34d399; box-shadow: 0 0 10px #34d399, 0 0 0 4px rgba(52,211,153,0.18); }
+    .orb-pulse { animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    /* Eyebrow chip — DARK hero version */
+    .chip-dark {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.4rem 0.95rem;
+      border-radius: 9999px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.01em;
+      text-transform: none;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      background: rgba(16, 185, 129, 0.08);
+      color: #34d399;
+    }
+
+    /* Eyebrow chip — LIGHT body version */
+    .chip-light {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em;
+      text-transform: none;
+      border: 1px solid #d1fae5;
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    /* Hairline divider */
+    .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(16,185,129,0.4), transparent); }
+    .hairline-dark { height: 1px; background: linear-gradient(90deg, transparent, rgba(52,211,153,0.4), transparent); }
+
+    /* CTAs */
+    .btn-primary-dark {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.65rem;
+      background: linear-gradient(120deg, #10b981, #34d399);
+      color: #0f172a; font-weight: 600; font-size: 0.92rem;
+      border-radius: 9999px;
+      box-shadow: 0 12px 36px -10px rgba(52,211,153,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary-dark:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -12px rgba(52,211,153,0.6); }
+
+    .btn-secondary-dark {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid rgba(52,211,153,0.4);
+      color: #d1fae5; font-weight: 500; font-size: 0.92rem;
+      border-radius: 9999px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .btn-secondary-dark:hover { border-color: #34d399; background: rgba(52,211,153,0.08); color: #f1f5f9; }
+
+    .btn-primary-light {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.65rem;
+      background: linear-gradient(120deg, #059669, #10b981);
+      color: #fff; font-weight: 600; font-size: 0.92rem;
+      border-radius: 9999px;
+      box-shadow: 0 12px 28px -8px rgba(5,150,105,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary-light:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -8px rgba(5,150,105,0.5); }
+
+    .btn-secondary-light {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid #10b981;
+      color: #047857; font-weight: 600; font-size: 0.92rem;
+      border-radius: 9999px;
+      background: #fff;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-secondary-light:hover { background: #ecfdf5; color: #065f46; }
+
+    /* Glass card on dark */
+    .glass-dark {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    /* Card on light */
+    .light-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .light-card:hover {
+      border-color: #10b981;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -10px rgba(15,23,42,0.12);
+    }
+
+    /* Fit card on light */
+    .fit-card {
+      position: relative;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.65rem 1.65rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .fit-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, rgb(var(--tint, 16 185 129)), rgba(var(--tint, 16 185 129), 0.4));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .fit-card:hover {
+      border-color: rgb(var(--tint, 16 185 129));
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px -14px rgba(15,23,42,0.16);
+    }
+    .fit-card:hover::before { opacity: 1; }
+
+    .fit-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px; height: 42px;
+      border-radius: 11px;
+      background: rgba(var(--tint, 16 185 129), 0.10);
+      color: rgb(var(--tint, 16 185 129));
+      margin-bottom: 1rem;
+      border: 1px solid rgba(var(--tint, 16 185 129), 0.22);
+    }
+    .fit-icon svg { width: 20px; height: 20px; }
+    .fit-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+    .fit-card p {
+      color: #334155;
+      line-height: 1.65;
+      font-size: 0.9rem;
+    }
+    .fit-card code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85em;
+      font-weight: 500;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      padding: 0;
+      background: transparent;
+      border-bottom: 1px dashed #6ee7b7;
+    }
+    .fit-card a {
+      color: #047857;
+      text-decoration: underline;
+      text-decoration-color: rgba(16,185,129,0.4);
+      text-underline-offset: 2px;
+    }
+    .fit-card a:hover { text-decoration-color: #10b981; }
+    .fit-card strong { color: #0f172a; }
+
+    /* legacy req-* (still referenced in places, kept harmless) */
+    .req-proof code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.82em;
+      background: #ecfdf5;
+      padding: 0.05rem 0.4rem;
+      border-radius: 4px;
+      color: #047857;
+    }
+    .req-proof a {
+      color: #047857;
+      text-decoration: underline;
+      text-decoration-color: rgba(16,185,129,0.4);
+      text-underline-offset: 3px;
+    }
+    .req-proof a:hover { text-decoration-color: #10b981; }
+    .req-proof strong { color: #0f172a; }
+
+    /* Stack pill (legacy, still in places) */
+    .stack-pill {
+      display: inline-flex; align-items: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem; font-weight: 500;
+      background: #fff;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* Stack-cluster card (Section C redesign) */
+    .stack-card {
+      position: relative;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 1.6rem 1.6rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+    .stack-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, rgb(var(--tint)), rgba(var(--tint), 0.3) 70%, transparent);
+    }
+    .stack-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px -14px rgba(15,23,42,0.16);
+      border-color: rgb(var(--tint));
+    }
+    .stack-card .stack-head {
+      display: flex; align-items: center; gap: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+    .stack-icon-box {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 11px;
+      background: rgb(var(--tint-light));
+      color: rgb(var(--tint));
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(var(--tint), 0.18);
+    }
+    .stack-icon-box svg { width: 22px; height: 22px; }
+    .stack-card .stack-eyebrow {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgb(var(--tint));
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .stack-card h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    .stack-card .stack-anchor {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+    .stack-card .stack-anchor strong { color: #0f172a; font-weight: 600; }
+    .stack-card .stack-list {
+      display: flex; flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .stack-tag {
+      display: inline-flex; align-items: center;
+      padding: 0.32rem 0.6rem;
+      border-radius: 6px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.74rem; font-weight: 500;
+      background: rgba(var(--tint-light), 1);
+      color: rgb(var(--tint));
+      border: 1px solid transparent;
+    }
+    .stack-tag-primary {
+      background: rgb(var(--tint));
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Section domain accent on light */
+    .domain-emerald { --tint: 16,185,129; --tint-light: 209,250,229; }
+    .domain-cyan    { --tint: 8,145,178;  --tint-light: 207,250,254; }
+    .domain-violet  { --tint: 124,58,237; --tint-light: 237,233,254; }
+    .domain-amber   { --tint: 217,119,6;  --tint-light: 254,243,199; }
+    .domain-rose    { --tint: 225,29,72;  --tint-light: 255,228,230; }
+    .domain-blue    { --tint: 37,99,235;  --tint-light: 219,234,254; }
+    .domain-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid rgb(var(--tint));
+      border-radius: 4px 16px 16px 4px;
+      padding: 1.4rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: block;
+    }
+    .domain-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -10px rgba(15,23,42,0.1);
+      border-color: rgb(var(--tint));
+      border-left-color: rgb(var(--tint));
+    }
+    .domain-card .pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em;
+      text-transform: none;
+      color: rgb(var(--tint));
+      background: rgb(var(--tint-light));
+    }
+    .domain-card .arrow { color: rgb(var(--tint)); }
+
+    /* Domain card on DARK background */
+    .domain-card-dark {
+      position: relative;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid rgb(var(--tint));
+      border-radius: 4px 16px 16px 4px;
+      padding: 1.4rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      display: block;
+    }
+    .domain-card-dark:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(var(--tint), 0.6);
+      border-left-color: rgb(var(--tint));
+    }
+    .domain-card-dark h3 { color: #f8fafc; }
+    .domain-card-dark p { color: #cbd5e1; }
+    .domain-card-dark .pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em;
+      text-transform: none;
+      color: rgb(var(--tint));
+      background: rgba(var(--tint), 0.12);
+      border: 1px solid rgba(var(--tint), 0.3);
+    }
+    .domain-card-dark .arrow { color: rgb(var(--tint)); }
+    .domain-card-dark .meta { color: #64748b; }
+
+    /* Card screenshot — top banner inside card */
+    .card-shot {
+      aspect-ratio: 16/9;
+      width: 100%;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #0f172a;
+      border: 1px solid #e2e8f0;
+    }
+    .domain-card-dark .card-shot {
+      background: #1e293b;
+      border-color: rgba(255,255,255,0.08);
+    }
+    .card-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease, opacity 0.3s;
+      opacity: 0.85;
+    }
+    .group:hover .card-shot img { opacity: 1; transform: scale(1.04); }
+
+    /* Section tag on light */
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.02em;
+      text-transform: none;
+      color: #047857;
+    }
+    .section-tag::before {
+      content: ""; width: 28px; height: 1px;
+      background: linear-gradient(90deg, #10b981, transparent);
+    }
+
+    .section-tag-dark { color: #34d399; }
+    .section-tag-dark::before { background: linear-gradient(90deg, #34d399, transparent); }
+
+    /* Floating orbs */
+    .float-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    /* Integration card icon (Section E) */
+    .int-icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: rgba(var(--tint), 0.14);
+      color: rgb(var(--tint));
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(var(--tint), 0.28);
+    }
+
+
+    /* Stack block (Section C — infographic style) */
+    .stack-block {
+      position: relative;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid rgb(var(--tint));
+      border-radius: 4px 14px 14px 4px;
+      padding: 1.4rem 1.5rem 1.3rem;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .stack-block:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px -16px rgba(15,23,42,0.16);
+      border-color: rgb(var(--tint));
+    }
+    .stack-block .sb-row {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    .stack-block .sb-icon {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(var(--tint), 0.12);
+      color: rgb(var(--tint));
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(var(--tint), 0.22);
+    }
+    .stack-block .sb-icon svg { width: 18px; height: 18px; }
+    .stack-block .pill {
+      display: inline-flex; align-items: center;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em;
+      background: rgba(var(--tint), 0.12);
+      color: rgb(var(--tint));
+      border: 1px solid rgba(var(--tint), 0.22);
+    }
+    .stack-block h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .stack-block p {
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #334155;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+    .stack-block p strong { color: #0f172a; font-weight: 600; }
+    .stack-block .sb-list {
+      list-style: none;
+      padding: 0.85rem 0 0 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .stack-block .sb-list li {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.28rem 0.55rem;
+      border-radius: 5px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      background: rgba(var(--tint), 0.08);
+      color: rgb(var(--tint));
+    }
+
+
+    /* Help-icon tooltip — plain-language for HR managers */
+    .help-icon {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.16);
+      color: #94a3b8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: help;
+      transition: all 0.2s;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1;
+      z-index: 5;
+    }
+    .help-icon:hover, .help-icon:focus {
+      background: rgba(52,211,153,0.2);
+      border-color: rgba(52,211,153,0.5);
+      color: #6ee7b7;
+      transform: scale(1.1);
+      outline: none;
+    }
+    .help-icon[data-tip]::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px);
+      right: -4px;
+      width: 280px;
+      padding: 12px 14px;
+      background: #0a0f1c;
+      color: #e2e8f0;
+      border: 1px solid rgba(52,211,153,0.4);
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0;
+      text-transform: none;
+      z-index: 100;
+      white-space: normal;
+      text-align: left;
+      box-shadow: 0 16px 40px -8px rgba(0,0,0,0.6);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .help-icon[data-tip]:hover::after,
+    .help-icon[data-tip]:focus::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .help-icon[data-tip]::before {
+      content: "";
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 4px;
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid rgba(52,211,153,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 101;
+    }
+    .help-icon[data-tip]:hover::before,
+    .help-icon[data-tip]:focus::before { opacity: 1; }
+
+
+    /* Section A & C dark variant */
+    section.dark-section {
+      background: #0f172a !important;
+      position: relative;
+      overflow: hidden;
+    }
+    section.dark-section .fit-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: none;
+    }
+    section.dark-section .fit-card:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgb(var(--tint, 16 185 129));
+    }
+    section.dark-section .fit-card h3 { color: #f1f5f9; }
+    section.dark-section .fit-card p { color: #cbd5e1; }
+    section.dark-section .fit-card p strong { color: #f8fafc; }
+    section.dark-section .fit-card p em { color: #cbd5e1; }
+    section.dark-section .fit-card code {
+      color: #f1f5f9;
+      border-bottom-color: rgb(var(--tint, 110 231 183));
+    }
+    section.dark-section .fit-card a {
+      color: #6ee7b7;
+    }
+    section.dark-section .fit-icon {
+      background: rgba(var(--tint, 16 185 129), 0.18);
+      border-color: rgba(var(--tint, 16 185 129), 0.40);
+      color: rgb(var(--tint, 110 231 183));
+    }
+    section.dark-section h2 { color: #f8fafc !important; }
+    section.dark-section .section-tag { color: #34d399; }
+    section.dark-section .section-tag::before {
+      background: linear-gradient(90deg, #34d399, transparent);
+    }
+    section.dark-section > .hairline { display: none; }
+
+    /* dark stack-block */
+    section.dark-section .stack-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid rgb(var(--tint));
+    }
+    section.dark-section .stack-block:hover {
+      background: rgba(255,255,255,0.05);
+    }
+    section.dark-section .stack-block h3 { color: #f1f5f9; }
+    section.dark-section .stack-block p { color: #cbd5e1; }
+    section.dark-section .stack-block p strong { color: #f8fafc; }
+    section.dark-section .stack-block .sb-icon {
+      background: rgba(var(--tint), 0.18);
+      border-color: rgba(var(--tint), 0.4);
+    }
+    section.dark-section .stack-block .pill {
+      background: rgba(var(--tint), 0.18);
+      color: rgb(var(--tint));
+      border-color: rgba(var(--tint), 0.4);
+    }
+    section.dark-section .stack-block .sb-list {
+      border-top-color: rgba(255,255,255,0.06);
+    }
+    section.dark-section .stack-block .sb-list li {
+      background: rgba(var(--tint), 0.14);
+      color: rgb(var(--tint));
+    }
+
+    /* Dark callout for Section A */
+    section.dark-section .a-callout {
+      background: linear-gradient(120deg, rgba(16,185,129,0.10) 0%, rgba(255,255,255,0.02) 30%, rgba(251,191,36,0.10) 60%, rgba(244,63,94,0.10) 90%, rgba(6,182,212,0.10) 100%) !important;
+    }
+    section.dark-section .a-callout p { color: #f1f5f9; }
+    section.dark-section .a-callout .gradient-emerald {
+      background: linear-gradient(120deg, #34d399 0%, #6ee7b7 50%, #67e8f9 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    /* Mobile responsive — global */
+    @media (max-width: 760px) {
+      header.relative {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 14px !important;
+      }
+      header nav {
+        flex-wrap: wrap !important;
+        gap: 12px 16px !important;
+        font-size: 0.85rem !important;
+        width: 100%;
+      }
+      h1.text-balance { font-size: 2rem !important; line-height: 1.1 !important; }
+      .text-4xl.sm\:text-5xl, h2.text-4xl { font-size: 1.85rem !important; line-height: 1.15 !important; }
+      .text-4xl.sm\:text-6xl { font-size: 2.2rem !important; }
+      .grid.lg\:grid-cols-\[1\.05fr_1fr\] { grid-template-columns: 1fr !important; }
+      .help-icon[data-tip]::after { width: 220px !important; right: -8px !important; font-size: 0.75rem !important; }
+    }
+    @media (max-width: 480px) {
+      .help-icon[data-tip]::after { width: calc(100vw - 64px) !important; right: -12px !important; }
+    }
+
+    /* RPlay-style multi-color gradient (green → yellow → red) */
+    .gradient-rplay {
+      background: linear-gradient(120deg, #34d399 0%, #fbbf24 45%, #f43f5e 80%, #67e8f9 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    /* Tech name gradient — replace dashed mono with stylish gradient */
+    .fit-card code {
+      font-family: "Inter", system-ui, sans-serif !important;
+      font-weight: 700 !important;
+      background: linear-gradient(120deg, #047857 0%, #10b981 50%, #06b6d4 100%) !important;
+      -webkit-background-clip: text !important; background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      border-bottom: none !important;
+      padding: 0 !important;
+      letter-spacing: 0 !important;
+    }
+    section.dark-section .fit-card code {
+      background: linear-gradient(120deg, #34d399 0%, #6ee7b7 50%, #67e8f9 100%) !important;
+      -webkit-background-clip: text !important; background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+    }
+
+
+    /* Help-icon for Section A fit-cards (works in both light + dark) */
+    .fit-card { position: relative; }
+    .fit-card .help-icon {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(15,23,42,0.06);
+      border: 1px solid rgba(15,23,42,0.12);
+      color: #475569;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: help;
+      font-family: "Inter", sans-serif;
+      font-size: 0.72rem; font-weight: 600;
+      transition: all 0.2s;
+      z-index: 5;
+    }
+    section.dark-section .fit-card .help-icon {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.16);
+      color: #94a3b8;
+    }
+    .fit-card .help-icon:hover {
+      background: rgba(52,211,153,0.2);
+      border-color: rgba(52,211,153,0.5);
+      color: #047857;
+      transform: scale(1.1);
+    }
+    section.dark-section .fit-card .help-icon:hover { color: #6ee7b7; }
+    .fit-card .help-icon[data-tip]::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px); right: -4px;
+      width: 270px;
+      padding: 12px 14px;
+      background: #0a0f1c; color: #e2e8f0;
+      border: 1px solid rgba(52,211,153,0.4);
+      border-radius: 10px;
+      font-size: 0.78rem; font-weight: 400; line-height: 1.5;
+      letter-spacing: 0; text-transform: none;
+      z-index: 100; white-space: normal; text-align: left;
+      box-shadow: 0 16px 40px -8px rgba(0,0,0,0.6);
+      opacity: 0; pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .fit-card .help-icon[data-tip]:hover::after { opacity: 1; transform: translateY(0); }
+
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ─────────────────────────── HERO (dark) ─────────────────────────── -->
+  <section class="relative overflow-hidden grid-glow" style="min-height: 100vh; background: #0f172a;">
+    <div class="absolute inset-0 grid-pattern-dark opacity-40"></div>
+    <!-- Subtle chess-board pattern -->
+    <div class="absolute inset-0 pointer-events-none" style="background: repeating-conic-gradient(rgba(52,211,153,0.045) 0% 25%, transparent 25% 50%) 0 0 / 110px 110px; mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);"></div>
+
+    <div class="float-orb" style="top: -200px; left: -150px; width: 540px; height: 540px; background: radial-gradient(closest-side, #10b981, transparent); opacity: 0.45;"></div>
+    <div class="float-orb" style="bottom: -240px; right: -180px; width: 640px; height: 640px; background: radial-gradient(closest-side, #06b6d4, transparent); opacity: 0.3;"></div>
+
+
+    <header class="relative mx-auto flex w-full max-w-[80rem] items-center justify-between px-6 sm:px-12 pt-7">
+      <a href="/" class="inline-flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight text-slate-50">
+        <span class="orb orb-light orb-pulse"></span>
+        <span>remy<span class="text-emerald-400">.</span>pollet</span>
+      </a>
+      <nav class="flex items-center gap-7 text-sm font-medium tracking-wide" style="color:#cbd5e1">
+        <a href="#fit" class="hover:text-emerald-400 transition-colors">Long CV</a>
+        <a href="/print.html" class="hover:text-emerald-400 transition-colors">Short CV (1-pager)</a>
+        <a href="/about.html" class="hover:text-emerald-400 transition-colors">About</a>
+        <a href="#contact" class="hover:text-emerald-400 transition-colors">Contact</a>
+        <span style="color:#475569">·</span>
+        <a href="/nl/" class="hover:text-emerald-400 transition-colors font-mono text-xs">NL</a>
+      </nav>
+    </header>
+
+    <div class="relative mx-auto w-full max-w-[80rem] px-6 sm:px-12 pt-14 sm:pt-20 pb-16 sm:pb-28">
+
+      <div class="chip-dark mb-7">
+        <span class="orb orb-light orb-pulse" style="width:0.45rem;height:0.45rem"></span>
+        Open to freelance · Solita Data Architect (AI &amp; Analytics)
+      </div>
+
+      <p class="mb-5 text-base sm:text-lg leading-relaxed max-w-2xl italic" style="color:#a7f3d0">
+        Hi Solita team &mdash; I read your job description for <span class="not-italic font-semibold" style="color:#f8fafc; padding: 0 0.15em;">Data Architect (AI &amp; Analytics)</span> twice this week and recognised myself in every bullet. So instead of mailing you a static CV, I built this one &mdash; in under two hours, paired with an LLM, on the same stack I use daily.
+      </p>
+
+      <h1 class="text-balance text-[2.25rem] sm:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-[-0.025em] max-w-5xl" style="color:#f8fafc">
+        I build the multi-tenant<br/>
+        <span class="gradient-rplay">data &amp; AI architectures</span><br/>
+        you advise customers to want.
+      </h1>
+
+      <p class="mt-7 max-w-2xl text-[0.98rem] sm:text-lg leading-relaxed" style="color:#e2e8f0">
+        At <span class="font-semibold" style="color:#f8fafc">Blyott</span> I wear three hats:
+        <span class="font-semibold" style="color:#34d399">Head of Helpdesk</span>,
+        <span class="font-semibold" style="color:#67e8f9">Customer Success</span> and
+        <span class="font-semibold" style="color:#fbbf24">Project Engineer</span> &mdash; all in one person.
+        Now opening up for <span class="font-semibold" style="color:#f8fafc">freelance data &amp; AI architecture</span> work,
+        because I'm already advising multiple companies on AI &amp; analytics next to the day job.
+        Multi-tenant SaaS across <span class="font-semibold" style="color:#f8fafc">healthcare, horeca, agri</span> and tourism.
+      </p>
+
+      <ul class="mt-10 grid gap-2.5 text-sm sm:max-w-3xl sm:grid-cols-3 sm:gap-3">
+        <li class="glass-dark rounded-2xl px-5 py-4 flex items-center justify-center gap-3" style="color:#f1f5f9">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/></svg>
+          <span><span class="font-semibold" style="color:#f8fafc">26 years old</span> · 4 yr SaaS</span>
+        </li>
+        <li class="glass-dark rounded-2xl px-5 py-4 flex items-center justify-center gap-3" style="color:#f1f5f9">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4-4 4 4-4 4-4-4zM13 13l4-4 4 4-4 4-4-4z"/></svg>
+          <span><span class="font-semibold" style="color:#f8fafc">3 companies</span> · built in &lt; 1 yr</span>
+        </li>
+        <li class="glass-dark rounded-2xl px-5 py-4 flex items-center justify-center gap-3" style="color:#f1f5f9">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span><span class="font-semibold" style="color:#f8fafc">This CV</span> · built in &lt; 2 h</span>
+        </li>
+      </ul>
+
+      <div class="mt-12 flex flex-wrap gap-3">
+        <a href="#fit" class="btn-primary-dark group">
+          See how I match this role
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/about.html" class="btn-secondary-dark">Read about me</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─────────────────────────── A · FIT (light) ─────────────────────────── -->
+  <section id="fit" class="dark-section relative overflow-hidden"><div class="absolute inset-0 grid-pattern-dark opacity-25"></div><div class="float-orb" style="top: 10%; right: -150px; width: 380px; height: 380px; background: radial-gradient(closest-side, #fbbf24, transparent); opacity: 0.10;"></div><div class="float-orb" style="bottom: -180px; left: -120px; width: 360px; height: 360px; background: radial-gradient(closest-side, #f43f5e, transparent); opacity: 0.10;"></div>
+    <div class="mx-auto max-w-[72rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <div class="mb-12">
+        <p class="section-tag mb-5">A · Your role · my proof</p>
+        <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] max-w-3xl" style="color:#f8fafc">
+          Solita asks for a Data Architect<br/>
+          who can <span class="gradient-emerald">advise customers</span>.
+        </h2>
+        <div class="a-callout mt-8 rounded-2xl px-7 py-6 max-w-3xl relative" style="background: linear-gradient(120deg, #ecfdf5 0%, #ffffff 30%, #fef3c7 60%, #fce7f3 90%, #ecfeff 100%); box-shadow: 0 0 0 2px transparent, 0 14px 40px -16px rgba(15,23,42,0.14); border: 2px solid transparent; background-clip: padding-box; position: relative;"><div style="position: absolute; inset: -2px; border-radius: 1.05rem; padding: 2px; background: linear-gradient(120deg, #10b981 0%, #06b6d4 25%, #fbbf24 60%, #f43f5e 85%, #10b981 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;"></div>
+          <p class="text-xl sm:text-2xl font-semibold leading-snug tracking-tight">
+            Below is <span class="gradient-emerald">your job description</span>, line by line,
+            with what <span class="gradient-emerald">I actually shipped</span> this year against it.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+
+        <div class="fit-card domain-emerald"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="How customer data is stored and isolated. Multi-tenant means: Hospital A and Hospital B share the same software but their data is strictly separated, by design.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>
+          </span>
+          <h3>Data architecture foundation</h3>
+          <p>Multi-tenant <code>Postgres + Drizzle</code> with row-level security across 3 industry verticals. Time-series IoT pipelines &mdash; <code>BLE → MQTT → state engine → alerts</code> &mdash; running for paying customers daily. Schema design, migrations, RLS policies, JSONB event modelling. Daily work, not theory.</p>
+        </div>
+
+        <div class="fit-card domain-violet"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Using AI assistants like Claude inside production software — automating reports, classifying events, doing pair-programming. Plus structured analytics dashboards on top.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4 4 1.5-4 1.5L12 14l-1.5-4-4-1.5 4-1.5L12 3z"/><path d="M19 14l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2z"/><path d="M5 16l.6 1.6 1.6.6-1.6.6L5 20.4l-.6-1.6-1.6-.6 1.6-.6L5 16z"/></svg>
+          </span>
+          <h3>AI &amp; Analytics — GenAI, LLMs, RAG, agents</h3>
+          <p>Claude API in production: agentic workflows running autonomously on my infra (this CV was deployed via an LLM pair). VLAIO market-validation survey at <a href="https://survey.scenti.ai">survey.scenti.ai</a> generates structured analytics with PSM pricing curves, multi-vertical cohorts. RAG over real-time IoT events. Dedup + throttle across 3 alert channels.</p>
+        </div>
+
+        <div class="fit-card domain-cyan"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Sitting between a customer ticket and the actual code fix. I take the &quot;cooler stopped alerting&quot; and turn it into a deployed migration that solves the root cause.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13M3 7l4-4M3 7l4 4"/><path d="M21 17H8M21 17l-4-4M21 17l-4 4"/></svg>
+          </span>
+          <h3>Business-to-tech translation</h3>
+          <p><strong>Head of Helpdesk at Blyott.</strong> I sit in customer escalations <em>and</em> in the architecture decisions that caused them. Translating <em>"the cooler stopped alerting"</em> into <em>"engine cooldown wasn't honored on schema-config"</em> is muscle memory. I write the proposal, demo to executives, then ship the fix.</p>
+        </div>
+
+        <div class="fit-card domain-blue"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Where the website + servers live. Mix of managed services (faster, more expensive) and bare-metal (cheaper, more control) — pick the right one per workload.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.6-8.7A6 6 0 0 0 4 12.5 4 4 0 0 0 6 20h11.5z"/></svg>
+          </span>
+          <h3>Cloud platform knowledge</h3>
+          <p><code>Vercel</code> (multiple deploys daily), <code>Cloudflare</code> tunnels + DNS + R2, <code>Hetzner</code> bare-metal for the IoT backbone, <code>Neon</code> serverless Postgres, <code>Resend</code> transactional, <code>Tailscale</code> ops mesh. Mix of managed PaaS where it makes sense and IaaS where control matters.</p>
+        </div>
+
+        <div class="fit-card domain-amber"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Security and compliance: making sure only authorised users/devices connect, GDPR-clean email, certificates everywhere, hardening sprints — the things that prevent breaches.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <h3>Enterprise thinking</h3>
+          <p><code>mTLS</code> for Wi-Fi access-point ingestion, <code>CA reissue</code> cycles, multi-tenant <code>RLS policies</code>, GDPR-compliant <code>DKIM/SPF/DMARC</code> pipelines, security hardening sprints (P0.0 → P0.4). I do this not because I have to — because I'm the one who'll get paged if it fails.</p>
+        </div>
+
+        <div class="fit-card domain-rose"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Keeping AI/ML pipelines reliable in production: alert dedup, observability dashboards, retries, push-notifications. The plumbing that lets stuff scale without breaking.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+          </span>
+          <h3>Production readiness — MLOps / LLMOps</h3>
+          <p>Cloudflare named tunnels, scheduled functions, observability dashboards, <code>VAPID push</code> with subscribe lifecycle, alarm dedup + 1/h throttle per <code>alarm_config_id</code>, idempotent webhook handlers. The thing that <em>didn't wake me at 03:00</em> last quarter.</p>
+        </div>
+
+        <div class="fit-card domain-emerald"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="I design and ship the actual marketing material — print brochures, decks, walkthroughs — not just slides someone else made. Customer demos weekly.">?</button>
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m7 12 3-3 3 3 4-5"/></svg>
+          </span>
+          <h3>Confident presenter</h3>
+          <p>5 print A4 brochures (Moniott agri vertical), 3 PostYourCard pitch decks (Bruges hotel partners), RPlay walkthrough deck, healthcare wound-diagnostics survey (Scenti.AI). Live customer demos weekly. I design the deck, write the copy, ship the PDF.</p>
+        </div>
+
+        <div class="fit-card domain-amber">
+          <span class="fit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          </span>
+          <h3>Languages — NL · EN · FR</h3>
+          <p>Native Dutch · fluent English · workable French. Technical docs in NL for ops, sales decks in EN for international, customer support in whatever the customer needs.</p>
+        </div>
+
+      </div>
+
+      <!-- "We would especially value" -->
+      <div class="mt-10 rounded-3xl p-8 sm:p-10" style="background: rgba(16,185,129,0.08); border: 1px solid rgba(52,211,153,0.3);">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="orb"></span>
+          <p class="font-mono text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-emerald-300">"We would especially value"</p>
+        </div>
+        <ul class="space-y-3.5 leading-relaxed" style="color:#cbd5e1;">
+          <li class="flex gap-3"><span class="text-emerald-400 mt-1">▸</span><span><strong style="color:#f8fafc">Presales &amp; offering development</strong> — turning Blyott into <em>RPlay</em> (horeca) and <em>Moniott</em> (agri) is not white-labelling, it's repackaging the offering, designing the GTM, writing the brochures, and walking into the meeting.</span></li>
+          <li class="flex gap-3"><span class="text-emerald-400 mt-1">▸</span><span><strong style="color:#f8fafc">Executive presentations</strong> — done weekly with hospital procurement, hotel groups, insurance sectors. The job is to translate biosensors into ROI without losing the science.</span></li>
+          <li class="flex gap-3"><span class="text-emerald-400 mt-1">▸</span><span><strong style="color:#f8fafc">Enterprise AI ecosystems</strong> — Claude / Anthropic, OpenAI embeddings, custom RAG over IoT data. Familiar with Databricks &amp; Snowflake from the data-platform side; less hands-on than I'd like, would learn fast.</span></li>
+          <li class="flex gap-3"><span class="text-emerald-400 mt-1">▸</span><span><strong style="color:#f8fafc">Consulting mindset</strong> — every customer at Blyott is a discovery → workshop → architecture → delivery cycle. I run the whole loop alone today; doing it inside a 400-person community is the next level.</span></li>
+          <li class="flex gap-3"><span class="text-emerald-400 mt-1">▸</span><span><strong style="color:#f8fafc">Architecture standards across projects</strong> — Blyott's multi-tenancy is one shared platform across 4 verticals. Architectural consistency isn't a wish-list — it's the only way I scale alone.</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── B · PRODUCTS (dark) ─────────────────────────── -->
+  <section style="background: #0f172a;" class="relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern-dark opacity-30"></div>
+    <div class="float-orb" style="top: 10%; right: -200px; width: 460px; height: 460px; background: radial-gradient(closest-side, #10b981, transparent); opacity: 0.18;"></div>
+
+    <div class="relative mx-auto max-w-[80rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <div class="mb-14">
+        <p class="section-tag section-tag-dark mb-5">B · Currently in production</p>
+        <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] max-w-3xl" style="color:#f8fafc">
+          Three companies. <span class="gradient-emerald-dark">One person.</span>
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed max-w-2xl" style="color:#cbd5e1">
+          What I work on day-to-day, grouped by company. The clickable cards open the live product.
+        </p>
+      </div>
+
+      <!-- BLYOTT cluster -->
+      <div class="mb-14">
+        <div class="flex items-baseline gap-4 mb-5 flex-wrap">
+          <h3 class="text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight">Blyott</h3>
+          <span class="text-sm italic font-medium tracking-tight" style="background:linear-gradient(120deg,#34d399 0%,#6ee7b7 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;"><span class="text-sm font-mono text-emerald-400 tracking-wider">— mdash; core role · multi-tenant IoT platform</span>
+        </div>
+        <p class="text-base text-slate-300 leading-relaxed mb-5 max-w-3xl">
+          My primary role &mdash; Head of Helpdesk at Blyott. The parent platform powering indoor RTLS &amp; asset tracking across enterprise verticals: healthcare, industry, retail, public sector.
+        </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <a href="https://www.blyott.com" target="_blank" rel="noopener" class="domain-card-dark domain-emerald group">
+            <div class="card-shot"><img src="shots/blyott.png" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Parent platform</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">Blyott</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">Multi-tenant SaaS asset tracking. RLS, industry presets, Stripe Connect for partner-distributors, KNOT BLE gateway pipeline.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">blyott.com</p>
+          </a>
+          <div class="domain-card-dark domain-emerald">
+            <div class="card-shot card-shot-vector">
+              <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="rtls-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#34d399" stop-opacity="0.55"/>
+                    <stop offset="60%" stop-color="#10b981" stop-opacity="0.05"/>
+                    <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="320" height="180" fill="#0b1220"/>
+                <g opacity="0.12" stroke="#34d399" stroke-width="0.5">
+                  <path d="M0 36H320M0 72H320M0 108H320M0 144H320"/>
+                  <path d="M40 0V180M80 0V180M120 0V180M160 0V180M200 0V180M240 0V180M280 0V180"/>
+                </g>
+                <circle cx="100" cy="92" r="55" fill="url(#rtls-glow)"/>
+                <circle cx="220" cy="60" r="40" fill="url(#rtls-glow)" opacity="0.7"/>
+                <g fill="#34d399">
+                  <circle cx="100" cy="92" r="3"/>
+                  <circle cx="220" cy="60" r="3"/>
+                  <circle cx="160" cy="120" r="3"/>
+                </g>
+                <g stroke="#34d399" stroke-width="1" fill="none" opacity="0.55">
+                  <circle cx="100" cy="92" r="22"/><circle cx="100" cy="92" r="40"/>
+                  <circle cx="220" cy="60" r="18"/><circle cx="220" cy="60" r="32"/>
+                  <circle cx="160" cy="120" r="14"/>
+                </g>
+                <g fill="#94a3b8">
+                  <rect x="56" y="128" width="14" height="6" rx="1"/>
+                  <rect x="180" y="40" width="14" height="6" rx="1"/>
+                  <rect x="244" y="100" width="14" height="6" rx="1"/>
+                  <rect x="40" y="60" width="14" height="6" rx="1"/>
+                  <rect x="280" y="140" width="14" height="6" rx="1"/>
+                </g>
+              </svg>
+            </div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Enterprise deployment</span></div>
+            <h3 class="text-xl font-semibold">Industry &amp; healthcare RTLS</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">Production deployments at industrial &amp; hospital sites: hundreds of gateways, thousands of tags, multi-floor RTLS.</p><p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">My day-to-day:</strong> on-site architecture workshops with the customer, gateway placement strategy from floor plans, tenant onboarding and calibration.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">Escalation triage when an asset goes &ldquo;missing&rdquo;, dashboard customisation per workflow, SLA reporting, plus designing the technical fix in the platform when the root cause sits in the schema or alert engine.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">End-to-end customer-facing &times; architect.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono italic">production · client confidential</p>
+          </div>
+          <div class="domain-card-dark domain-emerald">
+            <div class="card-shot card-shot-vector">
+              <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="rack-bg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0b1220"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                </defs>
+                <rect width="320" height="180" fill="url(#rack-bg)"/>
+                <g opacity="0.08" stroke="#34d399" stroke-width="0.5">
+                  <path d="M0 36H320M0 72H320M0 108H320M0 144H320"/>
+                </g>
+                <!-- server rack -->
+                <g transform="translate(70 28)">
+                  <rect x="0" y="0" width="180" height="124" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+                  <g>
+                    <rect x="10" y="12" width="160" height="18" rx="3" fill="#111c2e" stroke="#1e293b"/>
+                    <circle cx="22" cy="21" r="3" fill="#34d399"/>
+                    <rect x="36" y="18" width="100" height="6" rx="1" fill="#1e293b"/>
+                    <rect x="148" y="18" width="14" height="6" rx="1" fill="#34d399" opacity="0.6"/>
+                  </g>
+                  <g transform="translate(0 24)">
+                    <rect x="10" y="12" width="160" height="18" rx="3" fill="#111c2e" stroke="#1e293b"/>
+                    <circle cx="22" cy="21" r="3" fill="#34d399"/>
+                    <rect x="36" y="18" width="80" height="6" rx="1" fill="#1e293b"/>
+                    <rect x="124" y="18" width="38" height="6" rx="1" fill="#06b6d4" opacity="0.5"/>
+                  </g>
+                  <g transform="translate(0 48)">
+                    <rect x="10" y="12" width="160" height="18" rx="3" fill="#111c2e" stroke="#1e293b"/>
+                    <circle cx="22" cy="21" r="3" fill="#34d399"/>
+                    <rect x="36" y="18" width="120" height="6" rx="1" fill="#1e293b"/>
+                  </g>
+                  <g transform="translate(0 72)">
+                    <rect x="10" y="12" width="160" height="18" rx="3" fill="#111c2e" stroke="#1e293b"/>
+                    <circle cx="22" cy="21" r="3" fill="#fbbf24" opacity="0.85"/>
+                    <rect x="36" y="18" width="60" height="6" rx="1" fill="#1e293b"/>
+                    <rect x="104" y="18" width="58" height="6" rx="1" fill="#fbbf24" opacity="0.4"/>
+                  </g>
+                </g>
+                <!-- shield mTLS -->
+                <g transform="translate(248 110)" opacity="0.85">
+                  <path d="M16 0L32 6V18C32 27 24 33 16 36C8 33 0 27 0 18V6L16 0Z" fill="#0b1220" stroke="#34d399" stroke-width="1.4"/>
+                  <path d="M9 18l5 5 9-10" stroke="#34d399" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <text x="20" y="166" fill="#475569" font-family="monospace" font-size="9" letter-spacing="2">$ systemctl status blyott-api · active</text>
+              </svg>
+            </div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Production hardening</span></div>
+            <h3 class="text-xl font-semibold">Hetzner · mTLS sprints</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Hardening sprints I ran:</strong> public SSH closed and replaced with Tailscale-gated access; full Certificate Authority reissue (every IoT gateway re-enrolled with new mTLS certs, zero downtime).</p><p class="text-sm text-slate-300 leading-relaxed mt-2">systemd-unit hardening with private namespaces, log shipping to Loki + Grafana dashboards, two-server HA preparation for failover.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">The kind of work that's invisible if it works &mdash; and a 03:00 page if it doesn't.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono italic">internal infra</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RPLAY cluster -->
+      <div class="mb-14">
+        <div class="flex items-baseline gap-4 mb-5 flex-wrap">
+          <h3 class="text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight">RPlay</h3>
+          <span class="text-sm italic font-medium tracking-tight" style="background:linear-gradient(120deg,#34d399 0%,#6ee7b7 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;"><span class="text-sm font-mono text-emerald-400 tracking-wider">— mdash; founded &amp; running · horeca temp monitoring</span>
+        </div>
+        <p class="text-base text-slate-300 leading-relaxed mb-5 max-w-3xl">
+          A separate company I founded for the horeca market. RPlay is HACCP-grade fridge &amp; freezer monitoring for restaurants, hotels and kitchens &mdash; standalone product, own brand, own pricing (€249 device + €24.99/mo), own fork of the platform.
+        </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <a href="https://rplay.be" target="_blank" rel="noopener" class="domain-card-dark domain-emerald group">
+            <div class="card-shot"><img src="shots/rplay.png?v=4" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Horeca SaaS · solo founder</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">RPlay</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Built end-to-end by me</strong> — every line of code, the brand, the pricing, the gateway flash script. Kitchen temp + HACCP audit logs, BLE tags, PWA, plug-and-play gateway. Pre-launch sprint with first Bruges restaurant pilots.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">rplay.be</p>
+          </a>
+          <a href="https://rplay.be#features" target="_blank" rel="noopener" class="domain-card-dark domain-emerald group">
+            <div class="card-shot card-shot-vector">
+              <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="pwa-bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#0b1220"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                  <linearGradient id="pwa-screen" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1e293b"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                </defs>
+                <rect width="320" height="180" fill="url(#pwa-bg)"/>
+                <g opacity="0.08" stroke="#34d399" stroke-width="0.5">
+                  <path d="M0 36H320M0 72H320M0 108H320M0 144H320"/>
+                </g>
+                <!-- iPhone -->
+                <g transform="translate(118 18)">
+                  <rect x="0" y="0" width="84" height="148" rx="14" fill="#0a0f1c" stroke="#1e293b" stroke-width="1.2"/>
+                  <rect x="6" y="12" width="72" height="124" rx="6" fill="url(#pwa-screen)"/>
+                  <rect x="32" y="4" width="20" height="3" rx="1.5" fill="#1e293b"/>
+                  <!-- status bar -->
+                  <text x="12" y="22" fill="#94a3b8" font-family="monospace" font-size="5">9:41</text>
+                  <!-- notif card -->
+                  <g transform="translate(10 30)">
+                    <rect width="64" height="32" rx="5" fill="#0f172a" stroke="#34d399" stroke-width="0.8"/>
+                    <circle cx="8" cy="8" r="3" fill="#fbbf24"/>
+                    <text x="14" y="10" fill="#f8fafc" font-family="sans-serif" font-size="5" font-weight="600">RPlay alert</text>
+                    <text x="6" y="20" fill="#cbd5e1" font-family="sans-serif" font-size="4.5">Walk-in #2 · 9.2°C</text>
+                    <text x="6" y="27" fill="#94a3b8" font-family="sans-serif" font-size="4">Tap to acknowledge</text>
+                  </g>
+                  <g transform="translate(10 68)">
+                    <rect width="64" height="22" rx="5" fill="#0f172a" stroke="#1e293b" stroke-width="0.6" opacity="0.7"/>
+                    <circle cx="8" cy="8" r="3" fill="#34d399"/>
+                    <text x="14" y="10" fill="#cbd5e1" font-family="sans-serif" font-size="4.5">Daily digest</text>
+                    <text x="6" y="18" fill="#64748b" font-family="sans-serif" font-size="3.8">3 events · 0 critical</text>
+                  </g>
+                </g>
+                <!-- ping waves -->
+                <g transform="translate(160 32)" stroke="#34d399" fill="none" stroke-width="0.8" opacity="0.55">
+                  <circle cx="0" cy="0" r="14"/><circle cx="0" cy="0" r="22" opacity="0.4"/><circle cx="0" cy="0" r="30" opacity="0.2"/>
+                </g>
+                <!-- side icons -->
+                <g fill="#34d399" opacity="0.7">
+                  <circle cx="40" cy="60" r="2"/><circle cx="50" cy="90" r="2"/><circle cx="32" cy="120" r="2"/>
+                  <circle cx="280" cy="60" r="2"/><circle cx="270" cy="100" r="2"/><circle cx="288" cy="130" r="2"/>
+                </g>
+                <text x="20" y="166" fill="#475569" font-family="monospace" font-size="9" letter-spacing="2">VAPID push · digest · throttle</text>
+              </svg>
+            </div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Mobile alerts</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">PWA &amp; alarm engine</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">What I built:</strong> the installable web app the chef opens on their phone, plus the entire alarm engine behind it.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">Dedup logic, throttle per <code>alarm_config_id</code>, quiet-hours window, e-mail-digest fallback via Resend, and the VAPID push subscription lifecycle with service worker.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">Designed so the kitchen never gets paged twice for the same fridge &mdash; and the Tuesday brunch isn't ruined by a notification storm.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">rplay.be/#features</p>
+          </a>
+          <a href="https://rplay.be#pricing" target="_blank" rel="noopener" class="domain-card-dark domain-emerald group">
+            <div class="card-shot card-shot-vector">
+              <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="brand-bg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#0b1220"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                  </linearGradient>
+                </defs>
+                <rect width="320" height="180" fill="url(#brand-bg)"/>
+                <g opacity="0.08" stroke="#34d399" stroke-width="0.5">
+                  <path d="M0 36H320M0 72H320M0 108H320M0 144H320"/>
+                </g>
+                <!-- A4 brochure -->
+                <g transform="translate(36 24) rotate(-6)">
+                  <rect width="92" height="130" rx="3" fill="#fafaf7" stroke="#1e293b" stroke-width="1"/>
+                  <rect x="8" y="10" width="36" height="3" rx="1" fill="#10b981"/>
+                  <rect x="8" y="20" width="76" height="6" rx="1" fill="#0f172a"/>
+                  <rect x="8" y="30" width="60" height="3" rx="1" fill="#475569"/>
+                  <rect x="8" y="44" width="76" height="40" rx="2" fill="#ecfdf5" stroke="#a7f3d0"/>
+                  <circle cx="46" cy="64" r="10" fill="#34d399" opacity="0.6"/>
+                  <rect x="8" y="92" width="76" height="2" fill="#cbd5e1"/>
+                  <rect x="8" y="98" width="50" height="2" fill="#cbd5e1"/>
+                  <rect x="8" y="110" width="40" height="6" rx="2" fill="#10b981"/>
+                </g>
+                <!-- Pricing card -->
+                <g transform="translate(170 30)">
+                  <rect width="124" height="120" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.2"/>
+                  <text x="12" y="22" fill="#34d399" font-family="monospace" font-size="6" letter-spacing="2">RPLAY · STARTER</text>
+                  <text x="12" y="48" fill="#f8fafc" font-family="sans-serif" font-size="20" font-weight="700">€249</text>
+                  <text x="58" y="48" fill="#94a3b8" font-family="sans-serif" font-size="7">device</text>
+                  <text x="12" y="72" fill="#f8fafc" font-family="sans-serif" font-size="13" font-weight="600">€24.99 <tspan fill="#94a3b8" font-size="7">/ mo</tspan></text>
+                  <line x1="12" y1="84" x2="112" y2="84" stroke="#1e293b"/>
+                  <g transform="translate(12 92)" fill="#cbd5e1" font-family="sans-serif" font-size="6">
+                    <text y="0">✓ HACCP audit logs</text>
+                    <text y="10">✓ PWA + push alerts</text>
+                    <text y="20">✓ Email digest</text>
+                  </g>
+                </g>
+                <text x="20" y="168" fill="#475569" font-family="monospace" font-size="9" letter-spacing="2">brand · brochure · pricing · stripe</text>
+              </svg>
+            </div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">GTM &amp; pricing</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">Brand · pricing · sales</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">What I do:</strong> brand identity, print &amp; mobile brochures, pricing model (€249 device + €24.99/mo), Stripe Checkout flow, and manual superadmin-driven onboarding for early pilots.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">I run the customer call, ship the configuration myself, and design the marketing piece they take home &mdash; same person, same day.</p><p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Solo founder.</strong></p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">rplay.be/#pricing</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- SCENTI.AI cluster -->
+      <div class="mb-14">
+        <div class="flex items-baseline gap-4 mb-5 flex-wrap">
+          <h3 class="text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight">Scenti.AI</h3>
+          <span class="text-sm italic font-medium tracking-tight" style="background:linear-gradient(120deg,#34d399 0%,#6ee7b7 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;"><span class="text-sm font-mono text-emerald-400 tracking-wider">— mdash; co-founded · biosensor R&amp;D</span>
+        </div>
+        <p class="text-base text-slate-300 leading-relaxed mb-5 max-w-3xl">
+          GFET biosensor research with ML-driven analysis &mdash; bio-electronic nose for industrial fermentation and medical wound diagnostics. VLAIO funding application in preparation.
+        </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <a href="https://scenti.ai" target="_blank" rel="noopener" class="domain-card-dark domain-violet group">
+            <div class="card-shot"><img src="shots/scenti.png" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Biosensor R&amp;D</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">Scenti.AI</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">GFET biosensors + ML classification for fermentation &amp; medical wound diagnostics. <strong style="color:#f1f5f9">In collaboration with UGent and UZ Leuven.</strong> VLAIO funding application in progress.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">scenti.ai</p>
+          </a>
+          <a href="https://survey.scenti.ai" target="_blank" rel="noopener" class="domain-card-dark domain-violet group">
+            <div class="card-shot"><img src="shots/survey.png" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Market validation</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">scenti-survey</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">Multi-vertical survey app + full <strong style="color:#f1f5f9">analytics dashboard</strong> with PSM pricing curves, cohort cuts, CSV exports, NL/EN i18n. Healthcare &amp; fermentation tracks for the VLAIO dossier. Built solo across all platforms in <strong style="color:#f1f5f9">~6 months</strong>.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">survey.scenti.ai</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- SIDE VENTURES cluster -->
+      <div>
+        <div class="flex items-baseline gap-4 mb-5 flex-wrap">
+          <h3 class="text-2xl sm:text-3xl font-bold text-slate-50 tracking-tight">Side ventures</h3>
+          <span class="text-sm italic font-medium tracking-tight" style="background:linear-gradient(120deg,#34d399 0%,#6ee7b7 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;"><span class="text-sm font-mono text-emerald-400 tracking-wider">— mdash; solo &amp; client work</span>
+        </div>
+        <p class="text-base text-slate-300 leading-relaxed mb-5 max-w-3xl">
+          Smaller products I designed, built, deployed and (for some) still operate. Helps me keep the full-stack muscle alive outside the day job.
+        </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <a href="https://postyourcard.com" target="_blank" rel="noopener" class="domain-card-dark domain-rose group">
+            <div class="card-shot"><img src="shots/postyourcard.png" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Tourism SaaS · sole technical builder</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">PostYourCard</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">I designed and shipped the entire platform end-to-end</strong>: Stripe Connect commission split, hotel onboarding, Resend transactional templates, Cloudinary upload + AI background removal, Netlify deploy, admin analytics. Tourism partner runs the business side; every line of code is mine.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">postyourcard.com</p>
+          </a>
+          <a href="https://rmlx.ai" target="_blank" rel="noopener" class="domain-card-dark domain-cyan group">
+            <div class="card-shot"><img src="shots/rmlx.png" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">AI workflow integration · co-founded</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">rmlx.ai</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Co-founded with my father.</strong> Building an LLM-driven system that plugs into how businesses actually run their daily workflow &mdash; mails, invoicing, follow-ups, the whole stack of small repeatable tasks that eat hours.</p><p class="text-sm text-slate-300 leading-relaxed mt-2">Marketing site at rmlx.ai shipped end-to-end by me: Next 16 + R3F 3D orb (custom GLSL shaders), copy, layout, deployment.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">rmlx.ai</p>
+          </a>
+          <a href="https://moniott.vercel.app" target="_blank" rel="noopener" class="domain-card-dark domain-amber group">
+            <div class="card-shot"><img src="shots/moniott.png" alt="" loading="lazy" /></div>
+            <div class="flex items-start justify-between gap-2 mb-3"><span class="pill">Agri partner brand · sole builder</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="arrow opacity-50 group-hover:opacity-100 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+            <h3 class="text-xl font-semibold">Moniott</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2"><strong style="color:#f1f5f9">Built solo by me on top of the Blyott platform.</strong> Cow location + pasture analytics, custom RSSI triangulation engine, stylized SVG barn rendering, 5 print sales brochures. Distribution partner handles farmer-side sales.</p>
+            <p class="text-[0.7rem] text-slate-500 mt-3 font-mono">moniott.vercel.app</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── C · DAILY STACK (dark) ─────────────────────────── -->
+  <section class="dark-section relative overflow-hidden"><div class="absolute inset-0 grid-pattern-dark opacity-20"></div><div class="float-orb" style="top: -100px; right: -100px; width: 320px; height: 320px; background: radial-gradient(closest-side, #34d399, transparent); opacity: 0.18;"></div><div class="float-orb" style="bottom: -120px; left: 30%; width: 360px; height: 360px; background: radial-gradient(closest-side, #fbbf24, transparent); opacity: 0.10;"></div>
+    <div class="hairline"></div>
+    <div class="mx-auto max-w-[72rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <div class="mb-12">
+        <p class="section-tag mb-5">C · Daily stack</p>
+        <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] max-w-3xl" style="color:#f8fafc">
+          What I touch <span class="gradient-emerald">this week</span>.
+        </h2>
+      </div>
+
+      <p class="mt-3 mb-10 text-base leading-relaxed max-w-2xl" style="color:#cbd5e1">
+        Daily drivers, in production right now. <strong style="color:#f8fafc">Bold</strong> = primary, rest = supporting.
+      </p>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+        <div class="stack-block domain-violet">
+          <div class="sb-row">
+            <span class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4 4 1.5-4 1.5L12 14l-1.5-4-4-1.5 4-1.5L12 3z"/><path d="M19 16l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2z"/></svg></span>
+            <span class="pill">AI &amp; LLM</span>
+          </div>
+          <h3>Where the intelligence lives</h3>
+          <p>Daily driver: <strong>Claude API</strong> for autonomous build agents and structured-output loops. Agentic patterns over real-time IoT events. Zod validation on every output.</p>
+          <ul class="sb-list">
+            <li>Claude API</li><li>Agentic loops</li><li>RAG</li><li>Structured output</li>
+          </ul>
+        </div>
+
+        <div class="stack-block domain-emerald">
+          <div class="sb-row">
+            <span class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+            <span class="pill">Data</span>
+          </div>
+          <h3>Tenant-scoped truth</h3>
+          <p>Anchor: <strong>Postgres + Drizzle</strong> with multi-tenant RLS across all 3 verticals. JSONB events for time-series IoT, Valkey pub/sub for cross-service distribution.</p>
+          <ul class="sb-list">
+            <li>Postgres (Neon)</li><li>Drizzle ORM</li><li>RLS</li><li>JSONB</li><li>Valkey</li>
+          </ul>
+        </div>
+
+        <div class="stack-block domain-cyan">
+          <div class="sb-row">
+            <span class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.6-8.7A6 6 0 0 0 4 12.5 4 4 0 0 0 6 20h11.5z"/></svg></span>
+            <span class="pill">Cloud</span>
+          </div>
+          <h3>Where the bits land</h3>
+          <p>Mix of managed PaaS (<strong>Vercel</strong> for app deploys, <strong>Neon</strong> for Postgres) and IaaS (<strong>Hetzner</strong> for the IoT backbone) where control matters.</p>
+          <ul class="sb-list">
+            <li>Vercel</li><li>Hetzner</li><li>Cloudflare</li><li>Tailscale</li>
+          </ul>
+        </div>
+
+        <div class="stack-block domain-blue">
+          <div class="sb-row">
+            <span class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a7 7 0 0 1 14 0M8.5 16a3.5 3.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4"/></svg></span>
+            <span class="pill">IoT</span>
+          </div>
+          <h3>BLE → cloud pipeline</h3>
+          <p>Tags speak BLE → <strong>KNOT gateway</strong> → MQTT broker → consumer service → state engine. mTLS at every hop. 1NCE cellular where Wi-Fi isn't an option.</p>
+          <ul class="sb-list">
+            <li>KNOT</li><li>MQTT</li><li>BLE</li><li>Teltonika EYE</li><li>1NCE</li>
+          </ul>
+        </div>
+
+        <div class="stack-block domain-rose">
+          <div class="sb-row">
+            <span class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 8h10M7 12h6"/></svg></span>
+            <span class="pill">Frontend</span>
+          </div>
+          <h3>What the customer sees</h3>
+          <p>Default: <strong>Next.js 16 + Tailwind</strong>, server-side rendered, RSC where it pays off. R3F (Three.js) when the marketing site needs to make eyes pop.</p>
+          <ul class="sb-list">
+            <li>Next.js 16</li><li>Tailwind</li><li>RSC</li><li>R3F</li><li>Framer Motion</li>
+          </ul>
+        </div>
+
+        <div class="stack-block domain-amber">
+          <div class="sb-row">
+            <span class="sb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="pill">Security &amp; Ops</span>
+          </div>
+          <h3>What lets me sleep</h3>
+          <p>Defense in depth: <strong>mTLS</strong> on the wire, <strong>RLS</strong> in the DB, <strong>Tailscale</strong> on SSH. Custom CA for IoT enrolment, systemd hardening, GDPR-clean pipelines.</p>
+          <ul class="sb-list">
+            <li>mTLS</li><li>RLS</li><li>Custom CA</li><li>VAPID</li><li>systemd</li><li>Tailscale</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── D · BRIDGE (dark) ─────────────────────────── -->
+  <section style="background: #0f172a;" class="relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern-dark opacity-25"></div>
+    <div class="float-orb" style="top: -150px; left: -100px; width: 380px; height: 380px; background: radial-gradient(closest-side, #06b6d4, transparent); opacity: 0.18;"></div>
+
+    <div class="relative mx-auto max-w-[58rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <p class="section-tag section-tag-dark mb-5">D · The bridge</p>
+      <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em]" style="color:#f8fafc">
+        Head of Helpdesk who <span class="gradient-emerald-dark">codes</span> the fix.
+      </h2>
+
+      <div class="mt-8 space-y-6 text-lg leading-relaxed" style="color:#cbd5e1">
+        <p>My title at Blyott is <em>Head of Helpdesk</em>. In practice, I'm the person who picks up the customer ticket — and the person who writes the migration that fixes it.</p>
+        <p>Most architects design and hand off. Most support leads translate but don't ship. I do both, because Blyott is small enough that I have to. That's exactly the muscle Solita's role description asks for: <em>"translate customer needs into clear, credible, and scalable architectures."</em></p>
+        <p>Real example from this week: a hospital ICU was getting duplicate alerts for the same out-of-range fridge. The customer escalated to me. I read the alert engine, found the missing dedup window, designed the fix (per-config 1-hour throttle, 5-min for critical), shipped it to production, and updated the customer on what changed. Same person, same day. <strong style="color:#f8fafc">That's not a job description &mdash; that's just Tuesday.</strong></p>
+        <p class="text-2xl sm:text-3xl leading-snug font-semibold mt-10" style="color:#f8fafc">And <span class="gradient-emerald-dark">that</span> is exactly why Solita pulls me.</p>
+
+        <p>Today I'm the only architect, the helpdesk lead, the sales engineer, <em>and</em> the one who reboots the gateway at 03:00. It works &mdash; but it doesn't scale, and the architecture half stays shallower than I want it to be.</p>
+
+        <p>At Solita I'd be the same customer-facing architect, but with <strong style="color:#f8fafc">400 colleagues behind me</strong> who've already solved the problem.</p>
+
+        <p style="font-size:1.25rem;color:#a7f3d0" class="font-medium leading-snug">Less noise. More depth.<br/>Whiteboard at 14:00, no pager at 03:00.</p>
+
+        <p style="color:#67e8f9" class="text-base">That's the difference between <em>surviving as a founder</em> and <strong style="color:#f8fafc">growing as an architect</strong>. I'm picking the second.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── E · INTEGRATIONS (dark) ─────────────────────────── -->
+  <section style="background: #0f172a;" class="relative overflow-hidden">
+    <div class="absolute inset-0 grid-pattern-dark opacity-25"></div>
+    <div class="float-orb" style="top: 12%; right: -180px; width: 420px; height: 420px; background: radial-gradient(closest-side, #06b6d4, transparent); opacity: 0.18;"></div>
+    <div class="float-orb" style="bottom: -160px; left: -120px; width: 380px; height: 380px; background: radial-gradient(closest-side, #10b981, transparent); opacity: 0.15;"></div>
+
+    <div class="relative mx-auto max-w-[80rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <div class="mb-12">
+        <p class="section-tag section-tag-dark mb-5">E · Integrations · in production</p>
+        <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] max-w-3xl" style="color:#f8fafc">
+          Ecosystems I've <span class="gradient-emerald-dark">stitched together</span>.
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed max-w-2xl" style="color:#cbd5e1">
+          Architecture is mostly choosing the right boundary between systems and making them survive each other.
+          These are running in production today.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+        <div class="domain-card-dark domain-emerald"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Online payment system. Used here to charge customers and automatically split commission between PostYourCard and the partner hotels.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 11h20M6 15h2M11 15h2"/></svg></span>
+            <span class="pill">Payments</span>
+          </div>
+          <h3 class="text-lg font-semibold">Stripe · Connect · Webhooks</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Stripe Checkout, Stripe Connect for partner-distributor commission splits (PostYourCard hotels), idempotent webhook handlers with reconciliation cron, multi-currency, refund flow.</p>
+        </div>
+
+        <div class="domain-card-dark domain-cyan"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="How transactional emails (order confirmations, alerts) and phone push-notifications are sent — with proper anti-spam setup so messages don't end up in junk.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+            <span class="pill">Email &amp; messaging</span>
+          </div>
+          <h3 class="text-lg font-semibold">Resend · DKIM · VAPID push</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Transactional email via Resend with full domain verification (DKIM/SPF/DMARC), digest-mode batching, three-tier spam protection (dedup → quiet hours → throttle), web-push via VAPID + service worker.</p>
+        </div>
+
+        <div class="domain-card-dark domain-violet"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Anthropic's Claude is an AI assistant. Used to automate complex tasks: writing reports, classifying events, pair-programming on the platform itself.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4 4 1.5-4 1.5L12 14l-1.5-4-4-1.5 4-1.5L12 3z"/><path d="M19 16l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2z"/></svg></span>
+            <span class="pill">AI / LLM</span>
+          </div>
+          <h3 class="text-lg font-semibold">Claude · Agentic loops</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Anthropic Claude API for autonomous build agents, RAG over real-time IoT events, structured-output prompts with Zod validation, retries with exponential backoff.</p>
+        </div>
+
+        <div class="domain-card-dark domain-amber"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Where user-uploaded photos live. Cloudinary edits images automatically (crop, AI background-removal), Cloudflare R2 stores them cheaply.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 18 5-5 4 4 3-3 6 6"/></svg></span>
+            <span class="pill">Media &amp; storage</span>
+          </div>
+          <h3 class="text-lg font-semibold">Cloudinary · Cloudflare R2</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Cloudinary for user-uploaded images with transformations (crop, resize, format) + AI background removal, Cloudflare R2 for object storage, signed URLs, lifecycle policies, CDN delivery.</p>
+        </div>
+
+        <div class="domain-card-dark domain-blue"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="How wireless sensors (in fridges, on assets) send data to the cloud. Battery devices speak Bluetooth to a small gateway box that ships the data over the internet.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a7 7 0 0 1 14 0M8.5 16a3.5 3.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4"/></svg></span>
+            <span class="pill">IoT pipeline</span>
+          </div>
+          <h3 class="text-lg font-semibold">KNOT · MQTT · 1NCE</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">BLE-to-cloud pipeline: Teltonika EYE + Blyott BT-T2 tags → KNOT gateway → Mosquitto MQTT broker → consumer service → state engine. 1NCE cellular SIM for gateways without Wi-Fi. mTLS at every hop.</p>
+        </div>
+
+        <div class="domain-card-dark domain-rose"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Pushing live updates straight to the user's screen — no page refresh. Used for live alerts and dashboards.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>
+            <span class="pill">Real-time</span>
+          </div>
+          <h3 class="text-lg font-semibold">Valkey · WebSocket · SSE</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Valkey pub-sub for cross-service event distribution, WebSocket gateway for live-alert streaming to PWA, Server-Sent Events fallback, automatic reconnect with backoff.</p>
+        </div>
+
+        <div class="domain-card-dark domain-emerald"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Where the actual customer data lives. A modern cloud database with strict tenant isolation: hospital A can never see hospital B's data, by design.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+            <span class="pill">Data platform</span>
+          </div>
+          <h3 class="text-lg font-semibold">Neon · Drizzle · RLS</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Neon serverless Postgres, Drizzle ORM for type-safe queries + migrations, multi-tenant Row-Level Security policies (set_config app.tenant_id), JSONB event modelling, PostGIS for spatial.</p>
+        </div>
+
+        <div class="domain-card-dark domain-rose"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Making sure only authorised users and devices can connect. Includes login flows, certificate-based device authentication, and HTTPS-everywhere.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="pill">Identity &amp; security</span>
+          </div>
+          <h3 class="text-lg font-semibold">mTLS · Custom CA · OAuth</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Custom Certificate Authority for IoT device authentication, mTLS for Wi-Fi access-point ingestion, cookie-backed admin sessions with HMAC tokens, GitHub/Stripe OAuth flows, session-based RLS.</p>
+        </div>
+
+        <div class="domain-card-dark domain-amber"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Calculating where physical objects are inside a building based on Bluetooth signal strength, then drawing them on a map you can read.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 22s7-7.5 7-12a7 7 0 0 0-14 0c0 4.5 7 12 7 12z"/></svg></span>
+            <span class="pill">Maps &amp; geometry</span>
+          </div>
+          <h3 class="text-lg font-semibold">RSSI · Leaflet</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Custom RSSI-to-distance triangulation engine (Moniott cow location), Leaflet for indoor maps, custom SVG renderers for stylized barn / kitchen layouts, per-tenant calibration.</p>
+        </div>
+
+        <div class="domain-card-dark domain-blue"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Auto-generating documents — legal contracts with embedded signatures, marketing brochures with custom layout — straight from the platform.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span>
+            <span class="pill">Documents &amp; PDF</span>
+          </div>
+          <h3 class="text-lg font-semibold">react-pdf · headless Chrome</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">react-pdf for legal agreements with embedded signatures + audit trail, headless Chrome PDF export pipeline for marketing brochures, embedded typography for print.</p>
+        </div>
+
+        <div class="domain-card-dark domain-cyan"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Where the website itself runs, and how internal-only services are exposed safely without opening firewall ports.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.6-8.7A6 6 0 0 0 4 12.5 4 4 0 0 0 6 20h11.5z"/></svg></span>
+            <span class="pill">Cloud &amp; tunnels</span>
+          </div>
+          <h3 class="text-lg font-semibold">Vercel · Cloudflare · Tailscale</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Vercel for App Router deploys with previews, Cloudflare named tunnels exposing on-prem services, Tailscale mesh VPN for ops SSH (port 22 closed publicly).</p>
+        </div>
+
+        <div class="domain-card-dark domain-violet"><button type="button" class="help-icon" tabindex="0" aria-label="Explain" data-tip="Custom charts and dashboards on top of the data — including pricing-research methodology (Van Westendorp PSM) used in the Scenti.AI market validation.">?</button>
+          <div class="flex items-start gap-3 mb-3">
+            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V3h18"/><path d="M7 17V9M11 17V13M15 17v-7M19 17V7"/></svg></span>
+            <span class="pill">Analytics</span>
+          </div>
+          <h3 class="text-lg font-semibold">PSM · Recharts · custom dashboards</h3>
+          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Custom Van Westendorp PSM pricing analytics, Recharts time-series for IoT telemetry, multi-vertical admin dashboards, CSV export pipelines for VLAIO subsidy reporting.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── F · CONTACT (dark closer) ─────────────────────────── -->
+  <section id="contact" class="relative overflow-hidden grid-glow" style="background: #0f172a;">
+    <div class="absolute inset-0 grid-pattern-dark opacity-30"></div>
+    <div class="float-orb" style="top: 50%; left: 50%; transform: translate(-50%,-50%); width: 500px; height: 500px; background: radial-gradient(closest-side, #10b981, transparent); opacity: 0.3;"></div>
+
+    <div class="relative mx-auto max-w-[78rem] px-6 sm:px-12 py-24 sm:py-32">
+      <div class="grid lg:grid-cols-[1.05fr_1fr] items-center gap-12 lg:gap-16">
+
+        <div>
+          <p class="section-tag section-tag-dark mb-5">F · Let's talk</p>
+          <h2 class="text-4xl sm:text-6xl font-bold leading-[1.05] tracking-[-0.02em]" style="color:#f8fafc">
+            Coffee and a <span class="gradient-emerald-dark">whiteboard</span>.
+          </h2>
+          <p class="mt-6 text-lg leading-relaxed max-w-xl" style="color:#e2e8f0">
+            Send me a customer brief, a workshop topic, or a vague AI problem. I'll come back with an architecture sketch.
+          </p>
+          <p class="mt-5 text-sm leading-relaxed max-w-xl" style="color:#94a3b8">
+            I work via channels where I respond within minutes &mdash; iCloud mail and WhatsApp.
+            That's where I respond fastest, and the customer feedback loop closes within the same day.
+          </p>
+
+          <div class="mt-10 flex flex-wrap gap-3">
+            <a href="mailto:jremy.pollet@icloud.com" class="btn-primary-dark">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              jremy.pollet@icloud.com
+            </a>
+            <a href="https://wa.me/32494861699" target="_blank" rel="noopener" class="btn-secondary-dark">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              WhatsApp
+            </a>
+            <a href="https://www.linkedin.com/in/r%C3%A9mypollet/" target="_blank" rel="noopener" class="btn-secondary-dark">LinkedIn</a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute -inset-6 -z-10 rounded-[28px] blur-3xl opacity-40" style="background: radial-gradient(closest-side, #10b981, transparent);"></div>
+          <div class="relative overflow-hidden rounded-[20px] border border-emerald-500/25" style="box-shadow: 0 30px 80px -30px rgba(16,185,129,0.45), inset 0 0 0 1px rgba(255,255,255,0.04);">
+            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80" alt="Whiteboard session with coffee" loading="lazy" class="w-full h-auto block" style="aspect-ratio: 4/3; object-fit: cover;" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 50%, rgba(15,23,42,0.55) 100%);"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-5 flex items-center gap-3">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[0.7rem] font-medium" style="background: rgba(16,185,129,0.18); color: #6ee7b7; border: 1px solid rgba(52,211,153,0.35);">
+                <span class="orb orb-light orb-pulse" style="width:0.4rem;height:0.4rem"></span>
+                The natural habitat
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-16 inline-flex items-center gap-2 text-xs font-mono" style="color:#64748b">
+        <span class="orb orb-light" style="width:0.4rem;height:0.4rem"></span>
+        <span>Hand-written single HTML · built in &lt; 2 hours · LLM as my pair.</span>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remy Pollet — CV (one-page)</title>
+  <meta name="description" content="One-page infographic CV for Solita Data Architect (AI &amp; Analytics) application." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #0c1f17;
+      --ink-soft: #2c3f37;
+      --ink-muted: #6b7e75;
+      --paper: #ffffff;
+      --paper-2: #f7faf8;
+      --rule: #e3ece7;
+      --accent: #047857;
+      --accent-mid: #10b981;
+      --accent-soft: #d1fae5;
+      --accent-50: #ecfdf5;
+      --hairline: #c7e8d6;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #eef3f0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 11pt;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 36px 44px 30px 44px;
+      background: var(--paper);
+      border-radius: 10px;
+      box-shadow: 0 10px 40px -12px rgba(15,32,28,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #047857 0%, #10b981 50%, #34d399 100%);
+    }
+    .page::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #34d399 0%, #10b981 50%, #047857 100%);
+    }
+
+    /* Generic clickable link styling — recruiter-friendly */
+    a.smart-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s, transform 0.15s;
+    }
+    a.smart-link:hover { color: var(--accent); }
+    a.smart-link .ext-arrow {
+      display: inline-block;
+      width: 0.7em; height: 0.7em;
+      margin-left: 3px;
+      vertical-align: -1px;
+      color: var(--accent-mid);
+      opacity: 0.65;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    a.smart-link:hover .ext-arrow { opacity: 1; transform: translate(1px, -1px); }
+
+    /* ───── HEADER ───── */
+    .hdr {
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 26px;
+      align-items: start;
+      padding: 12px 0 28px 0;
+      border-bottom: 1px solid var(--hairline);
+      position: relative;
+    }
+    .hdr::before {
+      content: "";
+      position: absolute;
+      top: 8px; left: -8px;
+      width: 70px; height: 70px;
+      background-image: radial-gradient(circle, var(--accent-soft) 1.2px, transparent 1.6px);
+      background-size: 11px 11px;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .photo {
+      position: relative;
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 30%, #34d399 0%, #047857 70%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 44px;
+      letter-spacing: -0.02em;
+      display: flex; align-items: center; justify-content: center;
+      border: 6px solid #fff;
+      box-shadow: 0 0 0 2px var(--hairline), 0 14px 32px -12px rgba(5,150,105,0.45);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    .hdr-main { padding-top: 6px; }
+    .name {
+      font-size: 32pt;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      margin: 0 0 8px 0;
+      color: var(--ink);
+    }
+    .tagline {
+      font-size: 11.5pt;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.005em;
+    }
+    .role-line {
+      font-size: 11pt;
+      color: var(--ink-soft);
+      margin: 0 0 16px 0;
+      line-height: 1.45;
+    }
+    .role-line strong { color: var(--ink); font-weight: 600; }
+    .role-line a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .role-line a:hover { text-decoration: underline; }
+
+    .meta-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      background: var(--accent-50);
+      border: 1px solid var(--accent-soft);
+      border-radius: 8px;
+      font-size: 10.5pt;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .meta-pill svg { width: 14px; height: 14px; color: var(--accent); flex-shrink: 0; }
+
+    .contacts {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 10.5pt;
+      color: var(--ink-soft);
+      padding-top: 6px;
+    }
+    .contacts a {
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 4px 6px 4px 4px;
+      border-radius: 7px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .contacts a:hover { background: var(--accent-50); color: var(--accent); }
+    .contacts .ico {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: var(--accent-50);
+      border: 1px solid var(--accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .contacts a:hover .ico { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .contacts .ico svg { width: 14px; height: 14px; }
+
+    /* ───── SECTIONS ───── */
+    section {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    section:last-of-type { border-bottom: none; padding-bottom: 8px; }
+
+    .sec-h {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .sec-h .sec-ico {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: var(--accent-50);
+      border: 1px solid var(--accent-soft);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .sec-h .sec-ico svg { width: 18px; height: 18px; }
+    .sec-h h2 {
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0;
+    }
+
+    /* ───── 3-COLUMN BLOCKS ───── */
+    .triad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .triad-item .triad-h {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .triad-item .triad-ico {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: var(--accent-50);
+      border: 1px solid var(--accent-soft);
+      color: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .triad-item .triad-ico svg { width: 14px; height: 14px; }
+    .triad-item h3 {
+      font-size: 11.5pt;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0;
+    }
+    .triad-item p {
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .triad-item p strong { color: var(--ink); font-weight: 600; }
+    .triad-item p a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .triad-item p a:hover { text-decoration: underline; }
+
+    /* ───── QUICK FACTS ───── */
+    .quick {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .quick .item {
+      background: var(--paper-2);
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      padding: 16px 16px;
+      text-align: center;
+    }
+    .quick .item.highlight {
+      border: 1.5px solid var(--accent);
+      background: linear-gradient(180deg, #fff 0%, var(--accent-50) 100%);
+    }
+    .quick .item .qf-ico {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--accent-50);
+      border: 1px solid var(--accent-soft);
+      color: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin: 0 auto 8px auto;
+    }
+    .quick .item .qf-ico svg { width: 16px; height: 16px; }
+    .quick .item .k {
+      font-size: 9pt;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .quick .item .v {
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .quick .item .v small {
+      font-size: 10pt;
+      font-weight: 500;
+      color: var(--ink-muted);
+      display: block;
+      margin-top: 1px;
+    }
+
+    /* ───── SKILLS ───── */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .skill-block {
+      background: var(--paper-2);
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .skill-block .sb-h {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .skill-block .sb-ico {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: var(--accent-50);
+      border: 1px solid var(--accent-soft);
+      color: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .skill-block .sb-ico svg { width: 14px; height: 14px; }
+    .skill-block h3 {
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0;
+    }
+    .skill-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .skill-list li {
+      font-size: 10.5pt;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .skill-list li::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-mid);
+      flex-shrink: 0;
+    }
+    .skill-list li a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .skill-list li a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent-mid);
+    }
+
+    /* ───── EXPERIENCE ───── */
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .exp {
+      background: var(--paper-2);
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      padding: 18px 20px;
+      break-inside: avoid;
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    a.exp-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+    a.exp-link:hover .exp {
+      border-color: var(--accent-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px -12px rgba(15,32,28,0.18);
+    }
+    .exp .exp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 4px;
+    }
+    .exp .exp-title {
+      font-size: 13pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .exp .exp-org {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .exp .ext-arrow {
+      width: 12px; height: 12px;
+      color: var(--accent-mid);
+      opacity: 0.6;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    a.exp-link:hover .exp .ext-arrow {
+      opacity: 1;
+      transform: translate(2px, -2px);
+    }
+    .exp .exp-meta {
+      font-size: 10pt;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-weight: 500;
+    }
+    .exp p.exp-lead {
+      font-size: 10.5pt;
+      color: var(--ink-soft);
+      margin: 6px 0 8px 0;
+      line-height: 1.5;
+    }
+    .exp p.exp-lead strong { color: var(--ink); font-weight: 600; }
+    .exp p.exp-lead a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .exp p.exp-lead a:hover { text-decoration: underline; }
+    .exp ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0 0;
+    }
+    .exp ul li {
+      font-size: 10.5pt;
+      color: var(--ink-soft);
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 5px;
+      line-height: 1.5;
+    }
+    .exp ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 8px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent-mid);
+    }
+    .exp ul li strong { color: var(--ink); font-weight: 600; }
+    .exp ul li em { color: var(--ink-soft); }
+    .exp ul li a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .exp ul li a:hover { text-decoration: underline; }
+
+    /* Side venture chips inside exp */
+    .venture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .venture-card {
+      display: block;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .venture-card:hover {
+      border-color: var(--accent-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px -10px rgba(15,32,28,0.18);
+    }
+    .venture-card .v-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .venture-card .v-name {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .venture-card .v-name .ext-arrow {
+      width: 11px; height: 11px;
+      color: var(--accent-mid);
+      opacity: 0.6;
+      margin-left: 4px;
+    }
+    .venture-card:hover .v-name .ext-arrow { opacity: 1; }
+    .venture-card .v-tag {
+      font-size: 9pt;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .venture-card .v-desc {
+      font-size: 10pt;
+      color: var(--ink-soft);
+      line-height: 1.45;
+      margin: 4px 0 0 0;
+    }
+
+    /* ───── CLOSING ───── */
+    .closer {
+      background: linear-gradient(120deg, var(--accent-50) 0%, #ecfeff 100%);
+      border: 1.5px solid var(--accent-soft);
+      border-radius: 10px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .closer .star {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .closer .star svg { width: 18px; height: 18px; }
+    .closer p {
+      margin: 0;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .closer p strong { color: var(--ink); font-weight: 700; }
+    .closer p a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .closer p a:hover { text-decoration: underline; }
+
+    /* ───── PRINT ───── */
+    @media print {
+      body { background: #fff; }
+      .page {
+        margin: 0;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 14mm 16mm;
+      }
+      a { color: inherit !important; text-decoration: none !important; }
+      .no-print { display: none !important; }
+      section { break-inside: avoid; }
+      .exp { break-inside: avoid; }
+    }
+    @page { size: A4; margin: 0; }
+
+    /* Toolbar */
+    .toolbar {
+      max-width: 980px;
+      margin: 14px auto 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 10pt;
+      color: #475569;
+      padding: 0 4px;
+    }
+    .toolbar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #0f172a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .toolbar a:hover { border-color: var(--accent-mid); color: var(--accent); }
+    .toolbar .primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .toolbar .primary:hover { background: #065f46; color: #fff; }
+    .toolbar .links { display: flex; gap: 6px; }
+
+    /* Mobile responsive */
+    @media (max-width: 760px) {
+      html, body { font-size: 10.5pt; }
+      .page {
+        max-width: 100%;
+        margin: 12px;
+        padding: 22px 18px 22px 18px;
+        border-radius: 8px;
+      }
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .toolbar .links { justify-content: center; flex-wrap: wrap; }
+      .hdr {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hdr::before { display: none; }
+      .photo {
+        margin: 0 auto;
+        width: 96px; height: 96px;
+        font-size: 32px;
+      }
+      .name { font-size: 22pt; text-align: center; }
+      .tagline, .role-line { text-align: center; }
+      .meta-pills { justify-content: center; }
+      .contacts { text-align: center; align-items: center; }
+      .triad, .skill-grid, .companies, .quick {
+        grid-template-columns: 1fr !important;
+      }
+      .quick { grid-template-columns: 1fr 1fr !important; }
+      .langs { grid-template-columns: 1fr; }
+      .exp-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .exp-meta { white-space: normal; }
+      .exp-title { font-size: 12pt; }
+      .closer { flex-direction: column; text-align: center; }
+    }
+
+
+    /* Dark/white alternating sections */
+    .page > section:nth-of-type(2n) {
+      background: linear-gradient(180deg, #0a0f1c 0%, #0f172a 100%);
+      color: #cbd5e1;
+      margin: 0 -44px;
+      padding-left: 44px;
+      padding-right: 44px;
+      border-bottom: none;
+      position: relative;
+    }
+    .page > section:nth-of-type(2n)::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 44px; right: 44px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent);
+    }
+    .page > section:nth-of-type(2n) h2 {
+      color: #6ee7b7 !important;
+      border-bottom-color: rgba(52,211,153,0.2) !important;
+    }
+    .page > section:nth-of-type(2n) .sec-h .sec-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .triad-item h3 { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .triad-item p { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .triad-item p strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .triad-item p a { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .triad-item .triad-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .skill-block {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .skill-block .sb-h {
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .skill-block .sb-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .skill-block h3 { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .skill-list li { color: #f1f5f9; }
+    .page > section:nth-of-type(2n) .skill-list li a { color: #f1f5f9; }
+    .page > section:nth-of-type(2n) .skill-list li a:hover { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .skill-list li::before {
+      background: #34d399;
+    }
+    .page > section:nth-of-type(2n) .exp {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .exp .exp-title { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .exp .exp-org { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .exp .exp-meta { color: #94a3b8; }
+    .page > section:nth-of-type(2n) .exp p.exp-lead { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .exp p.exp-lead strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .exp p.exp-lead a { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .exp ul li { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .exp ul li strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .exp ul li::before { background: #34d399; }
+    .page > section:nth-of-type(2n) .exp .exp-tag {
+      background: rgba(52,211,153,0.18);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .venture-card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .venture-card .v-name { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .venture-card .v-tag { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .venture-card .v-desc { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .quick .item {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.10);
+    }
+    .page > section:nth-of-type(2n) .quick .item .v { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .quick .item .k { color: #94a3b8; }
+    .page > section:nth-of-type(2n) .quick .item .qf-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .quick .item.highlight {
+      border-color: rgba(52,211,153,0.6);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(52,211,153,0.10) 100%);
+    }
+    .page > section:nth-of-type(2n) .langs .lang {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+      color: #f1f5f9;
+    }
+    .page > section:nth-of-type(2n) .langs .lang .lvl { color: #94a3b8; }
+    .page > section:nth-of-type(2n) .edu, .page > section:nth-of-type(2n) .hobbies { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .edu strong, .page > section:nth-of-type(2n) .hobbies strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .profile p { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .profile p strong { color: #f8fafc; }
+
+    @media print {
+      .page > section:nth-of-type(2n) {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+
+    /* Visit-site action button */
+    .v-actions {
+      display: flex; flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .v-actions a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent-mid) 0%, #34d399 100%);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: none;
+    }
+    .v-actions a:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px -6px rgba(52,211,153,0.5);
+    }
+    .v-actions a[href*=".pdf"] {
+      background: rgba(15,23,42,0.06);
+      color: var(--accent);
+      border: 1px solid var(--hairline);
+    }
+    .v-actions a[href*=".pdf"]:hover {
+      background: var(--accent-50);
+      border-color: var(--accent-mid);
+    }
+    .page > section:nth-of-type(2n) .v-actions a[href*=".pdf"] {
+      background: rgba(255,255,255,0.06);
+      color: #6ee7b7;
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* Tech name styling — replace mono with stylish gradient */
+    .skill-cluster .tags {
+      font-family: "Inter", system-ui, sans-serif !important;
+    }
+    .skill-cluster .tags strong {
+      background: linear-gradient(120deg, #047857 0%, #10b981 50%, #06b6d4 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .page > section:nth-of-type(2n) .skill-cluster .tags strong {
+      background: linear-gradient(120deg, #34d399 0%, #6ee7b7 50%, #67e8f9 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    /* 1-pager beauty pass */
+    .name {
+      background: linear-gradient(120deg, var(--ink) 0%, var(--accent) 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tagline {
+      letter-spacing: 0.01em;
+      background: linear-gradient(120deg, #047857 0%, #10b981 50%, #06b6d4 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta-pill:first-child {
+      background: linear-gradient(120deg, #ecfdf5 0%, #fef3c7 100%);
+      border-color: #d1fae5;
+    }
+    .meta-pill:nth-child(2) {
+      background: linear-gradient(120deg, #fef3c7 0%, #fce7f3 100%);
+      border-color: #fde68a;
+    }
+    .meta-pill:nth-child(3) {
+      background: linear-gradient(120deg, #fce7f3 0%, #ecfeff 100%);
+      border-color: #fbcfe8;
+    }
+    .closer .star {
+      background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+      box-shadow: 0 8px 24px -8px rgba(52,211,153,0.6);
+    }
+    .v-actions a:first-child {
+      background: linear-gradient(120deg, #047857 0%, #10b981 60%, #06b6d4 100%);
+    }
+
+
+    /* v-locked badge for NDA */
+    .v-locked {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.06);
+      color: var(--ink-muted);
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      border: 1px dashed var(--hairline);
+    }
+    .page > section:nth-of-type(2n) .v-locked {
+      background: rgba(255,255,255,0.05);
+      color: #94a3b8;
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* Extra breathing room */
+    .venture-card { padding: 14px 16px !important; }
+    .venture-card .v-desc { line-height: 1.55 !important; margin-top: 8px !important; }
+    .v-actions { margin-top: 12px !important; }
+    .exp { padding: 20px 22px !important; }
+    .exp p.exp-lead { line-height: 1.6 !important; margin-bottom: 10px !important; }
+    .exp ul li { line-height: 1.65 !important; margin-bottom: 7px !important; }
+
+  </style>
+</head>
+<body>
+
+  <div class="toolbar no-print">
+    <span>Remy Pollet · CV (one-page · clickable)</span>
+    <span class="links">
+      <a href="/">← Interactive long version</a>
+      <a href="/nl/print">NL</a>
+      <a href="javascript:window.print()" class="primary">⎙ Print / save as PDF</a>
+    </span>
+  </div>
+
+  <div class="page">
+
+    <!-- ─────────────── HEADER ─────────────── -->
+    <div class="hdr">
+      <div class="photo" id="photo">RP</div>
+      <div class="hdr-main">
+        <h1 class="name">Remy Pollet</h1>
+        <p class="tagline">Data &amp; AI Architect · SaaS · IoT · production systems</p>
+        <p class="role-line">
+          <strong>Head of Helpdesk @ <a href="https://www.blyott.com" target="_blank" rel="noopener">Blyott</a></strong> · building and scaling real-world AI &amp; data systems.
+        </p>
+        <div class="meta-pills">
+          <span class="meta-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 10h18M9 10v11M15 6h.01M9 6h.01"/></svg>
+            26 years old
+          </span>
+          <span class="meta-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Bruges, Belgium
+          </span>
+          <span class="meta-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            4+ years SaaS
+          </span>
+        </div>
+      </div>
+
+      <div class="contacts">
+        <a href="mailto:jremy.pollet@icloud.com">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          jremy.pollet@icloud.com
+        </a>
+        <a href="https://wa.me/32494861699" target="_blank" rel="noopener">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></span>
+          +32 494 86 16 99
+        </a>
+        <a href="https://www.linkedin.com/in/r%C3%A9mypollet/" target="_blank" rel="noopener">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.34 17.34H5.67V9.66h2.67zM7 8.66a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zm11.34 8.68h-2.67v-3.74c0-.89 0-2-1.22-2s-1.41.95-1.41 1.94v3.8H10.4V9.66h2.56v1.05h.04c.36-.68 1.23-1.4 2.53-1.4 2.7 0 3.21 1.78 3.21 4.1z"/></svg></span>
+          linkedin.com/in/rémypollet
+        </a>
+      </div>
+    </div>
+
+    <!-- ─────────────── PROFILE ─────────────── -->
+    <section>
+      <div class="sec-h">
+        <span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></span>
+        <h2>Profile</h2>
+      </div>
+
+      <div class="triad">
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1"/></svg></span>
+            <h3>Who I am</h3>
+          </div>
+          <p><strong>4+ years in production SaaS.</strong> At <a href="https://www.blyott.com" target="_blank" rel="noopener">Blyott</a>, where I handle escalations <em>and</em> shape the architecture behind them.</p>
+        </div>
+
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <h3>What I've built</h3>
+          </div>
+          <p>Founder of <a href="https://rplay.be" target="_blank" rel="noopener">RPlay</a> (IoT horeca monitoring) and co-founder of <a href="https://scenti.ai" target="_blank" rel="noopener">Scenti.AI</a> (GFET biosensor R&amp;D). Systems that go from prototype to production.</p>
+        </div>
+
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
+            <h3>What I do now</h3>
+          </div>
+          <p>Opening up for <strong>freelance data &amp; AI architecture</strong> engagements. I advise and build production-grade systems for companies scaling with data &amp; AI.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── QUICK FACTS ─────────────── -->
+    <section>
+      <div class="sec-h">
+        <span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5" rx="0.5" fill="currentColor" stroke="none"/><rect x="13" y="9" width="3" height="9" rx="0.5" fill="currentColor" stroke="none"/></svg></span>
+        <h2>Quick facts</h2>
+      </div>
+
+      <div class="quick">
+        <div class="item">
+          <div class="qf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7a2 2 0 0 1 2-2h7v16"/><path d="M14 11h5a2 2 0 0 1 2 2v8h-7"/><path d="M6 9h2M6 13h2M6 17h2"/></svg></div>
+          <span class="k">Companies</span>
+          <span class="v">3+<small>side ventures</small></span>
+        </div>
+        <div class="item">
+          <div class="qf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3a8 8 0 0 0-8 8c0 5 8 10 8 10s8-5 8-10a8 8 0 0 0-8-8z"/><path d="M11 7c2 4 0 6-3 7"/></svg></div>
+          <span class="k">Verticals</span>
+          <span class="v" style="font-size:10.5pt">Healthcare · Horeca · Agri</span>
+        </div>
+        <div class="item highlight">
+          <div class="qf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></div>
+          <span class="k">Stack focus</span>
+          <span class="v" style="font-size:11pt">Production-grade systems</span>
+        </div>
+        <div class="item">
+          <div class="qf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8L19 10h-7z"/></svg></div>
+          <span class="k">Built</span>
+          <span class="v" style="font-size:11pt">all <strong>&lt; 1 yr</strong><small>across 3 companies</small></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── IMPACT ─────────────── -->
+    <section>
+      <div class="sec-h">
+        <span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span>
+        <h2>Impact</h2>
+      </div>
+
+      <div class="triad">
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+            <h3>Systems in production</h3>
+          </div>
+          <p>Built and operate multi-tenant systems handling real-world data, IoT events and users <strong>daily, with paying customers</strong>.</p>
+        </div>
+
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h3>From 0 to 1 and beyond</h3>
+          </div>
+          <p>Ship fast, iterate, and scale platforms with <strong>RLS, mTLS, observability</strong> &mdash; reliability built in from sprint one.</p>
+        </div>
+
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="9" r="3"/><path d="M22 21v-1a4 4 0 0 0-3-3.87"/></svg></span>
+            <h3>Business impact</h3>
+          </div>
+          <p>Reduce support load through architectural fixes, surface insights via custom dashboards, turn customer escalations into <strong>shipped product</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── SKILLS ─────────────── -->
+    <section>
+      <div class="sec-h">
+        <span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 11h-4V7a3 3 0 0 0-6 0v4H5a2 2 0 0 0-2 2v6h6v-2a3 3 0 0 1 6 0v2h6v-6a2 2 0 0 0-2-2z"/></svg></span>
+        <h2>Skills &amp; areas of expertise</h2>
+      </div>
+
+      <div class="skill-grid">
+        <div class="skill-block">
+          <div class="sb-h">
+            <span class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>
+            <h3>Data &amp; AI</h3>
+          </div>
+          <ul class="skill-list">
+            <li><a href="https://www.postgresql.org" target="_blank" rel="noopener">Postgres (RLS, multi-tenant)</a></li>
+            <li><a href="https://orm.drizzle.team" target="_blank" rel="noopener">Drizzle ORM</a></li>
+            <li>JSONB &amp; event-driven</li>
+            <li>Time-series IoT</li>
+            <li><a href="https://www.anthropic.com" target="_blank" rel="noopener">Claude API (LLMs)</a></li>
+            <li>RAG, agentic loops</li>
+            <li>Analytics dashboards</li>
+            <li>Van Westendorp PSM</li>
+          </ul>
+        </div>
+
+        <div class="skill-block">
+          <div class="sb-h">
+            <span class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a7 7 0 0 1 14 0M8.5 16a3.5 3.5 0 0 1 7 0"/><circle cx="12" cy="19" r="1.4"/></svg></span>
+            <h3>IoT &amp; pipelines</h3>
+          </div>
+          <ul class="skill-list">
+            <li>BLE → Gateway → MQTT</li>
+            <li>RSSI triangulation</li>
+            <li><a href="https://1nce.com" target="_blank" rel="noopener">1NCE cellular</a></li>
+            <li>State engines</li>
+            <li>Edge / device mgmt</li>
+            <li>Monitoring &amp; alerting</li>
+            <li>VAPID push + SW</li>
+            <li><a href="https://resend.com" target="_blank" rel="noopener">Resend digest mail</a></li>
+          </ul>
+        </div>
+
+        <div class="skill-block">
+          <div class="sb-h">
+            <span class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.6-8.7A6 6 0 0 0 4 12.5 4 4 0 0 0 6 20h11.5z"/></svg></span>
+            <h3>Cloud &amp; ops</h3>
+          </div>
+          <ul class="skill-list">
+            <li><a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a> · <a href="https://www.hetzner.com" target="_blank" rel="noopener">Hetzner</a></li>
+            <li><a href="https://www.cloudflare.com" target="_blank" rel="noopener">Cloudflare tunnels</a></li>
+            <li><a href="https://neon.tech" target="_blank" rel="noopener">Neon serverless PG</a></li>
+            <li><a href="https://tailscale.com" target="_blank" rel="noopener">Tailscale</a> mesh VPN</li>
+            <li>mTLS · custom CA</li>
+            <li>systemd hardening</li>
+            <li>Loki + Grafana</li>
+            <li>GDPR-clean DKIM/SPF</li>
+          </ul>
+        </div>
+
+        <div class="skill-block">
+          <div class="sb-h">
+            <span class="sb-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+            <h3>Frontend &amp; product</h3>
+          </div>
+          <ul class="skill-list">
+            <li><a href="https://nextjs.org" target="_blank" rel="noopener">Next.js 16 (App Router)</a></li>
+            <li><a href="https://tailwindcss.com" target="_blank" rel="noopener">Tailwind v4</a></li>
+            <li>RSC + server actions</li>
+            <li>R3F (Three.js)</li>
+            <li>Framer Motion</li>
+            <li>PWA + offline</li>
+            <li><a href="https://stripe.com" target="_blank" rel="noopener">Stripe Checkout</a></li>
+            <li>Brand &amp; pricing design</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── EXPERIENCE ─────────────── -->
+    <section>
+      <div class="sec-h">
+        <span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+        <h2>Experience · click any company to open</h2>
+      </div>
+
+      <div class="exp-list">
+
+        <a href="https://www.blyott.com" target="_blank" rel="noopener" class="exp-link">
+          <div class="exp">
+            <div class="exp-head">
+              <div class="exp-title">Head of Helpdesk · <span class="exp-org">Blyott</span>
+                <svg class="ext-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </div>
+              <div class="exp-meta">2022 — present · 4 yr</div>
+            </div>
+            <p class="exp-lead">Customer-facing architect. I sit in customer escalations <em>and</em> in the architecture decisions that caused them &mdash; on three active verticals (healthcare, horeca, agri).</p>
+            <ul>
+              <li><strong>Multi-tenant platform.</strong> RLS-scoped Postgres, industry presets, Stripe Connect for partner-distributors, KNOT BLE gateway pipeline.</li>
+              <li><strong>Hardening sprints.</strong> Public SSH closed → Tailscale, full CA reissue with zero downtime, systemd hardening, Loki + Grafana, two-server HA prep.</li>
+              <li><strong>Customer wins.</strong> Hospital RTLS at industrial scale (hundreds of gateways, thousands of tags), industrial deployments, SLA reporting.</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="https://rplay.be" target="_blank" rel="noopener" class="exp-link">
+          <div class="exp">
+            <div class="exp-head">
+              <div class="exp-title">Solo founder · <span class="exp-org">RPlay</span> &middot; horeca SaaS
+                <svg class="ext-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </div>
+              <div class="exp-meta">2025 — present</div>
+            </div>
+            <p class="exp-lead"><strong>Every line of code is mine</strong> &mdash; brand, pricing (€249 + €24.99/mo), Stripe checkout, the mobile app the chef opens on his phone, the alarm engine, the gateway flash script. Pre-launch, first restaurant pilots in Bruges starting now.</p>
+            <p style="margin: 10px 0 0; font-size: 9.5pt;">
+              <a href="/pdfs/rplay-walkthrough.pdf" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                Read the RPlay walkthrough deck (PDF)
+              </a>
+            </p>
+          </div>
+        </a>
+
+        <a href="https://scenti.ai" target="_blank" rel="noopener" class="exp-link">
+          <div class="exp">
+            <div class="exp-head">
+              <div class="exp-title">Co-founder · <span class="exp-org">Scenti.AI</span> &middot; biosensor R&amp;D
+                <svg class="ext-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </div>
+              <div class="exp-meta">2025 — present</div>
+            </div>
+            <p class="exp-lead">GFET biosensors + ML classification for industrial fermentation &amp; medical wound diagnostics, in collaboration with <strong>UGent</strong> and <strong>UZ Leuven</strong>. <strong>VLAIO</strong> funding application in progress.</p>
+            <ul>
+              <li><strong>Built solo across all platforms in ~6 months:</strong> public site <em>and</em> a full <strong>analytics dashboard</strong> with PSM pricing curves, cohort cuts, CSV exports, NL/EN i18n &mdash; <a href="https://survey.scenti.ai" target="_blank" rel="noopener">survey.scenti.ai</a></li>
+            </ul>
+          </div>
+        </a>
+
+        <div class="exp">
+          <div class="exp-head">
+            <div class="exp-title">Side ventures · <span class="exp-org">sole technical builder</span></div>
+            <div class="exp-meta">parallel · click any to open</div>
+          </div>
+          <div class="venture-grid">
+            <div class="venture-card">
+              <div class="v-head">
+                <span class="v-name">PostYourCard</span>
+                <span class="v-tag">Tourism SaaS</span>
+              </div>
+              <p class="v-desc">Whole platform: Stripe Connect commission split, Resend templates, Cloudinary + AI bg-removal. Bruges hotel partners.</p>
+              <div class="v-actions">
+                <a href="https://postyourcard.com" target="_blank" rel="noopener">Visit site →</a>
+                <a href="/pdfs/postyourcard-walkthrough.pdf" target="_blank" rel="noopener">📄 Walkthrough PDF</a>
+              </div>
+            </div>
+            <div class="venture-card">
+              <div class="v-head">
+                <span class="v-name">rmlx.ai</span>
+                <span class="v-tag">AI workflow integration · co-founded</span>
+              </div>
+              <p class="v-desc">Co-founded with my father: an LLM system integrating into daily business workflows (mails, invoicing, follow-ups). Marketing site (Next 16 + R3F orb) shipped end-to-end by me.</p>
+              <div class="v-actions">
+                <a href="https://rmlx.ai" target="_blank" rel="noopener">Visit site →</a>
+              </div>
+            </div>
+            <div class="venture-card">
+              <div class="v-head">
+                <span class="v-name">Moniott</span>
+                <span class="v-tag">Agri partner brand</span>
+              </div>
+              <p class="v-desc">Whole platform: cow location + RSSI triangulation engine, stylized SVG barn renderer.</p>
+              <div class="v-actions">
+                <a href="https://moniott.vercel.app" target="_blank" rel="noopener">Visit site →</a>
+              </div>
+            </div>
+            <div class="venture-card venture-card-nda">
+              <div class="v-head">
+                <span class="v-name">Hospital RTLS</span>
+                <span class="v-tag">Healthcare · NDA</span>
+              </div>
+              <p class="v-desc">Hundreds of gateways, thousands of tags, multi-floor RTLS at industrial scale. Client confidential — happy to discuss under NDA.</p>
+              <div class="v-actions">
+                <span class="v-locked">🔒 Confidential</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── EDUCATION + LANGUAGES + HOBBIES ─────────────── -->
+    <section>
+      <div class="sec-h">
+        <span class="sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span>
+        <h2>Education · Languages · Outside the laptop</h2>
+      </div>
+
+      <div class="triad">
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span>
+            <h3>Education</h3>
+          </div>
+          <p><strong>Bachelor &middot; Business Management</strong>. The architecture half I built on top through four years of customer-facing SaaS engineering.</p>
+        </div>
+
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+            <h3>Languages</h3>
+          </div>
+          <p><strong>Dutch</strong> native &middot; <strong>English</strong> fluent &middot; <strong>French</strong> workable. Tech docs in NL for ops, decks in EN for international customers.</p>
+        </div>
+
+        <div class="triad-item">
+          <div class="triad-h">
+            <span class="triad-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+            <h3>Outside work</h3>
+          </div>
+          <p>I run my own <strong>chess club in Bruges</strong>. On weekends I <strong>make music and perform live</strong> with my brother and uncle &mdash; both partners on the side businesses.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────── CLOSER ─────────────── -->
+    <div class="closer">
+      <span class="star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+      <p><strong>I like to fix the actual problem &mdash; not just the ticket.</strong> I'm the one who picks up the customer call <em>and</em> the one who writes the migration that fixes it &mdash; same person, same day. That's the muscle I'd love to bring to Solita next. <a href="mailto:jremy.pollet@icloud.com">Drop me a line.</a></p>
+    </div>
+
+  </div>
+
+  <script>
+    const photo = document.getElementById('photo');
+    const test = new Image();
+    test.onload = () => { photo.innerHTML = ''; photo.appendChild(test); };
+    test.src = 'shots/profile.jpg';
+  </script>
+
+</body>
+</html>

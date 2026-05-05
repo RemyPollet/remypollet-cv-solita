@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remy Pollet — CV (printversie)</title>
+  <meta name="description" content="Print-klare CV voor sollicitatie Solita Data Architect (AI &amp; Analytics)." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #0f172a;
+      --ink-soft: #334155;
+      --ink-muted: #64748b;
+      --paper: #ffffff;
+      --rule: #e2e8f0;
+      --accent: #047857;
+      --accent-light: #ecfdf5;
+      --accent-mid: #10b981;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f1f5f9;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 11pt;
+      line-height: 1.55;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 14px auto;
+      padding: 16mm 18mm 18mm 18mm;
+      background: var(--paper);
+      box-shadow: 0 6px 28px -8px rgba(15,23,42,0.18);
+      position: relative;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #059669 0%, #10b981 50%, #06b6d4 100%);
+    }
+    .page-num {
+      position: absolute;
+      bottom: 10mm; right: 18mm;
+      font-size: 9pt;
+      color: var(--ink-muted);
+    }
+
+    .hdr {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 22px;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 22px;
+    }
+    .photo {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #34d399, #047857 70%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: -0.02em;
+      display: flex; align-items: center; justify-content: center;
+      border: 3px solid #ecfdf5;
+      box-shadow: 0 6px 18px -6px rgba(5,150,105,0.35);
+      overflow: hidden;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: cover; }
+
+    .name {
+      font-size: 26pt;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin: 0 0 6px 0;
+    }
+    .role {
+      font-size: 11pt;
+      color: var(--ink-soft);
+      margin: 0;
+      line-height: 1.45;
+    }
+    .role strong { color: var(--accent); font-weight: 600; }
+
+    .contacts {
+      display: flex; flex-direction: column;
+      gap: 5px;
+      font-size: 9.5pt;
+      color: var(--ink-soft);
+      text-align: right;
+      line-height: 1.45;
+    }
+    .contacts a { color: var(--accent); text-decoration: none; }
+    .contacts a:hover { text-decoration: underline; }
+    .contacts .meta { color: var(--ink-muted); margin-top: 4px; font-size: 9pt; }
+
+    section h2 {
+      font-size: 11pt;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--accent);
+      margin: 0 0 10px 0;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid var(--accent-light);
+    }
+    section { margin-bottom: 24px; break-inside: avoid; }
+    section:last-child { margin-bottom: 0; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 22px;
+    }
+
+    .profile p {
+      font-size: 11pt;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 8px 0;
+    }
+    .profile p:last-child { margin-bottom: 0; }
+    .profile strong { color: var(--ink); font-weight: 600; }
+    .profile em { color: var(--ink-soft); }
+
+    .quick {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .quick .item {
+      background: var(--accent-light);
+      border: 1px solid #d1fae5;
+      border-radius: 8px;
+      padding: 10px 12px;
+      line-height: 1.35;
+    }
+    .quick .item .k {
+      color: var(--accent);
+      font-size: 8.5pt;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      display: block;
+      margin-bottom: 3px;
+    }
+    .quick .item .v {
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 10pt;
+    }
+
+    .skill-cluster { margin-bottom: 12px; }
+    .skill-cluster:last-child { margin-bottom: 0; }
+    .skill-cluster .label {
+      font-size: 10pt;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 4px 0;
+    }
+    .skill-cluster .tags {
+      font-size: 9.5pt;
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+    .skill-cluster .tags strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .langs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px 14px;
+      font-size: 10pt;
+    }
+    .langs .lang {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 10px;
+      background: #f8fafc;
+      border-radius: 6px;
+      border: 1px solid var(--rule);
+    }
+    .langs .lang .lvl {
+      color: var(--ink-muted);
+      font-size: 9pt;
+    }
+
+    .edu {
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .edu strong { color: var(--ink); font-weight: 600; }
+
+    .hobbies {
+      font-size: 10.5pt;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .hobbies strong { color: var(--ink); font-weight: 600; }
+
+    .exp-item {
+      margin-bottom: 18px;
+      break-inside: avoid;
+    }
+    .exp-item:last-child { margin-bottom: 0; }
+    .exp-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 4px;
+    }
+    .exp-title {
+      font-size: 13pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .exp-org {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .exp-meta {
+      font-size: 9.5pt;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .exp-tag {
+      display: inline-block;
+      font-size: 8.5pt;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 6px;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+    .exp-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0 0;
+      font-size: 10.5pt;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .exp-bullets li {
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .exp-bullets li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 10pt;
+      top: 1px;
+    }
+    .exp-bullets li strong { color: var(--ink); font-weight: 600; }
+    .exp-bullets li em { color: var(--ink-soft); }
+    .exp-bullets li a { color: var(--accent); text-decoration: none; }
+
+    .companies {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .company {
+      border: 1px solid var(--rule);
+      border-radius: 9px;
+      padding: 12px 14px;
+      background: #fafaf7;
+      break-inside: avoid;
+    }
+    .company .nm {
+      font-size: 11pt;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .company .nm a { color: var(--ink); text-decoration: none; }
+    .company .role-line {
+      font-size: 9pt;
+      color: var(--accent);
+      letter-spacing: 0;
+      text-transform: none;
+      margin-top: 3px;
+      font-weight: 600;
+    }
+    .company .desc {
+      font-size: 9.5pt;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+
+    .closing-quote {
+      margin-top: 22px;
+      padding: 18px 22px;
+      background: linear-gradient(120deg, var(--accent-light) 0%, #f0f9ff 100%);
+      border-left: 4px solid var(--accent-mid);
+      border-radius: 0 10px 10px 0;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: var(--ink);
+      font-style: italic;
+    }
+    .closing-quote strong { color: var(--accent); font-style: normal; font-weight: 600; }
+
+    .footer-note {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--rule);
+      font-size: 9pt;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-note a { color: var(--accent); text-decoration: none; }
+
+    @media print {
+      body { background: #fff; font-size: 10.5pt; }
+      .page {
+        margin: 0;
+        padding: 14mm 16mm;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      .page:last-child { page-break-after: auto; }
+      a { color: inherit !important; text-decoration: none !important; }
+      .no-print { display: none !important; }
+    }
+    @page { size: A4; margin: 0; }
+
+    .toolbar {
+      max-width: 210mm;
+      margin: 14px auto 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 10pt;
+      color: #475569;
+      padding: 0 4px;
+    }
+    .toolbar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #0f172a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .toolbar a:hover { border-color: var(--accent-mid); color: var(--accent); }
+    .toolbar .primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .toolbar .primary:hover { background: #065f46; color: #fff; }
+    .toolbar .links { display: flex; gap: 6px; }
+
+    /* Mobile responsive */
+    @media (max-width: 760px) {
+      html, body { font-size: 10.5pt; }
+      .page {
+        max-width: 100%;
+        margin: 12px;
+        padding: 22px 18px 22px 18px;
+        border-radius: 8px;
+      }
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .toolbar .links { justify-content: center; flex-wrap: wrap; }
+      .hdr {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hdr::before { display: none; }
+      .photo {
+        margin: 0 auto;
+        width: 96px; height: 96px;
+        font-size: 32px;
+      }
+      .name { font-size: 22pt; text-align: center; }
+      .tagline, .role-line { text-align: center; }
+      .meta-pills { justify-content: center; }
+      .contacts { text-align: center; align-items: center; }
+      .triad, .skill-grid, .companies, .quick {
+        grid-template-columns: 1fr !important;
+      }
+      .quick { grid-template-columns: 1fr 1fr !important; }
+      .langs { grid-template-columns: 1fr; }
+      .exp-head { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .exp-meta { white-space: normal; }
+      .exp-title { font-size: 12pt; }
+      .closer { flex-direction: column; text-align: center; }
+    }
+
+
+    /* Dark/white alternating sections */
+    .page > section:nth-of-type(2n) {
+      background: linear-gradient(180deg, #0a0f1c 0%, #0f172a 100%);
+      color: #cbd5e1;
+      margin: 0 -44px;
+      padding-left: 44px;
+      padding-right: 44px;
+      border-bottom: none;
+      position: relative;
+    }
+    .page > section:nth-of-type(2n)::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 44px; right: 44px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(52,211,153,0.5), transparent);
+    }
+    .page > section:nth-of-type(2n) h2 {
+      color: #6ee7b7 !important;
+      border-bottom-color: rgba(52,211,153,0.2) !important;
+    }
+    .page > section:nth-of-type(2n) .sec-h .sec-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .triad-item h3 { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .triad-item p { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .triad-item p strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .triad-item p a { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .triad-item .triad-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .skill-block {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .skill-block .sb-h {
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .skill-block .sb-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .skill-block h3 { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .skill-list li { color: #f1f5f9; }
+    .page > section:nth-of-type(2n) .skill-list li a { color: #f1f5f9; }
+    .page > section:nth-of-type(2n) .skill-list li a:hover { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .skill-list li::before {
+      background: #34d399;
+    }
+    .page > section:nth-of-type(2n) .exp {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .exp .exp-title { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .exp .exp-org { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .exp .exp-meta { color: #94a3b8; }
+    .page > section:nth-of-type(2n) .exp p.exp-lead { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .exp p.exp-lead strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .exp p.exp-lead a { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .exp ul li { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .exp ul li strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .exp ul li::before { background: #34d399; }
+    .page > section:nth-of-type(2n) .exp .exp-tag {
+      background: rgba(52,211,153,0.18);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .venture-card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .page > section:nth-of-type(2n) .venture-card .v-name { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .venture-card .v-tag { color: #6ee7b7; }
+    .page > section:nth-of-type(2n) .venture-card .v-desc { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .quick .item {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.10);
+    }
+    .page > section:nth-of-type(2n) .quick .item .v { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .quick .item .k { color: #94a3b8; }
+    .page > section:nth-of-type(2n) .quick .item .qf-ico {
+      background: rgba(52,211,153,0.15);
+      border-color: rgba(52,211,153,0.4);
+      color: #6ee7b7;
+    }
+    .page > section:nth-of-type(2n) .quick .item.highlight {
+      border-color: rgba(52,211,153,0.6);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(52,211,153,0.10) 100%);
+    }
+    .page > section:nth-of-type(2n) .langs .lang {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+      color: #f1f5f9;
+    }
+    .page > section:nth-of-type(2n) .langs .lang .lvl { color: #94a3b8; }
+    .page > section:nth-of-type(2n) .edu, .page > section:nth-of-type(2n) .hobbies { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .edu strong, .page > section:nth-of-type(2n) .hobbies strong { color: #f8fafc; }
+    .page > section:nth-of-type(2n) .profile p { color: #cbd5e1; }
+    .page > section:nth-of-type(2n) .profile p strong { color: #f8fafc; }
+
+    @media print {
+      .page > section:nth-of-type(2n) {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+
+    /* Visit-site action button */
+    .v-actions {
+      display: flex; flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .v-actions a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--accent-mid) 0%, #34d399 100%);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: none;
+    }
+    .v-actions a:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px -6px rgba(52,211,153,0.5);
+    }
+    .v-actions a[href*=".pdf"] {
+      background: rgba(15,23,42,0.06);
+      color: var(--accent);
+      border: 1px solid var(--hairline);
+    }
+    .v-actions a[href*=".pdf"]:hover {
+      background: var(--accent-50);
+      border-color: var(--accent-mid);
+    }
+    .page > section:nth-of-type(2n) .v-actions a[href*=".pdf"] {
+      background: rgba(255,255,255,0.06);
+      color: #6ee7b7;
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* Tech name styling — replace mono with stylish gradient */
+    .skill-cluster .tags {
+      font-family: "Inter", system-ui, sans-serif !important;
+    }
+    .skill-cluster .tags strong {
+      background: linear-gradient(120deg, #047857 0%, #10b981 50%, #06b6d4 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .page > section:nth-of-type(2n) .skill-cluster .tags strong {
+      background: linear-gradient(120deg, #34d399 0%, #6ee7b7 50%, #67e8f9 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    /* 1-pager beauty pass */
+    .name {
+      background: linear-gradient(120deg, var(--ink) 0%, var(--accent) 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tagline {
+      letter-spacing: 0.01em;
+      background: linear-gradient(120deg, #047857 0%, #10b981 50%, #06b6d4 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta-pill:first-child {
+      background: linear-gradient(120deg, #ecfdf5 0%, #fef3c7 100%);
+      border-color: #d1fae5;
+    }
+    .meta-pill:nth-child(2) {
+      background: linear-gradient(120deg, #fef3c7 0%, #fce7f3 100%);
+      border-color: #fde68a;
+    }
+    .meta-pill:nth-child(3) {
+      background: linear-gradient(120deg, #fce7f3 0%, #ecfeff 100%);
+      border-color: #fbcfe8;
+    }
+    .closer .star {
+      background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+      box-shadow: 0 8px 24px -8px rgba(52,211,153,0.6);
+    }
+    .v-actions a:first-child {
+      background: linear-gradient(120deg, #047857 0%, #10b981 60%, #06b6d4 100%);
+    }
+
+
+    /* v-locked badge for NDA */
+    .v-locked {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.06);
+      color: var(--ink-muted);
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      border: 1px dashed var(--hairline);
+    }
+    .page > section:nth-of-type(2n) .v-locked {
+      background: rgba(255,255,255,0.05);
+      color: #94a3b8;
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    /* Extra breathing room */
+    .venture-card { padding: 14px 16px !important; }
+    .venture-card .v-desc { line-height: 1.55 !important; margin-top: 8px !important; }
+    .v-actions { margin-top: 12px !important; }
+    .exp { padding: 20px 22px !important; }
+    .exp p.exp-lead { line-height: 1.6 !important; margin-bottom: 10px !important; }
+    .exp ul li { line-height: 1.65 !important; margin-bottom: 7px !important; }
+
+  </style>
+</head>
+<body>
+
+  <div class="toolbar no-print">
+    <span>Remy Pollet · CV · printversie (2 pagina's)</span>
+    <span class="links">
+      <a href="/nl">← Interactieve CV</a>
+      <a href="/print">EN</a>
+      <a href="javascript:window.print()" class="primary">⎙ Afdrukken / opslaan als PDF</a>
+    </span>
+  </div>
+
+  <!-- ──────────────────────────── PAGINA 1 ──────────────────────────── -->
+  <div class="page">
+
+    <div class="hdr">
+      <div class="photo" id="photo">RP</div>
+      <div>
+        <h1 class="name">Remy Pollet</h1>
+        <p class="role">
+          Head of Helpdesk <strong>@ Blyott</strong> &middot; nu beschikbaar voor <strong>freelance</strong> data- en AI-architectuurwerk.<br/>
+          Multi-tenant SaaS-architect, levert AI + IoT in productie.
+        </p>
+      </div>
+      <div class="contacts">
+        <span><a href="mailto:jremy.pollet@icloud.com">jremy.pollet@icloud.com</a></span>
+        <span><a href="https://wa.me/32494861699">WhatsApp · +32 494 86 16 99</a></span>
+        <span><a href="https://www.linkedin.com/in/r%C3%A9mypollet/">linkedin.com/in/rémypollet</a></span>
+        <span class="meta">Brugge, België &middot; 26 jaar</span>
+      </div>
+    </div>
+
+    <section class="profile">
+      <h2>Profiel</h2>
+      <p>
+        <strong>4 jaar production SaaS.</strong> Bij <strong>Blyott</strong> run ik klant-escalaties <em>én</em> de architectuur erachter &mdash; op drie live verticals (gezondheidszorg, horeca, agri). Oprichter van <strong>RPlay</strong> (horeca SaaS, end-to-end) en mede-oprichter van <strong>Scenti.AI</strong> (biosensor R&amp;D, met UGent + UZ Leuven). <strong style="color: var(--accent);">Alles gebouwd in minder dan een jaar.</strong>
+      </p>
+      <p>
+        Ik fix liever het echte probleem dan een ticket. Nu beschikbaar voor <strong>freelance data- en AI-architectuur-opdrachten</strong> &mdash; ik adviseer al verschillende bedrijven over AI &amp; analyse naast mijn dagjob.
+      </p>
+    </section>
+
+    <section>
+      <h2>Kerngegevens</h2>
+      <div class="quick">
+        <div class="item"><span class="k">Bedrijven</span><span class="v">3 + side ventures</span></div>
+        <div class="item"><span class="k">Verticals</span><span class="v">gezondheidszorg · horeca · agri</span></div>
+        <div class="item"><span class="k">Stack</span><span class="v">productie-grade</span></div>
+        <div class="item"><span class="k">Gebouwd</span><span class="v">alles &lt; 1 jr<br/><small>over 3 bedrijven</small></span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <div class="grid-2">
+        <div>
+          <div class="skill-cluster">
+            <div class="label">Data &amp; AI</div>
+            <div class="tags"><strong>Postgres + Drizzle</strong>, multi-tenant RLS, schema-design + migraties, JSONB events, time-series IoT. <strong>Claude API</strong> in productie: agentic loops, RAG over real-time events, structured-output prompts.</div>
+          </div>
+          <div class="skill-cluster">
+            <div class="label">Cloud &amp; Ops</div>
+            <div class="tags"><strong>Vercel</strong>, <strong>Hetzner</strong>, Cloudflare tunnels + DNS, Neon, Resend, Tailscale, mTLS, custom CA, systemd-hardening, Loki + Grafana.</div>
+          </div>
+        </div>
+        <div>
+          <div class="skill-cluster">
+            <div class="label">IoT &amp; pipelines</div>
+            <div class="tags">BLE → <strong>KNOT gateway</strong> → MQTT → state engine, RSSI-triangulatie, 1NCE cellular, Teltonika EYE.</div>
+          </div>
+          <div class="skill-cluster">
+            <div class="label">Frontend</div>
+            <div class="tags"><strong>Next.js 16</strong>, Tailwind, RSC, PWA + service workers, mobile-first product-UI.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Opleiding</h2>
+      <p class="edu"><strong>Bachelor &middot; Business Management</strong>. De architectuur-helft heb ik er bovenop gebouwd door vier jaar klant-georiënteerde SaaS-engineering.</p>
+    </section>
+
+    <section>
+      <h2>Talen</h2>
+      <div class="langs">
+        <div class="lang"><span><strong>Nederlands</strong></span><span class="lvl">moedertaal</span></div>
+        <div class="lang"><span><strong>Engels</strong></span><span class="lvl">vloeiend</span></div>
+        <div class="lang"><span><strong>Frans</strong></span><span class="lvl">werkbaar</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Naast de laptop</h2>
+      <p class="hobbies">
+        Run mijn eigen <strong>schaakclub in Brugge</strong> &mdash; wekelijkse avonden, gemengd niveau. In de weekends <strong>maak ik muziek en speel ik live</strong>. Lees engineering-blogs en post-mortems van bedrijven groter dan de mijne.
+      </p>
+    </section>
+
+    <span class="page-num">pagina 1 / 2</span>
+  </div>
+
+  <!-- ──────────────────────────── PAGINA 2 ──────────────────────────── -->
+  <div class="page">
+
+    <section>
+      <h2>Ervaring</h2>
+
+      <div class="exp-list">
+
+        <a href="https://www.blyott.com" target="_blank" rel="noopener" class="exp-link">
+          <div class="exp">
+            <div class="exp-head">
+              <div class="exp-title">Head of Helpdesk &middot; <span class="exp-org">Blyott</span>
+                <svg class="ext-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </div>
+              <div class="exp-meta">2022 — heden &middot; 4 jr</div>
+            </div>
+            <p class="exp-lead">Klant-georiënteerde architect. Ik zit in klant-escalaties <em>én</em> in de architectuur-beslissingen die ze veroorzaakten &mdash; op drie live verticals (gezondheidszorg, horeca, agri).</p>
+            <ul>
+              <li><strong>Multi-tenant platform.</strong> RLS-scoped Postgres, industry presets, Stripe Connect voor partner-distributeurs, KNOT BLE-gateway-pipeline.</li>
+              <li><strong>Hardening sprints.</strong> Publieke SSH dichtgezet → Tailscale-gated, volledige Certificate Authority-reissue zonder downtime, systemd-unit hardening, log-shipping naar Loki + Grafana.</li>
+              <li><strong>Klant-resultaten.</strong> Ziekenhuis-RTLS op industriële schaal (honderden gateways, duizenden tags), industriële deployments, SLA-rapportering, dashboard-customisatie per workflow.</li>
+            </ul>
+          </div>
+        </a>
+
+        <a href="https://rplay.be" target="_blank" rel="noopener" class="exp-link">
+          <div class="exp">
+            <div class="exp-head">
+              <div class="exp-title">Solo oprichter &middot; <span class="exp-org">RPlay</span> &middot; horeca SaaS
+                <svg class="ext-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </div>
+              <div class="exp-meta">2025 — heden</div>
+            </div>
+            <p class="exp-lead"><strong>Elke regel code is van mij</strong> &mdash; merk, mobiele PWA, alarm-engine met drie-laagse spam-bescherming (dedup → quiet hours → throttle), VAPID push, Resend digest, gateway-flash-script. Pre-launch, eerste restaurant-pilots in Brugge.</p>
+            <p style="margin: 10px 0 0; font-size: 9.5pt;">
+              <a href="/pdfs/rplay-walkthrough.pdf" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+                Lees de RPlay walkthrough deck (PDF)
+              </a>
+            </p>
+          </div>
+        </a>
+
+        <a href="https://scenti.ai" target="_blank" rel="noopener" class="exp-link">
+          <div class="exp">
+            <div class="exp-head">
+              <div class="exp-title">Mede-oprichter &middot; <span class="exp-org">Scenti.AI</span> &middot; biosensor R&amp;D
+                <svg class="ext-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </div>
+              <div class="exp-meta">2025 — heden</div>
+            </div>
+            <p class="exp-lead">GFET-biosensors + ML-classificatie voor industriële fermentatie &amp; medische wonddiagnostiek, in samenwerking met <strong>UGent</strong> en <strong>UZ Leuven</strong>. <strong>VLAIO</strong>-subsidiedossier loopt.</p>
+            <ul>
+              <li><strong>Solo gebouwd over alle platformen in ~6 maanden:</strong> de publieke site <em>én</em> een volledig <strong>analytics dashboard</strong> met PSM-prijscurves, cohorten, CSV-exports, NL/EN i18n &mdash; <a href="https://survey.scenti.ai" target="_blank" rel="noopener">survey.scenti.ai</a></li>
+            </ul>
+          </div>
+        </a>
+
+        <div class="exp">
+          <div class="exp-head">
+            <div class="exp-title">Side ventures &middot; <span class="exp-org">enige technische bouwer</span></div>
+            <div class="exp-meta">parallel &middot; klik om te openen</div>
+          </div>
+          <div class="venture-grid">
+            <div class="venture-card">
+              <div class="v-head">
+                <span class="v-name">PostYourCard</span>
+                <span class="v-tag">Tourism SaaS</span>
+              </div>
+              <p class="v-desc">Volledig platform: Stripe Connect commissie-split, Resend templates, Cloudinary + AI background-removal. Brugse hotelpartners.</p>
+              <div class="v-actions">
+                <a href="https://postyourcard.com" target="_blank" rel="noopener">Bezoek site →</a>
+                <a href="/pdfs/postyourcard-walkthrough.pdf" target="_blank" rel="noopener">📄 Walkthrough PDF</a>
+              </div>
+            </div>
+            <div class="venture-card">
+              <div class="v-head">
+                <span class="v-name">rmlx.ai</span>
+                <span class="v-tag">AI workflow-integratie · mede-opgericht</span>
+              </div>
+              <p class="v-desc">Mede-opgericht met mijn vader: een LLM-systeem dat integreert in dagelijkse bedrijfs-workflows (mails, facturen, opvolgingen). Marketing-site (Next 16 + R3F-orb) end-to-end door mij gebouwd.</p>
+              <div class="v-actions">
+                <a href="https://rmlx.ai" target="_blank" rel="noopener">Bezoek site →</a>
+              </div>
+            </div>
+            <div class="venture-card">
+              <div class="v-head">
+                <span class="v-name">Moniott</span>
+                <span class="v-tag">Agri partner-merk</span>
+              </div>
+              <p class="v-desc">Volledig platform: koeien-locatie + RSSI-triangulatie-engine, gestileerde SVG-stal-renderer.</p>
+              <div class="v-actions">
+                <a href="https://moniott.vercel.app" target="_blank" rel="noopener">Bezoek site →</a>
+              </div>
+            </div>
+            <div class="venture-card venture-card-nda">
+              <div class="v-head">
+                <span class="v-name">Ziekenhuis RTLS</span>
+                <span class="v-tag">Gezondheidszorg · NDA</span>
+              </div>
+              <p class="v-desc">Honderden gateways, duizenden tags, multi-floor RTLS op industriële schaal. Klant-confidentieel — kunnen onder NDA bespreken.</p>
+              <div class="v-actions">
+                <span class="v-locked">🔒 Confidentieel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Wat ik zoek</h2>
+      <div class="closing-quote">
+        <strong>Freelance Data Architect-opdrachten bij Solita.</strong>
+        Ik wil meer dagen doorbrengen in klant-workshops met architectuurschetsen, minder dagen als enige architect in de kamer. Minder alleen, meer diepte. De Solita-zin "<em>holistic, sustainable, production-ready AI</em>" past op hoe ik al werk &mdash; alleen op kleinere schaal.
+      </div>
+    </section>
+
+    <div class="footer-note">
+      <span>Lange interactieve versie: <a href="https://remypollet-cv-solita.vercel.app/nl">remypollet-cv-solita.vercel.app/nl</a></span>
+      <span>Hand-geschreven single HTML &middot; LLM-paired</span>
+    </div>
+
+    <span class="page-num">pagina 2 / 2</span>
+  </div>
+
+  <script>
+    const photo = document.getElementById('photo');
+    const test = new Image();
+    test.onload = () => { photo.innerHTML = ''; photo.appendChild(test); };
+    test.src = '../shots/profile.jpg';
+  </script>
+
+</body>
+</html>

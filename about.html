@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Remy Pollet — builder, customer person, accidental architect</title>
+  <meta name="description" content="The longer story behind the CV. Where I'm from, what drives me, how I work." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950:"#0a0f1c", 900:"#0f172a", 800:"#1e293b", 700:"#334155", 600:"#475569", 500:"#64748b", 400:"#94a3b8", 300:"#cbd5e1", 200:"#e2e8f0", 100:"#f1f5f9", 50:"#f8fafc" },
+            paper: "#fafaf7",
+            "paper-2": "#f4f1ea",
+            emerald: { 400:"#34d399", 500:"#10b981", 600:"#059669", 700:"#047857" },
+            cyan: { 500:"#06b6d4" },
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+            mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+            hand: ["Caveat", "cursive"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", system-ui, sans-serif; background: #fafaf7; color: #0f172a; }
+
+    .gradient-emerald {
+      background: linear-gradient(120deg, #059669 0%, #10b981 50%, #06b6d4 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-emerald-dark {
+      background: linear-gradient(120deg, #34d399 0%, #6ee7b7 50%, #67e8f9 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grid-glow {
+      background-image:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(16,185,129,0.18), transparent 70%),
+        radial-gradient(ellipse 40% 50% at 80% 100%, rgba(34,211,238,0.10), transparent 70%);
+    }
+    .grid-pattern-dark {
+      background-image:
+        linear-gradient(rgba(16,185,129,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,185,129,0.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+    }
+
+    .orb {
+      display: inline-block;
+      width: 0.55rem; height: 0.55rem;
+      border-radius: 9999px;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981, 0 0 0 4px rgba(16,185,129,0.12);
+    }
+    .orb-light { background: #34d399; box-shadow: 0 0 10px #34d399, 0 0 0 4px rgba(52,211,153,0.18); }
+    .orb-pulse { animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .chip-dark {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.4rem 0.95rem;
+      border-radius: 9999px;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.01em;
+      text-transform: none;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      background: rgba(16, 185, 129, 0.08);
+      color: #34d399;
+    }
+
+    .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(16,185,129,0.4), transparent); }
+
+    .btn-primary-dark {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.65rem;
+      background: linear-gradient(120deg, #10b981, #34d399);
+      color: #0f172a; font-weight: 600; font-size: 0.92rem;
+      border-radius: 9999px;
+      box-shadow: 0 12px 36px -10px rgba(52,211,153,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary-dark:hover { transform: translateY(-2px); box-shadow: 0 18px 44px -12px rgba(52,211,153,0.6); }
+
+    .btn-secondary-dark {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid rgba(52,211,153,0.4);
+      color: #d1fae5; font-weight: 500; font-size: 0.92rem;
+      border-radius: 9999px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+    .btn-secondary-dark:hover { border-color: #34d399; background: rgba(52,211,153,0.08); color: #f1f5f9; }
+
+    .btn-primary-light {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.65rem;
+      background: linear-gradient(120deg, #059669, #10b981);
+      color: #fff; font-weight: 600; font-size: 0.92rem;
+      border-radius: 9999px;
+      box-shadow: 0 12px 28px -8px rgba(5,150,105,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary-light:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -8px rgba(5,150,105,0.5); }
+
+    .btn-secondary-light {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border: 1px solid #10b981;
+      color: #047857; font-weight: 600; font-size: 0.92rem;
+      border-radius: 9999px;
+      background: #fff;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-secondary-light:hover { background: #ecfdf5; color: #065f46; }
+
+    /* Section tag light */
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.02em;
+      text-transform: none;
+      color: #047857;
+    }
+    .section-tag::before {
+      content: ""; width: 28px; height: 1px;
+      background: linear-gradient(90deg, #10b981, transparent);
+    }
+    .section-tag-dark { color: #34d399; }
+    .section-tag-dark::before { background: linear-gradient(90deg, #34d399, transparent); }
+
+    .float-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    /* Photo placeholder */
+    .photo-placeholder {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(52,211,153,0.5), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(34,211,238,0.55), transparent 60%),
+        linear-gradient(135deg, #0f172a, #020617);
+      border: 1px solid rgba(52,211,153,0.3);
+      box-shadow: 0 16px 48px -12px rgba(52,211,153,0.25);
+    }
+
+    .pull-quote {
+      font-size: 1.6rem;
+      line-height: 1.45;
+      font-style: italic;
+      color: #0f172a;
+      font-weight: 400;
+    }
+    @media (min-width: 768px) { .pull-quote { font-size: 2.1rem; } }
+
+    /* DARK value card (on light bg) */
+    .value-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 1.6rem;
+      color: #cbd5e1;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .value-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #10b981, #06b6d4 60%, transparent);
+      opacity: 0.7;
+    }
+    .value-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 44px -16px rgba(15,23,42,0.45);
+    }
+    .value-card:hover::before { opacity: 1; }
+    .value-card h3 {
+      color: #f8fafc;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .value-card p { color: #94a3b8; }
+    .value-card em { color: #cbd5e1; font-style: italic; }
+    .value-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(52,211,153,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #34d399;
+      margin-bottom: 1.1rem;
+    }
+
+    /* Refined section-tag — less aggressive mono */
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: "Inter", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #047857;
+    }
+    .section-tag::before {
+      content: ""; width: 28px; height: 1px;
+      background: linear-gradient(90deg, #10b981, transparent);
+    }
+    .section-tag-dark { color: #34d399; }
+    .section-tag-dark::before { background: linear-gradient(90deg, #34d399, transparent); }
+
+    /* Timeline on light */
+    .timeline-item {
+      position: relative;
+      padding-left: 1.75rem;
+      padding-bottom: 1.5rem;
+      border-left: 2px solid #d1fae5;
+    }
+    .timeline-item:last-child { border-left-color: transparent; padding-bottom: 0; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -7px;
+      top: 0.25rem;
+      width: 12px; height: 12px;
+      background: #10b981;
+      border-radius: 9999px;
+      box-shadow: 0 0 0 4px #fafaf7, 0 0 12px rgba(16,185,129,0.4);
+    }
+
+    /* Marginalia — Caveat allowed sparingly on this page */
+    .marginalia {
+      font-family: "Caveat", cursive;
+      color: #047857;
+      font-size: 1.3rem;
+      line-height: 1.35;
+      opacity: 0.9;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 760px) {
+      header.relative {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 14px !important;
+      }
+      header nav {
+        flex-wrap: wrap !important;
+        gap: 12px 16px !important;
+        font-size: 0.85rem !important;
+      }
+      h1.text-5xl, h1.text-balance { font-size: 2rem !important; line-height: 1.1 !important; }
+      .text-4xl.sm\:text-5xl { font-size: 1.85rem !important; line-height: 1.15 !important; }
+      .pull-quote { font-size: 1.3rem !important; }
+    }
+
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ─────────────────────────── HERO (dark) ─────────────────────────── -->
+  <section class="relative overflow-hidden grid-glow" style="background: #0f172a;">
+    <div class="absolute inset-0 grid-pattern-dark opacity-40"></div>
+    <div class="float-orb" style="top: -200px; right: -100px; width: 480px; height: 480px; background: radial-gradient(closest-side, #10b981, transparent); opacity: 0.4;"></div>
+    <div class="float-orb" style="bottom: -200px; left: -120px; width: 420px; height: 420px; background: radial-gradient(closest-side, #06b6d4, transparent); opacity: 0.25;"></div>
+
+    <header class="relative mx-auto flex w-full max-w-[80rem] items-center justify-between px-6 sm:px-12 pt-7">
+      <a href="/" class="inline-flex items-center gap-2.5 text-[1.05rem] font-semibold tracking-tight text-slate-50">
+        <span class="orb orb-light orb-pulse"></span>
+        <span>remy<span class="text-emerald-400">.</span>pollet</span>
+      </a>
+      <nav class="flex items-center gap-7 text-sm font-medium tracking-wide">
+        <a href="/" class="text-slate-300 hover:text-emerald-400 transition-colors">CV</a>
+        <a href="/about.html" class="text-emerald-400">About</a>
+        <a href="mailto:jremy.pollet@icloud.com" class="text-slate-300 hover:text-emerald-400 transition-colors">Contact</a>
+      </nav>
+    </header>
+
+    <div class="relative mx-auto max-w-[80rem] px-6 sm:px-12 pt-16 sm:pt-24 pb-16 sm:pb-24">
+      <div class="grid md:grid-cols-[220px_1fr] gap-10 md:gap-14 items-center">
+
+        <div class="photo-placeholder rounded-3xl aspect-square flex items-center justify-center">
+          <span class="text-7xl font-bold tracking-tight text-slate-50">R<span class="gradient-emerald-dark">P</span></span>
+        </div>
+
+        <div>
+          <div class="chip-dark mb-6">
+            <span class="orb orb-light orb-pulse" style="width:0.45rem;height:0.45rem"></span>
+            About me
+          </div>
+          <h1 class="text-balance text-[2.4rem] sm:text-6xl font-bold leading-[1.05] tracking-[-0.025em]" style="color:#f8fafc">
+            Builder, customer person,<br/>
+            <span class="gradient-emerald-dark">accidental architect</span>.
+          </h1>
+          <p class="mt-5 max-w-2xl text-lg leading-relaxed" style="color:#cbd5e1">
+            I didn't plan to architect SaaS platforms. I planned to help customers. The architecture happened because the customers had problems that needed it.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─────────────────────────── PULL QUOTE (light) ─────────────────────────── -->
+  <section class="bg-paper">
+    <div class="mx-auto max-w-[58rem] px-6 sm:px-12 py-20 sm:py-24">
+      <p class="pull-quote">
+        "If a customer escalates the same bug twice, I'd rather rewrite the architecture than write a third apology."
+      </p>
+      <p class="mt-6 text-sm text-ink-500 font-mono">— how I ended up coding for a support role</p>
+
+      <a href="https://www.linkedin.com/in/r%C3%A9mypollet/" target="_blank" rel="noopener" class="mt-12 group flex items-center gap-5 rounded-2xl p-6 transition-all hover:-translate-y-1" style="background: linear-gradient(120deg, #ecfdf5 0%, #ffffff 50%, #fef3c7 100%); border: 2px solid; border-image: linear-gradient(120deg, #10b981, #06b6d4 50%, #fbbf24) 1; box-shadow: 0 14px 40px -16px rgba(15,23,42,0.14);">
+        <span class="flex-shrink-0 inline-flex items-center justify-center w-14 h-14 rounded-full" style="background: #0a66c2; color: white;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM8.34 17.34H5.67V9.66h2.67zM7 8.66a1.55 1.55 0 1 1 0-3.1 1.55 1.55 0 0 1 0 3.1zm11.34 8.68h-2.67v-3.74c0-.89 0-2-1.22-2s-1.41.95-1.41 1.94v3.8H10.4V9.66h2.56v1.05h.04c.36-.68 1.23-1.4 2.53-1.4 2.7 0 3.21 1.78 3.21 4.1z"/></svg>
+        </span>
+        <div class="flex-1">
+          <p class="font-semibold text-ink-900 leading-tight">Want the LinkedIn version?</p>
+          <p class="text-sm text-ink-700 mt-1">Click here &mdash; full work history, recommendations, network &middot; <span class="font-mono text-emerald-700">linkedin.com/in/rémypollet</span></p>
+        </div>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── HOW I GOT HERE (dark) ─────────────────────────── -->
+  <section class="relative overflow-hidden" style="background: #0f172a;">
+    <div class="absolute inset-0 grid-pattern-dark opacity-25"></div>
+    <div class="relative mx-auto max-w-[60rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <p class="section-tag section-tag-dark mb-5">The path</p>
+      <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] mb-12" style="color:#f8fafc">
+        How I <span class="gradient-emerald-dark">ended up here</span>.
+      </h2>
+
+      <div class="space-y-1">
+        <div class="timeline-item" style="border-left-color: rgba(52,211,153,0.2)">
+          <p class="font-mono text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-emerald-400 mb-1">Now</p>
+          <h3 class="text-lg font-semibold" style="color:#f8fafc">Head of Helpdesk · Blyott</h3>
+          <p class="text-sm mt-2 leading-relaxed" style="color:#cbd5e1">
+            Picking up customer escalations and the architecture decisions behind them. Daily mix of demo calls, technical write-ups, schema migrations, and pitch decks. Architect across 3 active verticals (RPlay horeca, Moniott agri, healthcare RTLS) on one shared platform.
+          </p>
+        </div>
+
+        <div class="timeline-item" style="border-left-color: rgba(52,211,153,0.2)">
+          <p class="font-mono text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-emerald-400 mb-1">2024 – present · Side-projects became products</p>
+          <h3 class="text-lg font-semibold" style="color:#f8fafc">Co-founded Scenti.AI · built scenti-survey, RPlay, PostYourCard</h3>
+          <p class="text-sm mt-2 leading-relaxed" style="color:#cbd5e1">
+            What started as <em>"let me solve this customer's problem on a weekend"</em> turned into a portfolio of side ventures. Some are paying. Some are still validating. All are mine — design, code, deploy, support.
+          </p>
+        </div>
+
+        <div class="timeline-item" style="border-left-color: rgba(52,211,153,0.2)">
+          <p class="font-mono text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-emerald-400 mb-1">2022 – 2024 · Field operations</p>
+          <h3 class="text-lg font-semibold" style="color:#f8fafc">Customer-facing, hands on the IoT stack</h3>
+          <p class="text-sm mt-2 leading-relaxed" style="color:#cbd5e1">
+            Onsite installations, diagnosing BLE drop-offs, walking through hospital corridors with a spectrum analyser. Most architects don't know what RSSI does at <code class="font-mono text-emerald-300 bg-emerald-500/10 px-1 rounded">-75 dBm</code> in a steel doorframe. I do.
+          </p>
+        </div>
+
+        <div class="timeline-item" style="border-left-color: transparent">
+          <p class="font-mono text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-emerald-400 mb-1">Earlier</p>
+          <h3 class="text-lg font-semibold" style="color:#f8fafc">Business Management studies + early-career sales</h3>
+          <p class="text-sm mt-2 leading-relaxed" style="color:#cbd5e1">
+            Bachelor in Business Management for the customer-facing half of the work; the architecture half I built on top through 4 years of SaaS — by doing, not by studying. The combination most people pick one of. I picked both, and the rest is consequence.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── HOW I WORK (light) ─────────────────────────── -->
+  <section class="bg-paper">
+    <div class="hairline"></div>
+    <div class="mx-auto max-w-[72rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <p class="section-tag mb-5">How I work</p>
+      <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] text-ink-900 mb-12">
+        Five things you can <span class="gradient-emerald">hold me to</span>.
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-3">
+
+        <div class="value-card">
+          <span class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>
+          </span>
+          <h3>Customer pain → architecture</h3>
+          <p class="text-sm leading-relaxed mt-2">Every architecture decision I make has a customer ticket behind it. <em>"What problem does this solve?"</em> is the only meaningful refactor question.</p>
+        </div>
+
+        <div class="value-card">
+          <span class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V3h18"/><path d="M3 21h18M7 17V9M11 17V13M15 17v-7M19 17V7"/></svg>
+          </span>
+          <h3>Boring infra &gt; clever infra</h3>
+          <p class="text-sm leading-relaxed mt-2">Postgres, Tailwind, server-side rendering, single-region until proven otherwise. I reach for "exotic" only when the boring path is measurably broken.</p>
+        </div>
+
+        <div class="value-card">
+          <span class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M5 7h14M5 7l-2 6a4 4 0 0 0 8 0l-2-6M19 7l-2 6a4 4 0 0 0 8 0l-2-6"/></svg>
+          </span>
+          <h3>Ship + own + support</h3>
+          <p class="text-sm leading-relaxed mt-2">I won't design something I'd hate to be paged for. The Head of Helpdesk role keeps that honest &mdash; I get the call when my architecture fails.</p>
+        </div>
+
+        <div class="value-card">
+          <span class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a4 4 0 0 0-4 4v1a4 4 0 0 0-2 7v1a4 4 0 0 0 6 3.5A4 4 0 0 0 18 16v-1a4 4 0 0 0-2-7V7a4 4 0 0 0-4-4z"/><path d="M12 8v12M9 11.5l3 1.5 3-1.5"/></svg>
+          </span>
+          <h3>AI as a collaborator, not a magic wand</h3>
+          <p class="text-sm leading-relaxed mt-2">I pair with Claude daily. Not because it's trendy — because the right LLM in the loop turns "this would take a sprint" into "this can ship today." This page is partly proof.</p>
+        </div>
+
+        <div class="value-card md:col-span-2">
+          <span class="value-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12c1 1.5 2 2 3 2s2-.5 3-2"/><circle cx="9.5" cy="10" r=".8" fill="currentColor"/><circle cx="14.5" cy="10" r=".8" fill="currentColor"/></svg>
+          </span>
+          <h3>Calm under escalation</h3>
+          <p class="text-sm leading-relaxed mt-2">A panicked customer doesn't need a panicked engineer. The job is to translate <em>"everything is on fire"</em> into <em>"here's what we know, here's what we're doing, here's the next update."</em> Then keep that promise. Track record of doing this without losing my Tuesday.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── OUTSIDE WORK (dark) ─────────────────────────── -->
+  <section class="relative overflow-hidden" style="background: #0f172a;">
+    <div class="absolute inset-0 grid-pattern-dark opacity-25"></div>
+    <div class="float-orb" style="bottom: -150px; right: -100px; width: 400px; height: 400px; background: radial-gradient(closest-side, #06b6d4, transparent); opacity: 0.18;"></div>
+
+    <div class="relative mx-auto max-w-[58rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <p class="section-tag section-tag-dark mb-5">Outside the laptop</p>
+      <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] mb-8" style="color:#f8fafc">
+        What I do when <span class="gradient-emerald-dark">I'm not shipping</span>.
+      </h2>
+
+      <div class="space-y-5 text-lg leading-relaxed" style="color:#cbd5e1">
+        <p>
+          I live in <strong style="color:#f8fafc">Bruges</strong>, which is why several of my products end up Bruges-themed (PostYourCard's hotel partners are local, the survey's example tenant is Brugge). Working from a tourist city teaches you more about user-onboarding edge cases than you'd think.
+        </p>
+        <p>
+          I run my own <strong style="color:#f8fafc">chess club in Bruges</strong> &mdash; weekly evenings, mixed levels, a small community I built and still organise. It's the same loop as my products, just with pawns instead of Postgres: notice a gap, build the thing, keep it running.
+        </p>
+        <p>
+          On weekends I make <strong style="color:#f8fafc">music and perform live</strong> &mdash; with my brother and my uncle, both of whom also happen to be partners on the side businesses. Stage on Saturday, sprint review on Monday. The people I keep building things with are family, by accident.
+        </p>
+        <p>
+          I'm a multi-vertical entrepreneur by accident: I helped my <em>nonkel</em> launch his postcard business and ended up building him a SaaS. I helped a partner with cow-tracking and ended up building a vertical. The pattern is always the same: <em>this is too painful by hand, let me build the boring tool.</em>
+        </p>
+        <p>
+          Honestly: I rarely keep a 40-hour work week. I don't count my weeks in hours &mdash; I count them in <strong style="color:#f8fafc">interests and ideas</strong> I picked up, learned, or tried to build. Sometimes that's a schema migration, sometimes a chess opening, sometimes a chord change. All equally welcome.
+        </p>
+      </div>
+
+      <div class="marginalia mt-10 space-y-1" style="color:#34d399">
+        <p>&mdash; or testing a new tag prototype on a fridge in my kitchen.</p>
+        <p>&mdash; or chasing a flaky KNOT gateway reconnect over the weekend.</p>
+        <p>&mdash; or sketching the next architecture diagram on the back of a Bruges restaurant napkin.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── WHAT I'M LOOKING FOR (light) ─────────────────────────── -->
+  <section class="bg-paper">
+    <div class="hairline"></div>
+    <div class="mx-auto max-w-[58rem] px-6 sm:px-12 py-20 sm:py-28">
+
+      <p class="section-tag mb-5">What I'm looking for</p>
+      <h2 class="text-4xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em] text-ink-900 mb-8">
+        Why this role, <span class="gradient-emerald">this team, this year</span>.
+      </h2>
+
+      <div class="space-y-5 text-lg leading-relaxed text-ink-700">
+        <p>
+          I've spent the last three years being the only architect in the room. I want to be the only architect in <em>my</em> room — surrounded by 400 colleagues who've solved the problem already, and one customer who needs it solved again, differently.
+        </p>
+        <p>
+          The Solita description (especially the <em>"holistic approach … sustainable, production-ready AI solutions"</em> part) maps to how I already work, just at a smaller scale. The growth I want is upward depth — bigger customers, more architectural rigor, real consulting craft — not sideways breadth.
+        </p>
+        <p>
+          And honestly: I want to spend more days in customer workshops sketching architectures, and fewer days running <code class="font-mono text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded text-base border border-emerald-200">vercel deploy --prod</code> at 22:00 because the auto-deploy hook broke.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── BACK TO CV (dark closer) ─────────────────────────── -->
+  <section class="relative overflow-hidden grid-glow" style="background: #0f172a;">
+    <div class="absolute inset-0 grid-pattern-dark opacity-30"></div>
+    <div class="float-orb" style="top: 50%; left: 50%; transform: translate(-50%,-50%); width: 500px; height: 500px; background: radial-gradient(closest-side, #10b981, transparent); opacity: 0.25;"></div>
+
+    <div class="relative mx-auto max-w-[55rem] px-6 sm:px-12 py-20 sm:py-24 text-center">
+      <p class="section-tag section-tag-dark justify-center mb-5">Ready to talk specifics?</p>
+      <h2 class="text-3xl sm:text-5xl font-bold leading-[1.05] tracking-[-0.02em]" style="color:#f8fafc">
+        Let's start <span class="gradient-emerald-dark">a conversation</span>.
+      </h2>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn-primary-dark">← Back to CV</a>
+        <a href="mailto:jremy.pollet@icloud.com" class="btn-secondary-dark">jremy.pollet@icloud.com</a>
+        <a href="https://wa.me/32494861699" target="_blank" rel="noopener" class="btn-secondary-dark">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
