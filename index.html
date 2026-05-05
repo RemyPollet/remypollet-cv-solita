@@ -938,6 +938,46 @@
       pointer-events: auto !important;
     }
 
+
+    /* Mobile header layout fix — row, not column */
+    @media (max-width: 760px) {
+      header.relative {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        flex-wrap: wrap;
+      }
+      header > a:first-child { flex-shrink: 0; }
+      .nav-toggle {
+        order: 99;
+        margin-left: auto;
+      }
+      header nav {
+        order: 100;
+        position: absolute;
+        top: calc(100% - 8px);
+        right: 24px;
+        left: auto;
+        background: rgba(15,23,42,0.96);
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(52,211,153,0.35);
+        border-radius: 12px;
+        padding: 14px 18px;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+        width: auto !important;
+        min-width: 180px;
+        display: none !important;
+        z-index: 60;
+        box-shadow: 0 20px 60px -10px rgba(0,0,0,0.5);
+      }
+      .nav-toggle-checkbox:checked ~ nav {
+        display: flex !important;
+      }
+    }
+
   </style>
 </head>
 <body class="antialiased">
