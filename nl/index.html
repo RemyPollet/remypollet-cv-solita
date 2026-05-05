@@ -978,6 +978,68 @@
       }
     }
 
+
+    /* Strong help-tooltip overrides — modal-style on tap */
+    .help-icon.show-tip::after {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      bottom: auto !important;
+      right: auto !important;
+      transform: translate(-50%, -50%) !important;
+      width: calc(100vw - 40px) !important;
+      max-width: 360px !important;
+      padding: 18px 20px !important;
+      font-size: 0.92rem !important;
+      line-height: 1.55 !important;
+      background: #0a0f1c !important;
+      color: #f1f5f9 !important;
+      border: 2px solid #34d399 !important;
+      border-radius: 14px !important;
+      box-shadow: 0 30px 80px -10px rgba(0,0,0,0.8) !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      z-index: 10001 !important;
+    }
+    .help-icon.show-tip::before {
+      content: "" !important;
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(0,0,0,0.65) !important;
+      backdrop-filter: blur(2px) !important;
+      z-index: 10000 !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      width: auto !important;
+      height: auto !important;
+      border: none !important;
+    }
+    /* On wider screens with hover capability — go back to small hover tooltip */
+    @media (hover: hover) and (pointer: fine) {
+      .help-icon[data-tip]:hover::after {
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        right: -4px !important;
+        left: auto !important;
+        bottom: auto !important;
+        transform: translateY(0) !important;
+        width: 280px !important;
+        max-width: 280px !important;
+        padding: 12px 14px !important;
+        font-size: 0.78rem !important;
+        background: #0a0f1c !important;
+        border: 1px solid rgba(52,211,153,0.4) !important;
+        z-index: 100 !important;
+      }
+      .help-icon[data-tip]:hover::before {
+        display: none !important;
+      }
+      .help-icon:not(.show-tip):not(:hover)::after {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -1795,23 +1857,32 @@
   </section>
 
 
+  
+
+
   <script>
-    // Mobile-friendly tooltip toggle for .help-icon
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.help-icon[data-tip]').forEach(btn => {
-        btn.addEventListener('click', e => {
+        const handler = e => {
           e.preventDefault();
           e.stopPropagation();
+          e.stopImmediatePropagation();
           const wasOpen = btn.classList.contains('show-tip');
-          // Close all others
           document.querySelectorAll('.help-icon.show-tip').forEach(b => b.classList.remove('show-tip'));
           if (!wasOpen) btn.classList.add('show-tip');
-        });
+          return false;
+        };
+        btn.addEventListener('click', handler, true);
+        btn.addEventListener('touchstart', handler, true);
       });
-      // Close on outside tap
-      document.addEventListener('click', () => {
-        document.querySelectorAll('.help-icon.show-tip').forEach(b => b.classList.remove('show-tip'));
-      });
+      // Close on outside tap (but not on the button itself)
+      const closeAll = e => {
+        if (!e.target.closest('.help-icon')) {
+          document.querySelectorAll('.help-icon.show-tip').forEach(b => b.classList.remove('show-tip'));
+        }
+      };
+      document.addEventListener('click', closeAll);
+      document.addEventListener('touchstart', closeAll);
     });
   </script>
 
