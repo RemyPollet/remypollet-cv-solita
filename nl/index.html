@@ -1262,6 +1262,14 @@
     }
     .help-modal-close:hover { background: rgba(255,255,255,0.1); color: #f1f5f9; }
 
+
+    /* Help-icon z-index + interaction priority */
+    .help-icon {
+      z-index: 50 !important;
+      pointer-events: auto !important;
+      touch-action: manipulation !important;
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -1362,7 +1370,7 @@
           </p>
           <p class="mt-4 text-sm leading-relaxed flex items-center gap-2" style="color:#94a3b8">
             <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(52,211,153,0.18);border:1.5px solid rgba(52,211,153,0.5);color:#6ee7b7;font-size:0.75rem;font-weight:700;flex-shrink:0;">?</span>
-            <span>Tik op de <strong style="color:#cbd5e1">"?"</strong> op elke kaart voor een uitleg in gewone taal &mdash; geen jargon.</span>
+            <span>Tik op de <strong style="color:#cbd5e1">"?"</strong> op elke kaart voor een uitleg in gewone taal &mdash; geen ingewikkelde taal.</span>
           </p>
         </div>
       </div>
@@ -2114,50 +2122,6 @@
 
 
   <script>
-    // Reliable help-icon modal
-    document.addEventListener('DOMContentLoaded', () => {
-      const labelEN = 'Plain English';
-      const labelNL = 'In gewone taal';
-      const isNL = document.documentElement.lang === 'nl';
-      const label = isNL ? labelNL : labelEN;
-
-      function openHelpModal(text) {
-        // Remove any existing
-        document.querySelectorAll('.help-modal-overlay').forEach(o => o.remove());
-        const overlay = document.createElement('div');
-        overlay.className = 'help-modal-overlay';
-        overlay.innerHTML = `
-          <div class="help-modal" role="dialog" aria-modal="true">
-            <button class="help-modal-close" aria-label="Close">&times;</button>
-            <div class="help-modal-label">${label}</div>
-            <div class="help-modal-text">${text}</div>
-          </div>
-        `;
-        document.body.appendChild(overlay);
-        const close = () => overlay.remove();
-        overlay.addEventListener('click', e => {
-          if (e.target === overlay || e.target.classList.contains('help-modal-close')) close();
-        });
-        document.addEventListener('keydown', function esc(e) {
-          if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
-        });
-      }
-
-      document.querySelectorAll('.help-icon[data-tip]').forEach(btn => {
-        const handler = e => {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          openHelpModal(btn.getAttribute('data-tip'));
-          return false;
-        };
-        btn.addEventListener('click', handler, true);
-      });
-    });
-  </script>
-
-
-  <script>
     // Close mobile menu on nav link click
     document.addEventListener('DOMContentLoaded', () => {
       const toggle = document.getElementById('nav-toggle');
@@ -2169,6 +2133,62 @@
         });
       }
     });
+  </script>
+
+
+  <script>
+    // Reliable help-icon modal — handles all event types
+    (function() {
+      const labelEN = 'Plain English';
+      const labelNL = 'In gewone taal';
+      const isNL = document.documentElement.lang === 'nl';
+      const label = isNL ? labelNL : labelEN;
+
+      function openHelpModal(text) {
+        document.querySelectorAll('.help-modal-overlay').forEach(o => o.remove());
+        const overlay = document.createElement('div');
+        overlay.className = 'help-modal-overlay';
+        overlay.innerHTML = '<div class="help-modal" role="dialog" aria-modal="true">'
+          + '<button class="help-modal-close" aria-label="Close">&times;</button>'
+          + '<div class="help-modal-label">' + label + '</div>'
+          + '<div class="help-modal-text">' + text + '</div>'
+          + '</div>';
+        document.body.appendChild(overlay);
+        document.body.style.overflow = 'hidden';
+        const close = () => { overlay.remove(); document.body.style.overflow = ''; };
+        overlay.addEventListener('click', e => {
+          if (e.target === overlay || e.target.classList.contains('help-modal-close')) close();
+        });
+        document.addEventListener('keydown', function esc(e) {
+          if (e.key === 'Escape') { close(); document.removeEventListener('keydown', esc); }
+        });
+      }
+
+      function bindHelpIcons() {
+        document.querySelectorAll('.help-icon[data-tip]').forEach(btn => {
+          if (btn._helpBound) return;
+          btn._helpBound = true;
+          const tip = btn.getAttribute('data-tip');
+          const handler = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            openHelpModal(tip);
+            return false;
+          };
+          // Bind multiple event types in capture phase to beat parent <a>
+          btn.addEventListener('click', handler, { capture: true });
+          btn.addEventListener('touchend', handler, { capture: true });
+          btn.addEventListener('pointerup', handler, { capture: true });
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindHelpIcons);
+      } else {
+        bindHelpIcons();
+      }
+    })();
   </script>
 
 </body>
