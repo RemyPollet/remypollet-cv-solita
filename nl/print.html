@@ -797,6 +797,19 @@
       }
     }
 
+
+    /* Force meta-pill SVG sizes on mobile (was rendering huge) */
+    .meta-pill svg, .contacts svg, .triad-ico svg, .sec-ico svg, .sb-ico svg, .qf-ico svg {
+      width: 14px !important;
+      height: 14px !important;
+      flex-shrink: 0 !important;
+    }
+    .sec-ico svg, .triad-ico svg { width: 16px !important; height: 16px !important; }
+    .photo svg { display: none !important; }
+    @media (max-width: 760px) {
+      .meta-pill svg { width: 13px !important; height: 13px !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -819,7 +832,7 @@
         <h1 class="name">Remy Pollet</h1>
         <p class="tagline">Data &amp; AI Architect · SaaS · IoT · productie-systemen</p>
         <p class="role-line">
-          <strong>Head of Helpdesk @ <a href="https://www.blyott.com" target="_blank" rel="noopener">Blyott</a></strong> · building and scaling echte AI &amp; data systems.
+          <strong>Head of Helpdesk @ <a href="https://www.blyott.com" target="_blank" rel="noopener">Blyott</a></strong> · bouwt en schaalt AI- en data-systemen in productie.
         </p>
         <div class="meta-pills">
           <span class="meta-pill">
