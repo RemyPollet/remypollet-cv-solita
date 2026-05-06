@@ -1270,6 +1270,22 @@
       touch-action: manipulation !important;
     }
 
+
+    /* Mobile menu — spread items for better breathing room */
+    @media (max-width: 760px) {
+      .nav-toggle-checkbox:checked ~ nav {
+        gap: 36px !important;
+        justify-content: space-evenly !important;
+        padding: 110px 24px 80px !important;
+      }
+      .nav-toggle-checkbox:checked ~ nav::before {
+        top: 48px !important;
+      }
+      .nav-toggle-checkbox:checked ~ nav a {
+        padding: 4px 14px;
+      }
+    }
+
   </style>
 </head>
 <body class="antialiased">
@@ -1308,7 +1324,7 @@
       </div>
 
       <p class="mb-5 text-base sm:text-lg leading-relaxed max-w-2xl italic" style="color:#a7f3d0">
-        Beste Solita-team &mdash; ik las jullie vacature voor <span class="not-italic font-semibold" style="color:#f8fafc; padding: 0 0.15em;">Data Architect (AI &amp; Analytics)</span> twee keer deze week en herkende mezelf in elke regel. Dus in plaats van een statisch CV op te sturen, heb ik deze gebouwd &mdash; in minder dan twee uur, samen met een LLM, op dezelfde stack die ik dagelijks gebruik.
+        Beste Solita-team &mdash; ik las jullie vacature voor <span class="not-italic font-semibold" style="color:#f8fafc; padding: 0 0.15em;">Data Architect (AI &amp; Analytics)</span> twee keer deze week en herkende mezelf in elke regel. Dus in plaats van een statisch CV op te sturen, heb ik deze gebouwd &mdash; samen met een LLM, op dezelfde stack die ik dagelijks gebruik.
       </p>
 
       <h1 class="text-balance text-[2.25rem] sm:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-[-0.025em] max-w-5xl" style="color:#f8fafc">
