@@ -2156,5 +2156,20 @@
     });
   </script>
 
+
+  <script>
+    // Close mobile menu on nav link click
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.getElementById('nav-toggle');
+      if (toggle) {
+        document.querySelectorAll('header nav a').forEach(a => {
+          a.addEventListener('click', () => {
+            toggle.checked = false;
+          });
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
