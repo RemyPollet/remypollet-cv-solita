@@ -931,6 +931,35 @@
     }
     .orb-light { background: #34d399; box-shadow: 0 0 10px #34d399, 0 0 0 3px rgba(52,211,153,0.18); }
 
+
+    /* Mobile venture-card layout fix */
+    @media (max-width: 760px) {
+      .venture-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .venture-card .v-head {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+      }
+      .venture-card .v-name {
+        font-size: 11.5pt !important;
+      }
+      .venture-card .v-tag {
+        font-size: 8.5pt !important;
+        font-weight: 600;
+        opacity: 0.9;
+      }
+      .venture-card .v-desc {
+        font-size: 10pt !important;
+        line-height: 1.5 !important;
+      }
+      .v-actions {
+        flex-wrap: wrap;
+      }
+    }
+
   </style>
 </head>
 <body>
