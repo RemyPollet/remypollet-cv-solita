@@ -1903,7 +1903,7 @@
       <div class="mt-8 space-y-6 text-lg leading-relaxed" style="color:#cbd5e1">
         <p>Mijn functie bij Blyott <span style="font-style:italic;color:#94a3b8;font-size:0.95em;">(huidige job)</span> is <em>Head of Helpdesk</em>. In de praktijk ben ik de persoon die de klant-ticket oppakt &mdash; én de persoon die de migratie schrijft die het oplost.</p>
         <p>De meeste architecten ontwerpen en geven door. De meeste helpdesk-leads vertalen maar leveren niet. Ik doe beide, omdat Blyott klein genoeg is dat het moet. Dat is precies de spier die Solita’s vacature vraagt: <em>"translate customer needs into clear, credible, and scalable architectures."</em></p>
-        <p>Voorbeeld van deze week: een ziekenhuis-ICU kreeg dubbele alerts voor dezelfde out-of-range frigo. De klant escaleerde naar mij. Ik las de alert-engine, vond het ontbrekende dedup-window, ontwierp de fix (per-config 1-uur throttle, 5-min voor critical), leverde het in productie en updatete de klant over wat er veranderde. Zelfde persoon, zelfde dag. <strong style="color:#f8fafc">Dat is geen vacaturetekst &mdash; dat is gewoon dinsdag.</strong></p>
+        <p>Voorbeeld van deze week: een ziekenhuis-ICU kreeg dubbele alerts. Ik diagnostiseerde het (ontbrekend dedup-window), ontwierp en leverde de fix, en updatete de klant &mdash; zelfde persoon, zelfde dag.</p>
         <p class="text-2xl sm:text-3xl leading-snug font-semibold mt-10" style="color:#f8fafc">En <span class="gradient-emerald-dark">dáár</span> zit voor mij de hele aantrekkingskracht van Solita.</p>
 
         <p>Vandaag ben ik in mijn eentje architect, helpdesk-lead, sales-engineer én degene die de gateway om 03:00 reset. Het werkt &mdash; maar het schaalt niet, en de architectuur-helft blijft oppervlakkiger dan ik wil.</p>
@@ -1965,14 +1965,7 @@
           <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Anthropic Claude API voor autonome build-agents, RAG over real-time IoT-events, structured-output prompts met Zod-validatie, retries met exponential backoff.</p>
         </div>
 
-        <div class="domain-card-dark domain-amber"><button type="button" class="help-icon" data-tip="Waar foto's van gebruikers leven. Cloudinary bewerkt afbeeldingen automatisch (croppen, AI-achtergrond verwijderen), Cloudflare R2 slaat ze goedkoop op." aria-label="Explain">?</button>
-          <div class="flex items-start gap-3 mb-3">
-            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m3 18 5-5 4 4 3-3 6 6"/></svg></span>
-            <span class="pill">Media &amp; storage</span>
-          </div>
-          <h3 class="text-lg font-semibold">Cloudinary · Cloudflare R2</h3>
-          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Cloudinary voor user-uploads met transformaties (crop, resize, format) + AI background removal, Cloudflare R2 voor object storage, signed URLs, lifecycle policies, CDN delivery.</p>
-        </div>
+        
 
         <div class="domain-card-dark domain-blue"><button type="button" class="help-icon" data-tip="Hoe draadloze sensoren (in frigo's, op tags) data naar de cloud sturen. Batterij-toestelletjes praten Bluetooth met een kleine gateway-box die de data over internet verstuurt." aria-label="Explain">?</button>
           <div class="flex items-start gap-3 mb-3">
@@ -1983,14 +1976,7 @@
           <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">BLE-naar-cloud pipeline: Teltonika EYE + Blyott BT-T2 tags → KNOT gateway → Mosquitto MQTT-broker → consumer service → state engine. 1NCE cellular SIM voor gateways zonder Wi-Fi. mTLS op elke hop.</p>
         </div>
 
-        <div class="domain-card-dark domain-rose"><button type="button" class="help-icon" data-tip="Live updates rechtstreeks naar het scherm van de gebruiker pushen — zonder dat de pagina moet herladen. Gebruikt voor live alerts en dashboards." aria-label="Explain">?</button>
-          <div class="flex items-start gap-3 mb-3">
-            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>
-            <span class="pill">Real-time</span>
-          </div>
-          <h3 class="text-lg font-semibold">Valkey · WebSocket · SSE</h3>
-          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Valkey pub-sub voor cross-service event-distributie, WebSocket-gateway voor live-alert streaming naar PWA, Server-Sent Events-fallback, automatische reconnect met backoff.</p>
-        </div>
+        
 
         <div class="domain-card-dark domain-emerald"><button type="button" class="help-icon" data-tip="Waar de echte klantdata leeft. Een moderne cloud-database met strikte tenant-isolatie: ziekenhuis A kan nooit data van ziekenhuis B zien, by design." aria-label="Explain">?</button>
           <div class="flex items-start gap-3 mb-3">
@@ -2019,14 +2005,7 @@
           <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Custom RSSI-naar-afstand triangulatie-engine (Moniott koeien-locatie), Leaflet voor indoor maps, custom SVG-renderers voor gestileerde stal- / keuken-layouts, per-tenant kalibratie.</p>
         </div>
 
-        <div class="domain-card-dark domain-blue"><button type="button" class="help-icon" data-tip="Documenten automatisch genereren — legal contracten met handtekeningen, marketing-brochures met eigen layout — rechtstreeks vanuit het platform." aria-label="Explain">?</button>
-          <div class="flex items-start gap-3 mb-3">
-            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span>
-            <span class="pill">Documenten &amp; PDF</span>
-          </div>
-          <h3 class="text-lg font-semibold">react-pdf · headless Chrome</h3>
-          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">react-pdf voor legal agreements met ingebedde handtekeningen + audit trail, headless Chrome PDF-export pipeline voor marketing-brochures, ingebedde typografie voor print.</p>
-        </div>
+        
 
         <div class="domain-card-dark domain-cyan"><button type="button" class="help-icon" data-tip="Waar de website zelf draait, en hoe interne services veilig worden ontsloten zonder firewall-poorten te openen." aria-label="Explain">?</button>
           <div class="flex items-start gap-3 mb-3">
@@ -2037,14 +2016,7 @@
           <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Vercel voor App Router deploys met previews, Cloudflare named tunnels die on-prem services blootstellen, Tailscale mesh-VPN voor ops-SSH (poort 22 publiek dicht).</p>
         </div>
 
-        <div class="domain-card-dark domain-violet"><button type="button" class="help-icon" data-tip="Custom grafieken en dashboards bovenop de data — inclusief prijsonderzoek-methodologie (Van Westendorp PSM) gebruikt in de scenti.ai-marktvalidatie." aria-label="Explain">?</button>
-          <div class="flex items-start gap-3 mb-3">
-            <span class="int-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V3h18"/><path d="M7 17V9M11 17V13M15 17v-7M19 17V7"/></svg></span>
-            <span class="pill">Analytics</span>
-          </div>
-          <h3 class="text-lg font-semibold">PSM · Recharts · custom dashboards</h3>
-          <p class="text-sm leading-relaxed mt-2" style="color:#cbd5e1">Custom Van Westendorp PSM-prijsanalyses, Recharts time-series voor IoT-telemetrie, multi-vertical admin-dashboards, CSV-export pipelines voor VLAIO-rapportering.</p>
-        </div>
+        
 
       </div>
     </div>
