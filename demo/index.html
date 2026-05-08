@@ -233,86 +233,182 @@
 <body>
 <div class="hex-bg"></div>
 
-<!-- ────────────────── HOME ────────────────── -->
-<div class="view active" id="view-home">
-  <div class="topbar">
-    <div class="logo">remy<span class="play">▸</span> demo</div>
-    <span style="font-family:monospace;font-size:11px;">AZ Demo · Healthcare</span>
+<!-- ────────────────── HOME (exact replica of real RPlay /home) ────────────────── -->
+<div class="view active" id="view-home" style="padding:0">
+  <!-- Demo strip — bovenaan, discreet -->
+  <div style="background:rgba(16,185,129,0.12);border-bottom:1px solid rgba(16,185,129,0.25);padding:6px 16px;text-align:center;font-size:10px;font-weight:600;color:#6ee7b7;letter-spacing:0.05em">
+    <svg style="width:11px;height:11px;display:inline;vertical-align:-2px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    DEMO · alle data is fictief
   </div>
 
-  <div class="demo-banner">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-    <span><strong>Demo-modus</strong> · alle data is fictief, niets wordt opgeslagen</span>
-  </div>
+  <div style="padding:24px 8px 32px">
+    <!-- RPlay wordmark — green R + emerald play arrow -->
+    <div style="display:flex;justify-content:center;align-items:center;margin-bottom:36px;gap:6px">
+      <span style="font-size:46px;font-weight:900;letter-spacing:-0.04em;line-height:1;font-family:Inter,sans-serif">
+        <span style="color:#34d4a8;text-shadow:0 0 25px rgba(52,212,168,0.55), 0 0 60px rgba(52,212,168,0.3)">R</span><span style="color:#fff">Play</span>
+      </span>
+      <svg style="height:22px;width:auto;margin-bottom:4px" viewBox="0 0 20 20" fill="none">
+        <path d="M3 2 L17 10 L3 18 Z" fill="#34d4a8" style="filter:drop-shadow(0 0 8px rgba(52,212,168,0.6))"/>
+      </svg>
+    </div>
 
-  <div class="hero-eyebrow">VANDAAG · 8 mei 2026</div>
-  <h1 class="hero-h1">Goedemorgen,<br>alles loopt.</h1>
+    <!-- Hero — eyebrow with hairlines + sparkle + dual-gradient title + tenant -->
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px">
+        <div style="height:1px;width:32px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.4))"></div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <svg style="width:11px;height:11px" viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></svg>
+          <span style="font-size:9px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:#fda4af;text-shadow:0 0 25px rgba(244,63,94,0.5)">Welkom</span>
+        </div>
+        <div style="height:1px;width:32px;background:linear-gradient(to left,transparent,rgba(244,63,94,0.4))"></div>
+      </div>
+      <h1 style="font-size:38px;font-weight:700;line-height:1.05;letter-spacing:-0.05em;margin:0">
+        <span style="display:block;background:linear-gradient(to bottom,rgba(255,255,255,0.95),rgba(255,255,255,0.5));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:0.18em">Temperatuur</span>
+        <span style="display:block;background:linear-gradient(to right,#f43f5e,#f59e0b,#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(244,63,94,0.45));padding-bottom:0.18em">Monitoring.</span>
+      </h1>
+      <p style="margin:14px 0 0;font-size:14px;font-weight:600;letter-spacing:-0.01em;color:rgba(255,255,255,0.85)">AZ Demo Healthcare</p>
+    </div>
 
-  <div class="stats-grid">
-    <div class="stat ok"><div class="stat-num">14</div><div class="stat-lbl">In range</div></div>
-    <div class="stat warn"><div class="stat-num">2</div><div class="stat-lbl">Bijna out</div></div>
-    <div class="stat alarm"><div class="stat-num">1</div><div class="stat-lbl">Alarm</div></div>
-    <div class="stat"><div class="stat-num">0</div><div class="stat-lbl">Offline</div></div>
-  </div>
+    <!-- Tile LIST (vertical, niet grid) — accent hairlines tussen tiles -->
+    <div style="margin:0 -8px">
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.33),transparent)"></div>
 
-  <div class="tiles">
-    <div class="tile rose" onclick="go('frigos')">
-      <div class="tile-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg>
-      </div>
-      <div>
-        <div class="tile-label">Koelingen</div>
-        <div class="tile-desc">17 sensoren live</div>
-      </div>
-    </div>
-    <div class="tile rose" onclick="go('alerts')">
-      <span class="badge">1</span>
-      <div class="tile-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-      </div>
-      <div>
-        <div class="tile-label">Alarmen</div>
-        <div class="tile-desc">1 actief nu</div>
-      </div>
-    </div>
-    <div class="tile cyan" onclick="alert('HACCP-audittrail · 28 dagen schoon')">
-      <div class="tile-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>
-      </div>
-      <div>
-        <div class="tile-label">HACCP</div>
-        <div class="tile-desc">Audit klaar</div>
-      </div>
-    </div>
-    <div class="tile rose" onclick="go('heatmap')">
-      <div class="tile-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      </div>
-      <div>
-        <div class="tile-label">Warmtekaart</div>
-        <div class="tile-desc">17 sensoren</div>
-      </div>
-    </div>
-    <div class="tile amber" onclick="go('trends')">
-      <div class="tile-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
-      </div>
-      <div>
-        <div class="tile-label">Trends</div>
-        <div class="tile-desc">7-dagen + CSV</div>
-      </div>
-    </div>
-    <div class="tile slate" onclick="alert('Beheer · multi-tenant admin')">
-      <div class="tile-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </div>
-      <div>
-        <div class="tile-label">Beheer</div>
-        <div class="tile-desc">Tenant + users</div>
-      </div>
+      <!-- Koelingen -->
+      <a class="rp-tile rose" onclick="go('frigos')">
+        <span class="rp-stripe rose"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Koelingen</div>
+          <div class="rp-desc">Vaccin · bloed · lab</div>
+        </div>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.33),transparent)"></div>
+
+      <!-- Alarmen -->
+      <a class="rp-tile rose" onclick="go('alerts')">
+        <span class="rp-stripe rose"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Alarmen</div>
+          <div class="rp-desc">1 actief nu</div>
+        </div>
+        <span class="rp-badge"><span class="rp-badge-ping"></span><span style="position:relative">1</span></span>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(6,182,212,0.33),transparent)"></div>
+
+      <!-- Compliance -->
+      <a class="rp-tile cyan" onclick="alert('Compliance · GDP &amp; FAGG-klaar · 28 dagen schoon')">
+        <span class="rp-stripe cyan"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Compliance</div>
+          <div class="rp-desc">GDP &amp; FAGG-klaar</div>
+        </div>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(244,63,94,0.33),transparent)"></div>
+
+      <!-- Warmtekaart -->
+      <a class="rp-tile rose" onclick="go('heatmap')">
+        <span class="rp-stripe rose"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Warmtekaart</div>
+          <div class="rp-desc">Alle sensors in één blik</div>
+        </div>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(245,158,11,0.33),transparent)"></div>
+
+      <!-- Trends -->
+      <a class="rp-tile amber" onclick="go('trends')">
+        <span class="rp-stripe amber"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Trends</div>
+          <div class="rp-desc">Multi-sensor grafiek + CSV</div>
+        </div>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(245,158,11,0.33),transparent)"></div>
+
+      <!-- Geschiedenis -->
+      <a class="rp-tile amber" onclick="alert('Geschiedenis · 1.2k events · 28 dagen log')">
+        <span class="rp-stripe amber"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Geschiedenis</div>
+          <div class="rp-desc">Event log</div>
+        </div>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(139,92,246,0.33),transparent)"></div>
+
+      <!-- Instellingen -->
+      <a class="rp-tile violet" onclick="alert('Instellingen · tenant + gebruikers')">
+        <span class="rp-stripe violet"></span>
+        <div class="rp-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+        <div style="flex:1;min-width:0">
+          <div class="rp-label">Instellingen</div>
+          <div class="rp-desc">Tenant &amp; gebruikers</div>
+        </div>
+        <svg class="rp-chev" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(139,92,246,0.33),transparent)"></div>
     </div>
   </div>
 </div>
+
+<style>
+  .rp-tile {
+    position: relative;
+    display: flex; align-items: center; gap: 18px;
+    padding: 18px 18px;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: inherit; text-decoration: none;
+  }
+  .rp-tile:active { background: rgba(255,255,255,0.04); }
+  .rp-icon-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; position: relative;
+  }
+  .rp-icon-circle svg { width: 22px; height: 22px; }
+  .rp-tile.rose .rp-icon-circle { background: rgba(244,63,94,0.10); }
+  .rp-tile.cyan .rp-icon-circle { background: rgba(6,182,212,0.10); }
+  .rp-tile.amber .rp-icon-circle { background: rgba(245,158,11,0.10); }
+  .rp-tile.violet .rp-icon-circle { background: rgba(139,92,246,0.10); }
+  .rp-label { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: #fff; }
+  .rp-desc { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45); margin-top: 2px; }
+  .rp-chev { width: 18px; height: 18px; flex-shrink: 0; }
+  .rp-stripe {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 3px; height: 0; border-radius: 0 3px 3px 0; opacity: 0;
+    transition: all 0.3s;
+  }
+  .rp-tile:active .rp-stripe { opacity: 1; height: 44px; }
+  .rp-tile.rose .rp-stripe { background: linear-gradient(to bottom, #f43f5e, #f59e0b); }
+  .rp-tile.cyan .rp-stripe { background: linear-gradient(to bottom, #22d3ee, #0ea5e9); }
+  .rp-tile.amber .rp-stripe { background: linear-gradient(to bottom, #fbbf24, #f97316); }
+  .rp-tile.violet .rp-stripe { background: linear-gradient(to bottom, #a78bfa, #d946ef); }
+  .rp-badge {
+    position: relative;
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 26px; height: 26px; padding: 0 8px; border-radius: 999px;
+    background: #f43f5e; color: #fff; font-size: 12px; font-weight: 700;
+    box-shadow: 0 0 15px -2px rgba(244,63,94,0.7);
+    flex-shrink: 0;
+  }
+  .rp-badge-ping {
+    position: absolute; inset: 0; border-radius: 999px;
+    background: #f43f5e; opacity: 0.4;
+    animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+  }
+  @keyframes ping { 75%, 100% { transform: scale(1.6); opacity: 0; } }
+</style>
 
 <!-- ────────────────── KOELINGEN ────────────────── -->
 <div class="view" id="view-frigos">
