@@ -410,229 +410,993 @@
   @keyframes ping { 75%, 100% { transform: scale(1.6); opacity: 0; } }
 </style>
 
+<style>
+  /* ─── Real RPlay components — replicated in vanilla CSS ─── */
+  .rp-page { padding: 16px 16px 96px; min-height: 100vh; position: relative; }
+  .rp-orb {
+    position: fixed; pointer-events: none; z-index: 0;
+    width: 320px; height: 320px; border-radius: 50%; filter: blur(80px);
+  }
+  .rp-orb.emerald-tl { top: -120px; left: -120px; background: radial-gradient(circle, rgba(16,185,129,0.32) 0%, transparent 70%); }
+  .rp-orb.cyan-br { bottom: -120px; right: -120px; background: radial-gradient(circle, rgba(6,182,212,0.22) 0%, transparent 70%); }
+  .rp-orb.rose-tl { top: -120px; left: -120px; background: radial-gradient(circle, rgba(244,63,94,0.32) 0%, transparent 70%); }
+  .rp-orb.amber-br { bottom: -120px; right: -120px; background: radial-gradient(circle, rgba(251,191,36,0.20) 0%, transparent 70%); }
+
+  /* Page-header — gradient title + actions */
+  .rp-h1 {
+    font-size: 30px; font-weight: 700; letter-spacing: -0.025em;
+    line-height: 1.15; padding-bottom: 4px; margin: 0;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .rp-h1.emerald-cyan { background: linear-gradient(to right, #10b981, #06b6d4); filter: drop-shadow(0 0 22px rgba(16,185,129,0.45)); }
+  .rp-h1.rose-amber { background: linear-gradient(to right, #f43f5e, #f59e0b); filter: drop-shadow(0 0 22px rgba(244,63,94,0.45)); }
+  .rp-h1.tri { background: linear-gradient(to right, #fecdd3, #fef3c7, #a7f3d0); }
+  .rp-pageheader { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0 16px; }
+  .rp-actions { display: flex; gap: 8px; }
+  .rp-icon-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.8); cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .rp-icon-btn:active { transform: scale(0.94); }
+  .rp-icon-btn svg { width: 18px; height: 18px; }
+  .rp-icon-btn.emerald { border-color: rgba(16,185,129,0.30); background: rgba(16,185,129,0.12); color: #6ee7b7; }
+  .rp-icon-btn .ping-dot {
+    position: absolute; top: 6px; right: 6px;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #f43f5e; box-shadow: 0 0 0 2px #0a0e1a;
+    animation: rpping 1.4s infinite;
+  }
+  .rp-icon-btn { position: relative; }
+  @keyframes rpping { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* Hairline divider */
+  .rp-divider { height: 1px; width: 100%; }
+  .rp-divider.emerald-cyan { background: linear-gradient(90deg, transparent 0%, rgba(16,185,129,0.45) 35%, rgba(6,182,212,0.45) 65%, transparent 100%); }
+  .rp-divider.rose-amber { background: linear-gradient(90deg, transparent 0%, rgba(244,63,94,0.45) 35%, rgba(245,158,11,0.45) 65%, transparent 100%); }
+
+  /* Count chip */
+  .rp-count-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 11px; border-radius: 999px;
+    border: 1px solid rgba(244,63,94,0.32); background: rgba(244,63,94,0.10);
+    color: #fecdd3; font-size: 11px; font-weight: 600;
+  }
+  .rp-count-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: #f43f5e; animation: rppulse 1.4s infinite; }
+  @keyframes rppulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* StatsStrip — 4 mini cards horizontal */
+  .rp-stats {
+    display: flex; gap: 8px; overflow-x: auto;
+    margin: 0 -16px 0; padding: 12px 16px 4px;
+    scrollbar-width: none;
+  }
+  .rp-stats::-webkit-scrollbar { display: none; }
+  .rp-stat {
+    flex: 1 0 auto; min-width: 88px;
+    border-radius: 14px; padding: 10px 12px;
+    border: 1px solid; background: rgba(255,255,255,0.04);
+  }
+  .rp-stat .row { display: flex; align-items: center; gap: 6px; }
+  .rp-stat svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .rp-stat .lbl { font-size: 10px; color: rgba(255,255,255,0.6); }
+  .rp-stat .val { font-size: 18px; font-weight: 700; line-height: 1.1; margin-top: 4px; font-feature-settings: 'tnum'; }
+  .rp-stat.emerald { border-color: rgba(16,185,129,0.30); background: rgba(16,185,129,0.08); }
+  .rp-stat.emerald svg, .rp-stat.emerald .val { color: #a7f3d0; }
+  .rp-stat.rose { border-color: rgba(244,63,94,0.30); background: rgba(244,63,94,0.08); }
+  .rp-stat.rose svg, .rp-stat.rose .val { color: #fecaca; }
+  .rp-stat.cyan { border-color: rgba(6,182,212,0.30); background: rgba(6,182,212,0.08); }
+  .rp-stat.cyan svg, .rp-stat.cyan .val { color: #a5f3fc; }
+  .rp-stat.amber { border-color: rgba(245,158,11,0.30); background: rgba(245,158,11,0.08); }
+  .rp-stat.amber svg, .rp-stat.amber .val { color: #fde68a; }
+  .rp-stat.neutral { border-color: rgba(255,255,255,0.10); }
+  .rp-stat.neutral svg { color: rgba(255,255,255,0.5); }
+  .rp-stat.neutral .val { color: #fff; }
+
+  /* Group chips */
+  .rp-chip-row { display: flex; gap: 8px; align-items: center; padding: 12px 0 0; flex-wrap: wrap; }
+  .rp-chip-row .lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.18em; }
+  .rp-chip {
+    padding: 4px 11px; border-radius: 999px; font-size: 11px; font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.6);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .rp-chip:hover { color: #fff; }
+  .rp-chip.active { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.45); color: #d1fae5; }
+
+  /* FrigoCard — exact replica */
+  .rp-frigo-list { display: flex; flex-direction: column; gap: 10px; padding: 16px 0 0; }
+  .rp-frigo {
+    position: relative; border-radius: 16px; border: 1px solid; overflow: hidden;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .rp-frigo .row1 {
+    position: relative; display: flex; align-items: center; gap: 12px;
+    padding: 14px 14px 14px 14px; padding-right: 110px;
+  }
+  .rp-frigo .icon-circle {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid;
+  }
+  .rp-frigo .icon-circle svg { width: 16px; height: 16px; }
+  .rp-frigo h3 { font-size: 15px; font-weight: 600; line-height: 1.2; color: #fff; margin: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .rp-frigo .loc { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .rp-frigo .pill {
+    display: inline-flex; align-items: center;
+    margin-top: 6px; padding: 1px 7px; border-radius: 999px;
+    font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    border: 1px solid;
+  }
+  .rp-frigo .temp-block {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: flex-end;
+  }
+  .rp-frigo .temp-num {
+    font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -0.02em;
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-feature-settings: 'tnum';
+  }
+  .rp-frigo .temp-unit { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); margin-left: 1px; }
+  .rp-frigo .temp-max { font-size: 9.5px; color: rgba(252,165,165,0.85); margin-top: 4px; font-family: monospace; }
+  .rp-frigo .row2 {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px; border-top: 1px solid; font-size: 11px;
+  }
+  .rp-frigo .row2 .left, .rp-frigo .row2 .right { display: inline-flex; align-items: center; gap: 5px; }
+  .rp-frigo .row2 svg { width: 11px; height: 11px; }
+
+  /* Status colors for FrigoCard */
+  .rp-frigo.ok { border-color: rgba(16,185,129,0.18); background: rgba(16,185,129,0.04); }
+  .rp-frigo.ok .icon-circle { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.4); }
+  .rp-frigo.ok .icon-circle svg { color: #6ee7b7; }
+  .rp-frigo.ok .pill { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.30); color: #6ee7b7; }
+  .rp-frigo.ok .temp-num { color: #6ee7b7; }
+  .rp-frigo.ok .row2 { border-top-color: rgba(16,185,129,0.10); }
+
+  .rp-frigo.warning { border-color: rgba(245,158,11,0.32); background: rgba(245,158,11,0.05); }
+  .rp-frigo.warning .icon-circle { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.4); }
+  .rp-frigo.warning .icon-circle svg { color: #fde68a; }
+  .rp-frigo.warning .pill { background: rgba(245,158,11,0.15); border-color: rgba(245,158,11,0.30); color: #fef3c7; }
+  .rp-frigo.warning .temp-num { color: #fef3c7; }
+  .rp-frigo.warning .row2 { border-top-color: rgba(245,158,11,0.12); }
+
+  .rp-frigo.alarm { border-color: rgba(244,63,94,0.42); background: rgba(244,63,94,0.07); }
+  .rp-frigo.alarm .icon-circle { background: rgba(244,63,94,0.20); border-color: rgba(244,63,94,0.50);
+    box-shadow: 0 0 14px -2px rgba(244,63,94,0.5);
+  }
+  .rp-frigo.alarm .icon-circle svg { color: #fecaca; }
+  .rp-frigo.alarm .pill { background: rgba(244,63,94,0.22); border-color: rgba(244,63,94,0.42); color: #fecaca; animation: rppulse 1.5s infinite; }
+  .rp-frigo.alarm .temp-num { color: #fecaca; filter: drop-shadow(0 0 10px rgba(244,63,94,0.5)); }
+  .rp-frigo.alarm .row2 { border-top-color: rgba(244,63,94,0.16); }
+
+  .rp-frigo.offline { border-color: rgba(255,255,255,0.10); background: rgba(255,255,255,0.02); }
+  .rp-frigo.offline .icon-circle { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.20); }
+  .rp-frigo.offline .icon-circle svg { color: rgba(255,255,255,0.4); }
+  .rp-frigo.offline .pill { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); color: rgba(255,255,255,0.5); }
+  .rp-frigo.offline .temp-num { color: rgba(255,255,255,0.4); }
+
+  /* Group section header */
+  .rp-group-h {
+    display: flex; align-items: baseline; gap: 8px; padding: 4px 4px 8px;
+  }
+  .rp-group-h h2 { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin: 0; }
+  .rp-group-h .line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0.05), transparent); }
+  .rp-group-h .count { font-size: 10px; color: rgba(255,255,255,0.4); font-feature-settings: 'tnum'; }
+
+  /* Alarm panel — active variant */
+  .rp-alarm {
+    border-radius: 16px; padding: 14px;
+    border: 1px solid rgba(244,63,94,0.30);
+    background: linear-gradient(135deg, rgba(244,63,94,0.10), rgba(244,63,94,0.03));
+    margin-bottom: 12px;
+  }
+  .rp-alarm .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .rp-alarm .priority-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .rp-alarm .pdot.critical, .rp-alarm .pdot.high { background: #f43f5e; }
+  .rp-alarm .pdot.medium { background: #f59e0b; }
+  .rp-alarm .pdot.low { background: rgba(255,255,255,0.4); }
+  .rp-alarm .title { font-size: 14px; font-weight: 700; color: #fecaca; margin: 0; }
+  .rp-alarm.resolved { border-color: rgba(16,185,129,0.20); background: rgba(16,185,129,0.04); }
+  .rp-alarm.resolved .title { color: #a7f3d0; }
+  .rp-alarm .meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .rp-alarm .body { font-size: 12px; color: #cbd5e1; margin-top: 10px; line-height: 1.5; }
+  .rp-alarm .actions { display: flex; gap: 8px; margin-top: 12px; }
+  .rp-alarm .btn {
+    flex: 1; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 600;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: #f1f5f9;
+    cursor: pointer; text-align: center;
+  }
+  .rp-alarm .btn.primary { background: rgba(16,185,129,0.16); border-color: rgba(16,185,129,0.40); color: #d1fae5; }
+
+  /* Calm empty state */
+  .rp-calm { padding: 36px 16px 16px; text-align: center; }
+  .rp-calm .ring {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    width: 88px; height: 88px; border-radius: 50%;
+    border: 1px solid rgba(16,185,129,0.30); background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+  }
+  .rp-calm .ring::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: rgba(16,185,129,0.15); filter: blur(28px);
+    animation: rpcalm 2.4s ease-in-out infinite;
+  }
+  @keyframes rpcalm { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+  .rp-calm .ring svg { width: 44px; height: 44px; color: #34d399; position: relative; }
+  .rp-calm h2 { font-size: 19px; font-weight: 600; color: #fff; margin: 22px 0 4px; }
+  .rp-calm p { font-size: 13px; color: rgba(255,255,255,0.6); margin: 0; }
+
+  /* View-mode segmented toggle */
+  .rp-segment {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03);
+    padding: 4px; margin: 16px 0;
+  }
+  .rp-segment .opt {
+    border-radius: 10px; padding: 8px; text-align: center;
+    font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.55); cursor: pointer; transition: all 0.15s;
+  }
+  .rp-segment .opt.active { background: rgba(255,255,255,0.12); color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,0.18) inset; }
+
+  /* Status count cards (heatmap) */
+  .rp-status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .rp-status-card {
+    border-radius: 14px; padding: 8px 4px; text-align: center;
+    border: 1px solid; cursor: pointer; transition: transform 0.15s;
+  }
+  .rp-status-card:active { transform: scale(0.95); }
+  .rp-status-card .n { font-size: 22px; font-weight: 700; line-height: 1; font-feature-settings: 'tnum'; }
+  .rp-status-card .l { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.7); margin-top: 4px; }
+  .rp-status-card.in_range { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.40); }
+  .rp-status-card.in_range .n { color: #6ee7b7; }
+  .rp-status-card.near_threshold { background: rgba(245,158,11,0.20); border-color: rgba(245,158,11,0.50); }
+  .rp-status-card.near_threshold .n { color: #fde68a; }
+  .rp-status-card.out_of_range { background: rgba(244,63,94,0.25); border-color: rgba(244,63,94,0.60); }
+  .rp-status-card.out_of_range .n { color: #fecaca; }
+  .rp-status-card.offline { background: rgba(100,116,139,0.40); border-color: rgba(100,116,139,0.40); }
+  .rp-status-card.offline .n { color: #94a3b8; }
+
+  /* Heatmap grid v2 */
+  .rp-heat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .rp-heat-cell {
+    position: relative; border-radius: 12px; padding: 10px 10px 9px;
+    border: 1px solid;
+    aspect-ratio: 1.0;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .rp-heat-cell .tt { font-size: 11px; font-weight: 700; font-feature-settings: 'tnum'; }
+  .rp-heat-cell .nn { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.85);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .rp-heat-cell .cc { font-size: 9px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+  .rp-heat-cell.in_range { background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.40); }
+  .rp-heat-cell.in_range .tt { color: #6ee7b7; }
+  .rp-heat-cell.near_threshold { background: rgba(245,158,11,0.20); border-color: rgba(245,158,11,0.50); }
+  .rp-heat-cell.near_threshold .tt { color: #fde68a; }
+  .rp-heat-cell.out_of_range { background: rgba(244,63,94,0.25); border-color: rgba(244,63,94,0.60); }
+  .rp-heat-cell.out_of_range .tt { color: #fecaca; }
+  .rp-heat-cell.offline { background: rgba(100,116,139,0.40); border-color: rgba(100,116,139,0.40); }
+  .rp-heat-cell.offline .tt, .rp-heat-cell.offline .nn { color: #cbd5e1; }
+  .rp-heat-cell .alert-icon { position: absolute; top: 6px; right: 6px; width: 12px; height: 12px; color: #fecaca; }
+
+  /* Trends chart container */
+  .rp-trend-card {
+    border-radius: 16px; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+    margin-bottom: 12px;
+  }
+  .rp-trend-pills { display: flex; gap: 6px; padding: 12px 0 14px; }
+  .rp-trend-pill {
+    flex: 1; padding: 7px 0; text-align: center; border-radius: 999px;
+    font-size: 11px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.55);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .rp-trend-pill.active { background: rgba(255,255,255,0.10); color: #fff; border-color: rgba(255,255,255,0.25); }
+
+  /* Sensor selection chips */
+  .rp-sensor-chips { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0 12px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; scrollbar-width: none; }
+  .rp-sensor-chips::-webkit-scrollbar { display: none; }
+  .rp-sensor-chip {
+    flex-shrink: 0; padding: 6px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.02);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+  }
+  .rp-sensor-chip .swatch { width: 8px; height: 8px; border-radius: 50%; }
+  .rp-sensor-chip.active { color: #fff; border-color: rgba(255,255,255,0.30); background: rgba(255,255,255,0.10); }
+
+  /* History timeline */
+  .rp-timeline { display: flex; flex-direction: column; gap: 8px; padding: 12px 0; }
+  .rp-timeline-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+  }
+  .rp-timeline-item .pdot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .rp-timeline-item .pdot.critical, .rp-timeline-item .pdot.high { background: #f43f5e; }
+  .rp-timeline-item .pdot.medium { background: #f59e0b; }
+  .rp-timeline-item .pdot.low { background: rgba(255,255,255,0.4); }
+  .rp-timeline-item .name { font-size: 13px; font-weight: 600; color: #fff;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .rp-timeline-item .ago { font-size: 11px; color: rgba(255,255,255,0.5); flex-shrink: 0; }
+  .rp-timeline-item .desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  /* HACCP — large compliance card + audit list */
+  .rp-haccp-hero {
+    border-radius: 20px; padding: 22px 18px;
+    border: 1px solid rgba(16,185,129,0.30);
+    background: linear-gradient(140deg, rgba(16,185,129,0.10), rgba(6,182,212,0.05));
+    margin: 12px 0;
+  }
+  .rp-haccp-hero .pct { font-size: 56px; font-weight: 800; line-height: 1;
+    background: linear-gradient(to right, #10b981, #06b6d4);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-feature-settings: 'tnum';
+  }
+  .rp-haccp-hero .lbl { font-size: 11px; font-weight: 600; color: #6ee7b7; text-transform: uppercase; letter-spacing: 0.22em; margin-top: 6px; }
+  .rp-haccp-hero .desc { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 12px; line-height: 1.5; }
+
+  /* Settings list */
+  .rp-settings-row {
+    display: flex; align-items: center; gap: 14px; padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer;
+  }
+  .rp-settings-row .icon {
+    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.04);
+  }
+  .rp-settings-row .icon svg { width: 16px; height: 16px; color: rgba(255,255,255,0.7); }
+  .rp-settings-row .label { font-size: 14px; font-weight: 500; color: #fff; }
+  .rp-settings-row .desc { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .rp-settings-row .chev { color: rgba(255,255,255,0.3); flex-shrink: 0; }
+  .rp-settings-row .chev svg { width: 16px; height: 16px; }
+
+  /* Bottom nav v2 — 6 items, emerald active */
+  .bottomnav.v2 {
+    background: rgba(15,23,42,0.85); backdrop-filter: blur(28px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 0;
+  }
+  .bottomnav.v2 .grid6 {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .navitem.v2 {
+    position: relative; flex-direction: column; align-items: center; gap: 3px;
+    padding: 10px 4px 10px;
+    color: rgba(255,255,255,0.5); font-size: 9.5px; font-weight: 500;
+    cursor: pointer; transition: color 0.4s;
+  }
+  .navitem.v2 svg { width: 22px; height: 22px; transition: filter 0.3s; }
+  .navitem.v2.active { color: #34d399; }
+  .navitem.v2.active svg { filter: drop-shadow(0 0 6px rgba(16,185,129,0.55)); }
+  .navitem.v2 .underline {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    height: 2px; width: 28px; border-radius: 999px;
+    background: #34d399; opacity: 0; transition: opacity 0.4s;
+  }
+  .navitem.v2.active .underline { opacity: 1; }
+</style>
+
 <!-- ────────────────── KOELINGEN ────────────────── -->
-<div class="view" id="view-frigos">
-  <div class="topbar">
-    <div class="back" onclick="go('home')">‹ Home</div>
-    <div class="logo">Koelingen</div>
-  </div>
+<div class="view rp-page" id="view-frigos">
+  <div class="rp-orb emerald-tl"></div>
+  <div class="rp-orb cyan-br"></div>
 
-  <div class="hero-eyebrow">17 SENSOREN · LIVE</div>
-  <h1 class="hero-h1" style="font-size:24px">Realtime<br>temperatuur</h1>
+  <div style="position:relative;z-index:1">
+    <div class="rp-pageheader">
+      <h1 class="rp-h1 emerald-cyan">Koelingen</h1>
+      <div class="rp-actions">
+        <button class="rp-icon-btn" onclick="go('alerts')" aria-label="Alarmen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+          <span class="ping-dot"></span>
+        </button>
+        <button class="rp-icon-btn emerald" aria-label="Voeg koeling toe">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="rp-divider emerald-cyan"></div>
 
-  <div class="section-h">Bloedbank · 4-8°C</div>
-  <div class="frigo-row" onclick="alert('BB-01: laatste meting 5.2°C, batterij 82%, 1424 metingen vandaag')">
-    <div class="frigo-status ok"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Bloedbank-koelkast 1</div>
-      <div class="frigo-loc">Vleugel A · BB-01</div>
+    <div class="rp-stats">
+      <div class="rp-stat emerald">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg><span class="lbl">Online</span></div>
+        <div class="val">17/17</div>
+      </div>
+      <div class="rp-stat rose">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="lbl">Alerts</span></div>
+        <div class="val">1</div>
+      </div>
+      <div class="rp-stat cyan">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4 4 0 1 0 5 0z"/></svg><span class="lbl">Gem. temp</span></div>
+        <div class="val">-9.2°C</div>
+      </div>
+      <div class="rp-stat amber">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg><span class="lbl">Lage batterij</span></div>
+        <div class="val">2</div>
+      </div>
     </div>
-    <div class="frigo-temp ok">5.2°</div>
-  </div>
-  <div class="frigo-row">
-    <div class="frigo-status ok"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Bloedbank-koelkast 2</div>
-      <div class="frigo-loc">Vleugel A · BB-02</div>
-    </div>
-    <div class="frigo-temp ok">5.8°</div>
-  </div>
 
-  <div class="section-h">Lab vriezer · -80°C</div>
-  <div class="frigo-row">
-    <div class="frigo-status ok"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Lab-vriezer A</div>
-      <div class="frigo-loc">Centraal Lab · LAB-01</div>
+    <div class="rp-chip-row">
+      <span class="lbl">Groepeer</span>
+      <span class="rp-chip">Geen</span>
+      <span class="rp-chip active">Categorie</span>
+      <span class="rp-chip">Locatie</span>
     </div>
-    <div class="frigo-temp ok">-78.4°</div>
-  </div>
-  <div class="frigo-row">
-    <div class="frigo-status warn"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Lab-vriezer B</div>
-      <div class="frigo-loc">Centraal Lab · LAB-02</div>
-    </div>
-    <div class="frigo-temp warn">-75.1°</div>
-  </div>
 
-  <div class="section-h">Vaccinkast · -20°C</div>
-  <div class="frigo-row">
-    <div class="frigo-status ok"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Vaccinkast 1</div>
-      <div class="frigo-loc">Vleugel B · VC-01</div>
+    <!-- Bloedbank group -->
+    <div style="padding-top:18px">
+      <div class="rp-group-h">
+        <h2>Bloedbank</h2><span class="line"></span><span class="count">3</span>
+      </div>
+      <div class="rp-frigo-list" style="padding-top:0">
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>BB-01</h3>
+              <div class="loc">Vleugel A · Bloedbank</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">5.2</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+          <div class="row2">
+            <span class="left" style="color:rgba(167,243,208,0.85)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Stabiel</span>
+            <span class="right" style="color:rgba(167,243,208,0.85)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>±0.1°C</span>
+          </div>
+        </div>
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>BB-02</h3>
+              <div class="loc">Vleugel A · Bloedbank</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">5.8</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+          <div class="row2">
+            <span class="left" style="color:rgba(167,243,208,0.85)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Stabiel</span>
+            <span class="right" style="color:rgba(167,243,208,0.85)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>±0.2°C</span>
+          </div>
+        </div>
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>BB-03</h3>
+              <div class="loc">Vleugel A · Bloedbank</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">6.1</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+          <div class="row2">
+            <span class="left" style="color:rgba(255,255,255,0.6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Stijgend</span>
+            <span class="right" style="color:rgba(255,255,255,0.6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>+0.4°C</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="frigo-temp ok">-21.3°</div>
-  </div>
-  <div class="frigo-row">
-    <div class="frigo-status alarm"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Vaccinkast 2</div>
-      <div class="frigo-loc">Vleugel B · VC-02</div>
+
+    <!-- Lab group -->
+    <div style="padding-top:18px">
+      <div class="rp-group-h">
+        <h2>Lab vriezer</h2><span class="line"></span><span class="count">3</span>
+      </div>
+      <div class="rp-frigo-list" style="padding-top:0">
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>LAB-01</h3>
+              <div class="loc">Centraal Lab · Vriezer</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">-78.4</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="rp-frigo warning">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>LAB-02</h3>
+              <div class="loc">Centraal Lab · Vriezer</div>
+              <span class="pill">WAARSCHUWING</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">-75.1</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+          <div class="row2">
+            <span class="left" style="color:rgba(255,255,255,0.6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Stijgend</span>
+            <span class="right" style="color:rgba(255,255,255,0.6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>+1.8°C</span>
+          </div>
+        </div>
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>LAB-03</h3>
+              <div class="loc">Centraal Lab · Vriezer</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">-79.2</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="frigo-temp alarm">-15.8°</div>
-  </div>
-  <div class="frigo-row">
-    <div class="frigo-status ok"></div>
-    <div style="flex:1">
-      <div class="frigo-name">Vaccinkast 3</div>
-      <div class="frigo-loc">Vleugel B · VC-03</div>
+
+    <!-- Vaccinkast group -->
+    <div style="padding-top:18px">
+      <div class="rp-group-h">
+        <h2>Vaccinkast</h2><span class="line"></span><span class="count">3</span>
+      </div>
+      <div class="rp-frigo-list" style="padding-top:0">
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>VC-01</h3>
+              <div class="loc">Vleugel B · Vaccins</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">-21.3</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="rp-frigo alarm">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>VC-02</h3>
+              <div class="loc">Vleugel B · Vaccins</div>
+              <span class="pill">ALERT</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">-15.8</span><span class="temp-unit">°C</span></div>
+              <span class="temp-max">Max: -18.0°C</span>
+            </div>
+          </div>
+          <div class="row2">
+            <span class="left" style="color:#fda4af"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Overschrijding: 14m</span>
+            <span class="right" style="color:#fda4af"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>+2.2°C</span>
+          </div>
+        </div>
+        <div class="rp-frigo ok">
+          <div class="row1">
+            <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg></div>
+            <div style="min-width:0;flex:1">
+              <h3>VC-03</h3>
+              <div class="loc">Vleugel B · Vaccins</div>
+              <span class="pill">OK</span>
+            </div>
+            <div class="temp-block">
+              <div><span class="temp-num">-22.1</span><span class="temp-unit">°C</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="frigo-temp ok">-22.1°</div>
+
+    <!-- Add koeling button -->
+    <button style="margin-top:20px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:14px;border:1px dashed rgba(16,185,129,0.30);background:rgba(16,185,129,0.05);color:#a7f3d0;font-size:13px;font-weight:600;cursor:pointer">
+      <svg style="width:14px;height:14px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Koeling toevoegen
+    </button>
   </div>
 </div>
 
 <!-- ────────────────── ALARMEN ────────────────── -->
-<div class="view" id="view-alerts">
-  <div class="topbar">
-    <div class="back" onclick="go('home')">‹ Home</div>
-    <div class="logo">Alarmen</div>
-  </div>
+<div class="view rp-page" id="view-alerts">
+  <div class="rp-orb rose-tl"></div>
+  <div class="rp-orb amber-br"></div>
 
-  <div class="hero-eyebrow" style="color:#fda4af">1 ACTIEF · 3 OPGELOST VANDAAG</div>
-  <h1 class="hero-h1" style="font-size:24px">Live alarm-feed</h1>
+  <div style="position:relative;z-index:1">
+    <div class="rp-pageheader">
+      <h1 class="rp-h1 rose-amber">Alarmen</h1>
+      <span class="rp-count-chip"><span class="dot"></span>1 actief</span>
+    </div>
+    <div class="rp-divider rose-amber"></div>
 
-  <div class="alert">
-    <div class="alert-head">
-      <div>
-        <div class="alert-title">⚠️ Vaccinkast 2 — boven max</div>
-        <div class="alert-meta">VC-02 · Vleugel B · al 14 minuten</div>
+    <div style="padding-top:14px">
+      <div class="rp-alarm">
+        <div class="head">
+          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
+            <span class="priority-dot pdot critical"></span>
+            <div style="min-width:0;flex:1">
+              <div class="title">Vaccinkast 2 — boven max</div>
+              <div class="meta">VC-02 · Vleugel B · al 14 minuten</div>
+            </div>
+          </div>
+          <span style="font-size:18px;font-weight:700;color:#fecaca;font-family:monospace">-15.8°</span>
+        </div>
+        <div class="body">Temperatuur overschrijdt max van -18.0°C. Mogelijk deur openblijven of compressor-issue. Vaccins risico na 30 min.</div>
+        <div class="actions">
+          <div class="btn primary">Bevestigen</div>
+          <div class="btn">Snooze 1u</div>
+        </div>
       </div>
-    </div>
-    <div class="alert-body">Temperatuur −15.8°C, max ingesteld op −18°C. Mogelijk deur openblijven of compressor-issue.</div>
-    <div class="alert-actions">
-      <div class="alert-btn primary">Bevestigen</div>
-      <div class="alert-btn">Snooze 1u</div>
-    </div>
-  </div>
 
-  <div class="alert resolved">
-    <div class="alert-head">
-      <div>
-        <div class="alert-title">✓ Bloedbank-koelkast 1 — opgelost</div>
-        <div class="alert-meta">BB-01 · 09:42 → 09:51 · 9 min</div>
+      <div class="rp-alarm resolved">
+        <div class="head">
+          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
+            <span class="priority-dot pdot medium"></span>
+            <div style="min-width:0;flex:1">
+              <div class="title">Bloedbank-koelkast 1 — opgelost</div>
+              <div class="meta">BB-01 · 09:42 → 09:51 · 9 min</div>
+            </div>
+          </div>
+        </div>
+        <div class="body">Korte spike na deur-opening tijdens shift-wissel. Auto-resolved.</div>
       </div>
-    </div>
-    <div class="alert-body">Korte spike na deur-opening tijdens shift-wissel. Auto-resolved.</div>
-  </div>
 
-  <div class="alert resolved">
-    <div class="alert-head">
-      <div>
-        <div class="alert-title">✓ Lab-vriezer A — opgelost</div>
-        <div class="alert-meta">LAB-01 · 06:15 → 06:30 · 15 min · door Mira P.</div>
+      <div class="rp-alarm resolved">
+        <div class="head">
+          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
+            <span class="priority-dot pdot high"></span>
+            <div style="min-width:0;flex:1">
+              <div class="title">Lab-vriezer A — opgelost</div>
+              <div class="meta">LAB-01 · 06:15 → 06:30 · 15 min · door Mira P.</div>
+            </div>
+          </div>
+        </div>
+        <div class="body">Compressor herstart. Bevestigd door technische dienst.</div>
       </div>
-    </div>
-    <div class="alert-body">Compressor herstart. Bevestigd door technische dienst.</div>
-  </div>
 
-  <div class="alert resolved">
-    <div class="alert-head">
-      <div>
-        <div class="alert-title">✓ Vaccinkast 3 — opgelost</div>
-        <div class="alert-meta">VC-03 · 03:08 → 03:14 · 6 min</div>
+      <div class="rp-alarm resolved">
+        <div class="head">
+          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
+            <span class="priority-dot pdot low"></span>
+            <div style="min-width:0;flex:1">
+              <div class="title">Vaccinkast 3 — opgelost</div>
+              <div class="meta">VC-03 · 03:08 → 03:14 · 6 min</div>
+            </div>
+          </div>
+        </div>
+        <div class="body">Deur-sensor flapping na schoonmaakronde. Geen actie nodig.</div>
       </div>
+
+      <a onclick="go('geschiedenis')" style="margin-top:20px;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer">
+        Volledige geschiedenis bekijken →
+      </a>
     </div>
-    <div class="alert-body">Deur-sensor flapping na schoonmaakronde. Geen actie nodig.</div>
   </div>
 </div>
 
 <!-- ────────────────── WARMTEKAART ────────────────── -->
-<div class="view" id="view-heatmap">
-  <div class="topbar">
-    <div class="back" onclick="go('home')">‹ Home</div>
-    <div class="logo">Warmtekaart</div>
-  </div>
+<div class="view rp-page" id="view-heatmap">
+  <div class="rp-orb rose-tl"></div>
+  <div class="rp-orb amber-br"></div>
 
-  <div class="hero-eyebrow">17 SENSOREN · ÉÉN BLIK</div>
-  <h1 class="hero-h1" style="font-size:24px">Heel het<br>ziekenhuis</h1>
+  <div style="position:relative;z-index:1">
+    <a onclick="go('home')" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.55);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;cursor:pointer;margin-bottom:14px">
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home
+    </a>
 
-  <div class="heatmap-grid">
-    <div class="heatcell ok"><div class="heatcell-temp">5.2°</div><div><div class="heatcell-name">BB-01</div><div class="heatcell-cat">Bloedbank</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">5.8°</div><div><div class="heatcell-name">BB-02</div><div class="heatcell-cat">Bloedbank</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">6.1°</div><div><div class="heatcell-name">BB-03</div><div class="heatcell-cat">Bloedbank</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">-78°</div><div><div class="heatcell-name">LAB-01</div><div class="heatcell-cat">Lab</div></div></div>
-    <div class="heatcell warn"><div class="heatcell-temp">-75°</div><div><div class="heatcell-name">LAB-02</div><div class="heatcell-cat">Lab</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">-79°</div><div><div class="heatcell-name">LAB-03</div><div class="heatcell-cat">Lab</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">-21°</div><div><div class="heatcell-name">VC-01</div><div class="heatcell-cat">Vaccin</div></div></div>
-    <div class="heatcell alarm"><div class="heatcell-temp">-16°</div><div><div class="heatcell-name">VC-02</div><div class="heatcell-cat">Vaccin</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">-22°</div><div><div class="heatcell-name">VC-03</div><div class="heatcell-cat">Vaccin</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">22.1°</div><div><div class="heatcell-name">MED-01</div><div class="heatcell-cat">Medicatie</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">22.6°</div><div><div class="heatcell-name">MED-02</div><div class="heatcell-cat">Medicatie</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">22.3°</div><div><div class="heatcell-name">MED-03</div><div class="heatcell-cat">Medicatie</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">3.8°</div><div><div class="heatcell-name">FAR-01</div><div class="heatcell-cat">Farmacie</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">4.5°</div><div><div class="heatcell-name">FAR-02</div><div class="heatcell-cat">Farmacie</div></div></div>
-    <div class="heatcell warn"><div class="heatcell-temp">7.9°</div><div><div class="heatcell-name">FAR-03</div><div class="heatcell-cat">Farmacie</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">-19°</div><div><div class="heatcell-name">VC-04</div><div class="heatcell-cat">Vaccin</div></div></div>
-    <div class="heatcell ok"><div class="heatcell-temp">-20°</div><div><div class="heatcell-name">VC-05</div><div class="heatcell-cat">Vaccin</div></div></div>
+    <div style="margin-bottom:18px">
+      <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.28em;color:rgba(252,165,165,0.85);margin-bottom:6px">Warmtekaart</div>
+      <h1 class="rp-h1 tri" style="font-size:32px">Temperatuur Monitoring</h1>
+    </div>
+
+    <div class="rp-segment">
+      <div class="opt active">Alarm-status</div>
+      <div class="opt">Temperatuur</div>
+    </div>
+
+    <div class="rp-status-grid">
+      <div class="rp-status-card in_range">
+        <div class="n">15</div>
+        <div class="l">In range</div>
+      </div>
+      <div class="rp-status-card near_threshold">
+        <div class="n">2</div>
+        <div class="l">Bijna out</div>
+      </div>
+      <div class="rp-status-card out_of_range">
+        <div class="n">1</div>
+        <div class="l">Out of range</div>
+      </div>
+      <div class="rp-status-card offline">
+        <div class="n">0</div>
+        <div class="l">Offline</div>
+      </div>
+    </div>
+
+    <div class="rp-chip-row" style="padding-top:0;margin-bottom:14px">
+      <span class="lbl">Groepeer</span>
+      <span class="rp-chip active">Geen</span>
+      <span class="rp-chip">Categorie</span>
+      <span class="rp-chip">Locatie</span>
+    </div>
+
+    <div class="rp-heat-grid">
+      <div class="rp-heat-cell in_range"><div class="tt">5.2°</div><div><div class="nn">BB-01</div><div class="cc">Bloedbank</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">5.8°</div><div><div class="nn">BB-02</div><div class="cc">Bloedbank</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">6.1°</div><div><div class="nn">BB-03</div><div class="cc">Bloedbank</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">-78°</div><div><div class="nn">LAB-01</div><div class="cc">Lab</div></div></div>
+      <div class="rp-heat-cell near_threshold"><div class="tt">-75°</div><div><div class="nn">LAB-02</div><div class="cc">Lab</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">-79°</div><div><div class="nn">LAB-03</div><div class="cc">Lab</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">-21°</div><div><div class="nn">VC-01</div><div class="cc">Vaccin</div></div></div>
+      <div class="rp-heat-cell out_of_range">
+        <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="tt">-16°</div><div><div class="nn">VC-02</div><div class="cc">Vaccin</div></div>
+      </div>
+      <div class="rp-heat-cell in_range"><div class="tt">-22°</div><div><div class="nn">VC-03</div><div class="cc">Vaccin</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">22.1°</div><div><div class="nn">MED-01</div><div class="cc">Medicatie</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">22.6°</div><div><div class="nn">MED-02</div><div class="cc">Medicatie</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">22.3°</div><div><div class="nn">MED-03</div><div class="cc">Medicatie</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">3.8°</div><div><div class="nn">FAR-01</div><div class="cc">Farmacie</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">4.5°</div><div><div class="nn">FAR-02</div><div class="cc">Farmacie</div></div></div>
+      <div class="rp-heat-cell near_threshold"><div class="tt">7.9°</div><div><div class="nn">FAR-03</div><div class="cc">Farmacie</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">-19°</div><div><div class="nn">VC-04</div><div class="cc">Vaccin</div></div></div>
+      <div class="rp-heat-cell in_range"><div class="tt">-20°</div><div><div class="nn">VC-05</div><div class="cc">Vaccin</div></div></div>
+    </div>
   </div>
 </div>
 
 <!-- ────────────────── TRENDS ────────────────── -->
-<div class="view" id="view-trends">
-  <div class="topbar">
-    <div class="back" onclick="go('home')">‹ Home</div>
-    <div class="logo">Trends</div>
-  </div>
+<div class="view rp-page" id="view-trends">
+  <div class="rp-orb rose-tl"></div>
+  <div class="rp-orb amber-br"></div>
 
-  <div class="hero-eyebrow" style="color:#fde68a">7 DAGEN · BB-01</div>
-  <h1 class="hero-h1" style="font-size:24px">Bloedbank<br>koelkast 1</h1>
+  <div style="position:relative;z-index:1">
+    <a onclick="go('home')" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.55);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;cursor:pointer;margin-bottom:14px">
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home
+    </a>
 
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
-    <svg viewBox="0 0 280 130" style="width:100%;height:auto">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#10b981" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <line x1="0" y1="50" x2="280" y2="50" stroke="rgba(244,63,94,0.4)" stroke-dasharray="4,3" stroke-width="1"/>
-      <text x="2" y="46" fill="#fda4af" font-size="9" font-family="monospace">8°C MAX</text>
-      <line x1="0" y1="100" x2="280" y2="100" stroke="rgba(244,63,94,0.4)" stroke-dasharray="4,3" stroke-width="1"/>
-      <text x="2" y="96" fill="#fda4af" font-size="9" font-family="monospace">2°C MIN</text>
-      <path d="M0,75 L40,72 L80,68 L120,55 L120,85 L160,60 L200,70 L240,65 L280,73 L280,130 L0,130 Z" fill="url(#g)"/>
-      <path d="M0,75 L40,72 L80,68 L120,55 L120,85 L160,60 L200,70 L240,65 L280,73" stroke="#34d399" stroke-width="2" fill="none"/>
-    </svg>
-    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--slate-500);font-family:monospace">
-      <span>Mon</span><span>Di</span><span>Wo</span><span>Do</span><span>Vr</span><span>Za</span><span>Zo</span>
+    <div style="margin-bottom:18px">
+      <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.28em;color:rgba(253,230,138,0.9);margin-bottom:6px">Trends</div>
+      <h1 class="rp-h1 tri" style="font-size:32px">Multi-sensor</h1>
     </div>
-  </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-    <div class="stat ok"><div class="stat-num" style="font-size:16px">5.4°</div><div class="stat-lbl">Gem.</div></div>
-    <div class="stat warn"><div class="stat-num" style="font-size:16px">8.2°</div><div class="stat-lbl">Max</div></div>
-    <div class="stat ok"><div class="stat-num" style="font-size:16px">99.2%</div><div class="stat-lbl">Compliance</div></div>
+    <div class="rp-trend-pills">
+      <div class="rp-trend-pill">1u</div>
+      <div class="rp-trend-pill">24u</div>
+      <div class="rp-trend-pill active">7d</div>
+      <div class="rp-trend-pill">30d</div>
+    </div>
+
+    <div class="rp-sensor-chips">
+      <div class="rp-sensor-chip active"><span class="swatch" style="background:#10b981"></span>BB-01</div>
+      <div class="rp-sensor-chip active"><span class="swatch" style="background:#06b6d4"></span>VC-02</div>
+      <div class="rp-sensor-chip"><span class="swatch" style="background:#f43f5e"></span>LAB-02</div>
+      <div class="rp-sensor-chip"><span class="swatch" style="background:#a78bfa"></span>FAR-03</div>
+      <div class="rp-sensor-chip"><span class="swatch" style="background:#f59e0b"></span>+ Toevoegen</div>
+    </div>
+
+    <div class="rp-trend-card">
+      <svg viewBox="0 0 360 200" style="width:100%;height:auto">
+        <defs>
+          <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#10b981" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line x1="28" y1="60" x2="332" y2="60" stroke="rgba(244,63,94,0.4)" stroke-dasharray="4,3" stroke-width="1"/>
+        <text x="2" y="58" fill="#fda4af" font-size="9" font-family="monospace">8°C</text>
+        <line x1="28" y1="150" x2="332" y2="150" stroke="rgba(244,63,94,0.4)" stroke-dasharray="4,3" stroke-width="1"/>
+        <text x="2" y="155" fill="#fda4af" font-size="9" font-family="monospace">2°C</text>
+        <path d="M28,110 L70,108 L110,104 L150,98 L190,118 L230,102 L270,106 L310,108 L332,112 L332,200 L28,200 Z" fill="url(#tg)"/>
+        <path d="M28,110 L70,108 L110,104 L150,98 L190,118 L230,102 L270,106 L310,108 L332,112" stroke="#10b981" stroke-width="2" fill="none"/>
+        <path d="M28,72 L70,75 L110,73 L150,80 L190,140 L230,76 L270,78 L310,82 L332,80" stroke="#06b6d4" stroke-width="2" fill="none"/>
+      </svg>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:rgba(255,255,255,0.5);font-family:monospace;padding:0 24px">
+        <span>Ma</span><span>Di</span><span>Wo</span><span>Do</span><span>Vr</span><span>Za</span><span>Zo</span>
+      </div>
+    </div>
+
+    <button style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px;margin-top:8px;border-radius:999px;border:1px solid rgba(16,185,129,0.30);background:rgba(16,185,129,0.10);color:#a7f3d0;font-size:12px;font-weight:600;cursor:pointer">
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      CSV exporteren
+    </button>
   </div>
 </div>
 
-<!-- ────────────────── BOTTOM NAV ────────────────── -->
-<div class="bottomnav">
-  <div class="navitem active" onclick="go('home')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
-    Home
+<!-- ────────────────── GESCHIEDENIS ────────────────── -->
+<div class="view rp-page" id="view-geschiedenis">
+  <div class="rp-orb rose-tl" style="opacity:0.6"></div>
+  <div class="rp-orb amber-br" style="opacity:0.4"></div>
+
+  <div style="position:relative;z-index:1">
+    <a onclick="go('home')" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.55);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;cursor:pointer;margin-bottom:14px">
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home
+    </a>
+
+    <div class="rp-pageheader" style="padding-top:0">
+      <h1 class="rp-h1 rose-amber" style="font-size:30px">Historiek</h1>
+      <span style="font-size:11px;color:rgba(255,255,255,0.5);font-family:monospace">7 dagen · 23 events</span>
+    </div>
+    <div class="rp-divider rose-amber"></div>
+
+    <div class="rp-timeline">
+      <div class="rp-timeline-item"><span class="pdot critical"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">VC-02</span><span class="ago">14m</span></div><div class="desc">Actief · -15.8°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot medium"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">BB-01</span><span class="ago">3u</span></div><div class="desc">Opgelost · 9 min · 8.4°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot high"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">LAB-01</span><span class="ago">9u</span></div><div class="desc">Opgelost · 15 min · -71.2°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot low"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">VC-03</span><span class="ago">12u</span></div><div class="desc">Opgelost · 6 min · -17.0°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot medium"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">FAR-03</span><span class="ago">1d</span></div><div class="desc">Opgelost · 22 min · 8.1°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot low"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">MED-02</span><span class="ago">2d</span></div><div class="desc">Opgelost · 4 min · 23.5°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot medium"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">LAB-02</span><span class="ago">3d</span></div><div class="desc">Opgelost · 18 min · -73.5°C</div></div></div>
+      <div class="rp-timeline-item"><span class="pdot low"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">BB-02</span><span class="ago">4d</span></div><div class="desc">Opgelost · 7 min · 7.6°C</div></div></div>
+    </div>
   </div>
-  <div class="navitem" onclick="go('frigos')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14"/></svg>
-    Koelingen
+</div>
+
+<!-- ────────────────── HACCP ────────────────── -->
+<div class="view rp-page" id="view-haccp">
+  <div class="rp-orb emerald-tl"></div>
+  <div class="rp-orb cyan-br"></div>
+
+  <div style="position:relative;z-index:1">
+    <a onclick="go('home')" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.55);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;cursor:pointer;margin-bottom:14px">
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home
+    </a>
+
+    <div class="rp-pageheader" style="padding-top:0">
+      <h1 class="rp-h1 emerald-cyan" style="font-size:30px">Compliance</h1>
+    </div>
+    <div class="rp-divider emerald-cyan"></div>
+
+    <div class="rp-haccp-hero">
+      <div class="pct">99.2%</div>
+      <div class="lbl">Compliance · 28 dagen</div>
+      <div class="desc">GDP- & FAGG-klaar audittrail. CSV-export beschikbaar voor inspectie. Laatste audit: 28 april 2026 · clean.</div>
+    </div>
+
+    <div class="rp-stats">
+      <div class="rp-stat emerald">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span class="lbl">Schoon</span></div>
+        <div class="val">26d</div>
+      </div>
+      <div class="rp-stat amber">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span class="lbl">Events</span></div>
+        <div class="val">23</div>
+      </div>
+      <div class="rp-stat cyan">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg><span class="lbl">Reports</span></div>
+        <div class="val">12</div>
+      </div>
+      <div class="rp-stat emerald">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span class="lbl">Audits</span></div>
+        <div class="val">100%</div>
+      </div>
+    </div>
+
+    <div style="margin-top:22px">
+      <div class="rp-group-h"><h2>Recente audit-events</h2><span class="line"></span></div>
+      <div class="rp-timeline" style="padding:0">
+        <div class="rp-timeline-item"><span class="pdot low" style="background:#34d399"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">CSV-export · 28 dagen</span><span class="ago">2u</span></div><div class="desc">door Mira P. · 1.2 MB</div></div></div>
+        <div class="rp-timeline-item"><span class="pdot low" style="background:#34d399"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">Calibratie BB-01</span><span class="ago">3d</span></div><div class="desc">Bevestigd · ±0.1°C drift</div></div></div>
+        <div class="rp-timeline-item"><span class="pdot low" style="background:#34d399"></span><div style="min-width:0;flex:1"><div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline"><span class="name">FAGG-rapport Q1</span><span class="ago">1w</span></div><div class="desc">Verzonden · clean</div></div></div>
+      </div>
+    </div>
   </div>
-  <div class="navitem" onclick="go('alerts')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
-    Alarmen
+</div>
+
+<!-- ────────────────── MEER (Settings) ────────────────── -->
+<div class="view rp-page" id="view-meer">
+  <div class="rp-orb emerald-tl" style="opacity:0.5"></div>
+  <div class="rp-orb cyan-br" style="opacity:0.4"></div>
+
+  <div style="position:relative;z-index:1">
+    <a onclick="go('home')" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.55);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.22em;cursor:pointer;margin-bottom:14px">
+      <svg style="width:13px;height:13px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home
+    </a>
+
+    <div class="rp-pageheader" style="padding-top:0">
+      <h1 class="rp-h1 emerald-cyan" style="font-size:30px">Meer</h1>
+    </div>
+    <div class="rp-divider emerald-cyan"></div>
+
+    <div style="padding-top:8px">
+      <div class="rp-settings-row">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+        <div style="flex:1"><div class="label">Mira Peeters</div><div class="desc">Lab-coördinator · AZ Demo</div></div>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="rp-settings-row">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21v-4a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v4"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div style="flex:1"><div class="label">Tenant &amp; gebruikers</div><div class="desc">12 leden · 3 rollen</div></div>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="rp-settings-row">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg></div>
+        <div style="flex:1"><div class="label">Notificaties</div><div class="desc">Push · E-mail · SMS</div></div>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="rp-settings-row">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div style="flex:1"><div class="label">Drempels &amp; alarmregels</div><div class="desc">Per categorie of per sensor</div></div>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="rp-settings-row">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+        <div style="flex:1"><div class="label">Quiet hours</div><div class="desc">22:00 → 06:00 · alleen kritiek</div></div>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+      <div class="rp-settings-row">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+        <div style="flex:1"><div class="label">Over RPlay</div><div class="desc">v2.4.1 · build 893</div></div>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+      </div>
+    </div>
   </div>
-  <div class="navitem" onclick="go('heatmap')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    Kaart
+</div>
+
+<!-- ────────────────── BOTTOM NAV (6 items, exact replica) ────────────────── -->
+<div class="bottomnav v2">
+  <div class="grid6">
+    <div class="navitem v2 active" onclick="go('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg>
+      Home<span class="underline"></span>
+    </div>
+    <div class="navitem v2" onclick="go('frigos')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg>
+      Frigo's<span class="underline"></span>
+    </div>
+    <div class="navitem v2" onclick="go('alerts')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      Alarmen<span class="underline"></span>
+    </div>
+    <div class="navitem v2" onclick="go('geschiedenis')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Historiek<span class="underline"></span>
+    </div>
+    <div class="navitem v2" onclick="go('haccp')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      HACCP<span class="underline"></span>
+    </div>
+    <div class="navitem v2" onclick="go('meer')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      Meer<span class="underline"></span>
+    </div>
   </div>
 </div>
 
 <script>
+  const NAV_ORDER = ['home','frigos','alerts','geschiedenis','haccp','meer'];
   function go(view) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view-' + view).classList.add('active');
-    document.querySelectorAll('.navitem').forEach(n => n.classList.remove('active'));
-    const navIdx = ['home','frigos','alerts','heatmap'].indexOf(view);
-    if (navIdx >= 0) document.querySelectorAll('.navitem')[navIdx].classList.add('active');
+    const target = document.getElementById('view-' + view);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.navitem.v2').forEach(n => n.classList.remove('active'));
+    // Trends and Heatmap don't have nav-tab — keep Home highlighted while in those views
+    const navIdx = NAV_ORDER.indexOf(view);
+    if (navIdx >= 0) {
+      document.querySelectorAll('.navitem.v2')[navIdx].classList.add('active');
+    }
     window.scrollTo(0, 0);
   }
 </script>
