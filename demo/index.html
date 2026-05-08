@@ -429,9 +429,9 @@
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-  .rp-h1.emerald-cyan { background: linear-gradient(to right, #10b981, #06b6d4); filter: drop-shadow(0 0 22px rgba(16,185,129,0.45)); }
-  .rp-h1.rose-amber { background: linear-gradient(to right, #f43f5e, #f59e0b); filter: drop-shadow(0 0 22px rgba(244,63,94,0.45)); }
-  .rp-h1.tri { background: linear-gradient(to right, #fecdd3, #fef3c7, #a7f3d0); }
+  .rp-h1.emerald-cyan { background-image: linear-gradient(to right, #10b981, #06b6d4); filter: drop-shadow(0 0 22px rgba(16,185,129,0.45)); }
+  .rp-h1.rose-amber { background-image: linear-gradient(to right, #f43f5e, #f59e0b); filter: drop-shadow(0 0 22px rgba(244,63,94,0.45)); }
+  .rp-h1.tri { background-image: linear-gradient(to right, #fecdd3, #fef3c7, #a7f3d0); }
   .rp-pageheader { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0 16px; }
   .rp-actions { display: flex; gap: 8px; }
   .rp-icon-btn {
@@ -590,30 +590,83 @@
   .rp-group-h .line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0.05), transparent); }
   .rp-group-h .count { font-size: 10px; color: rgba(255,255,255,0.4); font-feature-settings: 'tnum'; }
 
-  /* Alarm panel — active variant */
-  .rp-alarm {
-    border-radius: 16px; padding: 14px;
-    border: 1px solid rgba(244,63,94,0.30);
-    background: linear-gradient(135deg, rgba(244,63,94,0.10), rgba(244,63,94,0.03));
+  /* AlarmPanel — exact replica van components/alarm-panel.tsx (matches FrigoCard alarm layout) */
+  .rp-alarmpanel {
+    display: flex; flex-direction: column;
+    border-radius: 16px; border: 1px solid rgba(244,63,94,0.40);
+    background: rgba(244,63,94,0.07);
     margin-bottom: 12px;
   }
-  .rp-alarm .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .rp-alarm .priority-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-  .rp-alarm .pdot.critical, .rp-alarm .pdot.high { background: #f43f5e; }
-  .rp-alarm .pdot.medium { background: #f59e0b; }
-  .rp-alarm .pdot.low { background: rgba(255,255,255,0.4); }
-  .rp-alarm .title { font-size: 14px; font-weight: 700; color: #fecaca; margin: 0; }
-  .rp-alarm.resolved { border-color: rgba(16,185,129,0.20); background: rgba(16,185,129,0.04); }
-  .rp-alarm.resolved .title { color: #a7f3d0; }
-  .rp-alarm .meta { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
-  .rp-alarm .body { font-size: 12px; color: #cbd5e1; margin-top: 10px; line-height: 1.5; }
-  .rp-alarm .actions { display: flex; gap: 8px; margin-top: 12px; }
-  .rp-alarm .btn {
-    flex: 1; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 600;
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); color: #f1f5f9;
-    cursor: pointer; text-align: center;
+  .rp-alarmpanel .top-row {
+    position: relative; display: flex; align-items: center; gap: 12px;
+    padding: 14px 14px; padding-right: 110px;
   }
-  .rp-alarm .btn.primary { background: rgba(16,185,129,0.16); border-color: rgba(16,185,129,0.40); color: #d1fae5; }
+  .rp-alarmpanel .icon-circle {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(244,63,94,0.50);
+    background: rgba(244,63,94,0.20);
+    box-shadow: 0 0 14px -2px rgba(244,63,94,0.5);
+  }
+  .rp-alarmpanel .icon-circle svg { width: 16px; height: 16px; color: #fda4af; }
+  .rp-alarmpanel h3 {
+    font-size: 15px; font-weight: 600; color: #fff; line-height: 1.2; margin: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .rp-alarmpanel .loc {
+    font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .rp-alarmpanel .pill {
+    display: inline-flex; align-items: center;
+    margin-top: 6px; padding: 1px 7px; border-radius: 999px;
+    font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+    border: 1px solid rgba(244,63,94,0.42);
+    background: rgba(244,63,94,0.22); color: #fecaca;
+    animation: rppulse 1.5s infinite;
+  }
+  .rp-alarmpanel .temp-block {
+    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; align-items: flex-end;
+  }
+  .rp-alarmpanel .temp-num {
+    font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -0.02em;
+    font-family: 'JetBrains Mono', ui-monospace, monospace; font-feature-settings: 'tnum';
+    color: #fda4af; filter: drop-shadow(0 0 10px rgba(244,63,94,0.5));
+  }
+  .rp-alarmpanel .temp-unit { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.5); margin-left: 1px; }
+  .rp-alarmpanel .temp-max { font-size: 9.5px; color: rgba(252,165,165,0.85); margin-top: 4px; font-family: monospace; }
+  .rp-alarmpanel .duration-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px; border-top: 1px solid rgba(244,63,94,0.16);
+    font-size: 11px; color: #fda4af;
+  }
+  .rp-alarmpanel .duration-row .l, .rp-alarmpanel .duration-row .r { display: inline-flex; align-items: center; gap: 5px; }
+  .rp-alarmpanel .duration-row svg { width: 12px; height: 12px; }
+  .rp-alarmpanel .actions-row {
+    display: flex; gap: 8px; padding: 11px 12px;
+    border-top: 1px solid rgba(244,63,94,0.16);
+  }
+  .rp-alarmpanel .btn-ack, .rp-alarmpanel .btn-snooze {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 10px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid;
+    transition: background 0.15s;
+  }
+  .rp-alarmpanel .btn-ack svg, .rp-alarmpanel .btn-snooze svg { width: 14px; height: 14px; }
+  .rp-alarmpanel .btn-ack {
+    border-color: rgba(16,185,129,0.40);
+    background: rgba(16,185,129,0.15);
+    color: #d1fae5;
+  }
+  .rp-alarmpanel .btn-ack:active { background: rgba(16,185,129,0.25); }
+  .rp-alarmpanel .btn-snooze {
+    border-color: rgba(245,158,11,0.40);
+    background: rgba(245,158,11,0.10);
+    color: #fde68a;
+    flex: 0 0 auto; padding: 9px 14px;
+  }
+  .rp-alarmpanel .btn-snooze:active { background: rgba(245,158,11,0.20); }
 
   /* Calm empty state */
   .rp-calm { padding: 36px 16px 16px; text-align: center; }
@@ -1027,61 +1080,43 @@
     <div class="rp-divider rose-amber"></div>
 
     <div style="padding-top:14px">
-      <div class="rp-alarm">
-        <div class="head">
-          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
-            <span class="priority-dot pdot critical"></span>
-            <div style="min-width:0;flex:1">
-              <div class="title">Vaccinkast 2 — boven max</div>
-              <div class="meta">VC-02 · Vleugel B · al 14 minuten</div>
-            </div>
-          </div>
-          <span style="font-size:18px;font-weight:700;color:#fecaca;font-family:monospace">-15.8°</span>
-        </div>
-        <div class="body">Temperatuur overschrijdt max van -18.0°C. Mogelijk deur openblijven of compressor-issue. Vaccins risico na 30 min.</div>
-        <div class="actions">
-          <div class="btn primary">Bevestigen</div>
-          <div class="btn">Snooze 1u</div>
-        </div>
-      </div>
 
-      <div class="rp-alarm resolved">
-        <div class="head">
-          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
-            <span class="priority-dot pdot medium"></span>
-            <div style="min-width:0;flex:1">
-              <div class="title">Bloedbank-koelkast 1 — opgelost</div>
-              <div class="meta">BB-01 · 09:42 → 09:51 · 9 min</div>
-            </div>
+      <!-- Active alarm: AlarmPanel exact replica -->
+      <div class="rp-alarmpanel">
+        <div class="top-row">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div style="min-width:0;flex:1">
+            <h3>VC-02</h3>
+            <div class="loc">Vleugel B · Vaccins</div>
+            <span class="pill">ALERT</span>
+          </div>
+          <div class="temp-block">
+            <div><span class="temp-num">-15.8</span><span class="temp-unit">°C</span></div>
+            <span class="temp-max">Max: -18.0°C</span>
           </div>
         </div>
-        <div class="body">Korte spike na deur-opening tijdens shift-wissel. Auto-resolved.</div>
-      </div>
-
-      <div class="rp-alarm resolved">
-        <div class="head">
-          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
-            <span class="priority-dot pdot high"></span>
-            <div style="min-width:0;flex:1">
-              <div class="title">Lab-vriezer A — opgelost</div>
-              <div class="meta">LAB-01 · 06:15 → 06:30 · 15 min · door Mira P.</div>
-            </div>
-          </div>
+        <div class="duration-row">
+          <span class="l">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Overschrijding: 14m
+          </span>
+          <span class="r">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            +2.2°C
+          </span>
         </div>
-        <div class="body">Compressor herstart. Bevestigd door technische dienst.</div>
-      </div>
-
-      <div class="rp-alarm resolved">
-        <div class="head">
-          <div style="display:flex;gap:10px;align-items:flex-start;min-width:0;flex:1">
-            <span class="priority-dot pdot low"></span>
-            <div style="min-width:0;flex:1">
-              <div class="title">Vaccinkast 3 — opgelost</div>
-              <div class="meta">VC-03 · 03:08 → 03:14 · 6 min</div>
-            </div>
-          </div>
+        <div class="actions-row">
+          <button class="btn-ack">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Bevestigen
+          </button>
+          <button class="btn-snooze">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            Snooze 1u
+          </button>
         </div>
-        <div class="body">Deur-sensor flapping na schoonmaakronde. Geen actie nodig.</div>
       </div>
 
       <a onclick="go('geschiedenis')" style="margin-top:20px;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer">
