@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>RPlay — Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --card: rgba(255,255,255,0.04);
+    --card-hover: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,0.08);
+    --emerald: #10b981;
+    --emerald-light: #6ee7b7;
+    --rose: #f43f5e;
+    --amber: #f59e0b;
+    --cyan: #06b6d4;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(244,63,94,0.18), transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 100%, rgba(16,185,129,0.10), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hex-bg {
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'><path d='M30 1 L57 16 L57 36 L30 51 L3 36 L3 16 Z' fill='none' stroke='%2310b981' stroke-opacity='0.05' stroke-width='1'/></svg>");
+    background-size: 60px 52px;
+    pointer-events: none; z-index: 0;
+  }
+  .view { position: relative; z-index: 1; padding: 16px; padding-top: env(safe-area-inset-top, 16px); padding-bottom: 88px; min-height: 100vh; display: none; }
+  .view.active { display: block; }
+
+  /* ─── Top Bar ─── */
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 4px 18px; font-size: 13px; color: var(--slate-400);
+  }
+  .logo {
+    font-weight: 700; font-size: 17px; color: #fff; letter-spacing: -0.02em;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .logo .play { color: var(--emerald); font-size: 14px; }
+
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--slate-400); font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    cursor: pointer; padding: 6px 0;
+  }
+  .back:hover { color: #fff; }
+
+  /* ─── Hero ─── */
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; color: rgba(244,63,94,0.85); margin-bottom: 4px;
+  }
+  .hero-h1 {
+    font-size: 28px; font-weight: 700; letter-spacing: -0.025em;
+    background: linear-gradient(120deg, #fda4af, #fde68a, #6ee7b7);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.1; margin-bottom: 22px;
+  }
+
+  /* ─── Tile Grid ─── */
+  .tiles {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .tile {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px;
+    aspect-ratio: 1;
+    display: flex; flex-direction: column; justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .tile:active { transform: scale(0.97); }
+  .tile.rose { border-color: rgba(244,63,94,0.35); background: linear-gradient(145deg, rgba(244,63,94,0.18), rgba(244,63,94,0.04)); }
+  .tile.emerald { border-color: rgba(16,185,129,0.35); background: linear-gradient(145deg, rgba(16,185,129,0.18), rgba(16,185,129,0.04)); }
+  .tile.cyan { border-color: rgba(6,182,212,0.35); background: linear-gradient(145deg, rgba(6,182,212,0.18), rgba(6,182,212,0.04)); }
+  .tile.amber { border-color: rgba(245,158,11,0.35); background: linear-gradient(145deg, rgba(245,158,11,0.18), rgba(245,158,11,0.04)); }
+  .tile.violet { border-color: rgba(167,139,250,0.35); background: linear-gradient(145deg, rgba(167,139,250,0.18), rgba(167,139,250,0.04)); }
+  .tile.slate { border-color: rgba(148,163,184,0.25); background: rgba(148,163,184,0.06); }
+  .tile-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tile-icon svg { width: 18px; height: 18px; }
+  .tile-label { font-size: 14px; font-weight: 600; color: #f1f5f9; }
+  .tile-desc { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+  .badge {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--rose); color: #fff;
+    font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 9px;
+    box-shadow: 0 0 12px rgba(244,63,94,0.6);
+  }
+
+  /* ─── Frigo list ─── */
+  .frigo-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px; margin-bottom: 8px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .frigo-row:active { background: var(--card-hover); }
+  .frigo-status {
+    width: 10px; height: 10px; border-radius: 50%;
+    box-shadow: 0 0 8px currentColor; flex-shrink: 0;
+  }
+  .frigo-status.ok { background: var(--emerald); color: var(--emerald); }
+  .frigo-status.warn { background: var(--amber); color: var(--amber); }
+  .frigo-status.alarm { background: var(--rose); color: var(--rose); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100% {opacity:1;transform:scale(1);} 50% {opacity:0.5;transform:scale(0.85);} }
+  .frigo-name { font-size: 14px; font-weight: 600; flex: 1; }
+  .frigo-loc { font-size: 11px; color: var(--slate-400); margin-top: 1px; font-weight: 500; }
+  .frigo-temp { font-size: 18px; font-weight: 700; font-feature-settings: 'tnum'; letter-spacing: -0.02em; }
+  .frigo-temp.ok { color: var(--emerald-light); }
+  .frigo-temp.warn { color: #fbbf24; }
+  .frigo-temp.alarm { color: #fda4af; }
+
+  /* ─── Alerts ─── */
+  .alert {
+    background: linear-gradient(135deg, rgba(244,63,94,0.12), rgba(244,63,94,0.04));
+    border: 1px solid rgba(244,63,94,0.25);
+    border-radius: 14px; padding: 14px;
+    margin-bottom: 10px; position: relative;
+  }
+  .alert.resolved {
+    background: rgba(16,185,129,0.06);
+    border-color: rgba(16,185,129,0.2);
+  }
+  .alert-head { display: flex; justify-content: space-between; align-items: start; gap: 10px; }
+  .alert-title { font-size: 14px; font-weight: 700; color: #fda4af; }
+  .alert.resolved .alert-title { color: var(--emerald-light); }
+  .alert-meta { font-size: 11px; color: var(--slate-400); margin-top: 4px; }
+  .alert-body { font-size: 12px; color: var(--slate-300); margin-top: 8px; line-height: 1.5; }
+  .alert-actions { display: flex; gap: 6px; margin-top: 10px; }
+  .alert-btn {
+    flex: 1; padding: 8px 10px; border-radius: 8px; font-size: 11px; font-weight: 600;
+    background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+    color: #f1f5f9; cursor: pointer; text-align: center;
+  }
+  .alert-btn.primary { background: var(--emerald); border-color: var(--emerald); color: #0a0e1a; }
+
+  /* ─── Heatmap ─── */
+  .heatmap-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;
+  }
+  .heatcell {
+    aspect-ratio: 1; border-radius: 10px; padding: 8px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px solid var(--border);
+  }
+  .heatcell.ok { background: rgba(16,185,129,0.18); border-color: rgba(16,185,129,0.35); }
+  .heatcell.warn { background: rgba(245,158,11,0.20); border-color: rgba(245,158,11,0.4); }
+  .heatcell.alarm { background: rgba(244,63,94,0.25); border-color: rgba(244,63,94,0.5); }
+  .heatcell.off { background: rgba(100,116,139,0.15); border-color: rgba(100,116,139,0.3); }
+  .heatcell-temp { font-size: 14px; font-weight: 700; color: #fff; }
+  .heatcell-name { font-size: 10px; color: rgba(255,255,255,0.85); font-weight: 600; }
+  .heatcell-cat { font-size: 9px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+
+  /* ─── Section header ─── */
+  .section-h {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.25em;
+    color: var(--emerald); margin: 18px 4px 10px;
+  }
+  .section-h::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 8px var(--emerald); }
+
+  /* ─── Stat row ─── */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 16px; }
+  .stat {
+    border-radius: 14px; padding: 10px 6px; text-align: center;
+    border: 1px solid var(--border); background: var(--card);
+  }
+  .stat.ok { border-color: rgba(16,185,129,0.3); background: rgba(16,185,129,0.08); }
+  .stat.warn { border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+  .stat.alarm { border-color: rgba(244,63,94,0.3); background: rgba(244,63,94,0.08); }
+  .stat-num { font-size: 20px; font-weight: 800; line-height: 1; }
+  .stat.ok .stat-num { color: var(--emerald-light); }
+  .stat.warn .stat-num { color: #fde68a; }
+  .stat.alarm .stat-num { color: #fda4af; }
+  .stat-lbl { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.6); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ─── Bottom nav ─── */
+  .bottomnav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(10,14,26,0.85); backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-around;
+    padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 100;
+  }
+  .navitem {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    color: var(--slate-500); font-size: 10px; font-weight: 600; cursor: pointer;
+    flex: 1; padding: 4px 0;
+  }
+  .navitem.active { color: var(--emerald); }
+  .navitem svg { width: 22px; height: 22px; }
+
+  /* ─── Demo banner ─── */
+  .demo-banner {
+    background: linear-gradient(90deg, rgba(16,185,129,0.18), rgba(6,182,212,0.12));
+    border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 12px; padding: 10px 12px;
+    font-size: 11px; color: var(--emerald-light);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .demo-banner svg { flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="hex-bg"></div>
+
+<!-- ────────────────── HOME ────────────────── -->
+<div class="view active" id="view-home">
+  <div class="topbar">
+    <div class="logo">remy<span class="play">▸</span> demo</div>
+    <span style="font-family:monospace;font-size:11px;">AZ Demo · Healthcare</span>
+  </div>
+
+  <div class="demo-banner">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    <span><strong>Demo-modus</strong> · alle data is fictief, niets wordt opgeslagen</span>
+  </div>
+
+  <div class="hero-eyebrow">VANDAAG · 8 mei 2026</div>
+  <h1 class="hero-h1">Goedemorgen,<br>alles loopt.</h1>
+
+  <div class="stats-grid">
+    <div class="stat ok"><div class="stat-num">14</div><div class="stat-lbl">In range</div></div>
+    <div class="stat warn"><div class="stat-num">2</div><div class="stat-lbl">Bijna out</div></div>
+    <div class="stat alarm"><div class="stat-num">1</div><div class="stat-lbl">Alarm</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-lbl">Offline</div></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile rose" onclick="go('frigos')">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 6v2M9 14v3"/></svg>
+      </div>
+      <div>
+        <div class="tile-label">Koelingen</div>
+        <div class="tile-desc">17 sensoren live</div>
+      </div>
+    </div>
+    <div class="tile rose" onclick="go('alerts')">
+      <span class="badge">1</span>
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+      </div>
+      <div>
+        <div class="tile-label">Alarmen</div>
+        <div class="tile-desc">1 actief nu</div>
+      </div>
+    </div>
+    <div class="tile cyan" onclick="alert('HACCP-audittrail · 28 dagen schoon')">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <div class="tile-label">HACCP</div>
+        <div class="tile-desc">Audit klaar</div>
+      </div>
+    </div>
+    <div class="tile rose" onclick="go('heatmap')">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <div>
+        <div class="tile-label">Warmtekaart</div>
+        <div class="tile-desc">17 sensoren</div>
+      </div>
+    </div>
+    <div class="tile amber" onclick="go('trends')">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
+      </div>
+      <div>
+        <div class="tile-label">Trends</div>
+        <div class="tile-desc">7-dagen + CSV</div>
+      </div>
+    </div>
+    <div class="tile slate" onclick="alert('Beheer · multi-tenant admin')">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div>
+        <div class="tile-label">Beheer</div>
+        <div class="tile-desc">Tenant + users</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ────────────────── KOELINGEN ────────────────── -->
+<div class="view" id="view-frigos">
+  <div class="topbar">
+    <div class="back" onclick="go('home')">‹ Home</div>
+    <div class="logo">Koelingen</div>
+  </div>
+
+  <div class="hero-eyebrow">17 SENSOREN · LIVE</div>
+  <h1 class="hero-h1" style="font-size:24px">Realtime<br>temperatuur</h1>
+
+  <div class="section-h">Bloedbank · 4-8°C</div>
+  <div class="frigo-row" onclick="alert('BB-01: laatste meting 5.2°C, batterij 82%, 1424 metingen vandaag')">
+    <div class="frigo-status ok"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Bloedbank-koelkast 1</div>
+      <div class="frigo-loc">Vleugel A · BB-01</div>
+    </div>
+    <div class="frigo-temp ok">5.2°</div>
+  </div>
+  <div class="frigo-row">
+    <div class="frigo-status ok"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Bloedbank-koelkast 2</div>
+      <div class="frigo-loc">Vleugel A · BB-02</div>
+    </div>
+    <div class="frigo-temp ok">5.8°</div>
+  </div>
+
+  <div class="section-h">Lab vriezer · -80°C</div>
+  <div class="frigo-row">
+    <div class="frigo-status ok"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Lab-vriezer A</div>
+      <div class="frigo-loc">Centraal Lab · LAB-01</div>
+    </div>
+    <div class="frigo-temp ok">-78.4°</div>
+  </div>
+  <div class="frigo-row">
+    <div class="frigo-status warn"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Lab-vriezer B</div>
+      <div class="frigo-loc">Centraal Lab · LAB-02</div>
+    </div>
+    <div class="frigo-temp warn">-75.1°</div>
+  </div>
+
+  <div class="section-h">Vaccinkast · -20°C</div>
+  <div class="frigo-row">
+    <div class="frigo-status ok"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Vaccinkast 1</div>
+      <div class="frigo-loc">Vleugel B · VC-01</div>
+    </div>
+    <div class="frigo-temp ok">-21.3°</div>
+  </div>
+  <div class="frigo-row">
+    <div class="frigo-status alarm"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Vaccinkast 2</div>
+      <div class="frigo-loc">Vleugel B · VC-02</div>
+    </div>
+    <div class="frigo-temp alarm">-15.8°</div>
+  </div>
+  <div class="frigo-row">
+    <div class="frigo-status ok"></div>
+    <div style="flex:1">
+      <div class="frigo-name">Vaccinkast 3</div>
+      <div class="frigo-loc">Vleugel B · VC-03</div>
+    </div>
+    <div class="frigo-temp ok">-22.1°</div>
+  </div>
+</div>
+
+<!-- ────────────────── ALARMEN ────────────────── -->
+<div class="view" id="view-alerts">
+  <div class="topbar">
+    <div class="back" onclick="go('home')">‹ Home</div>
+    <div class="logo">Alarmen</div>
+  </div>
+
+  <div class="hero-eyebrow" style="color:#fda4af">1 ACTIEF · 3 OPGELOST VANDAAG</div>
+  <h1 class="hero-h1" style="font-size:24px">Live alarm-feed</h1>
+
+  <div class="alert">
+    <div class="alert-head">
+      <div>
+        <div class="alert-title">⚠️ Vaccinkast 2 — boven max</div>
+        <div class="alert-meta">VC-02 · Vleugel B · al 14 minuten</div>
+      </div>
+    </div>
+    <div class="alert-body">Temperatuur −15.8°C, max ingesteld op −18°C. Mogelijk deur openblijven of compressor-issue.</div>
+    <div class="alert-actions">
+      <div class="alert-btn primary">Bevestigen</div>
+      <div class="alert-btn">Snooze 1u</div>
+    </div>
+  </div>
+
+  <div class="alert resolved">
+    <div class="alert-head">
+      <div>
+        <div class="alert-title">✓ Bloedbank-koelkast 1 — opgelost</div>
+        <div class="alert-meta">BB-01 · 09:42 → 09:51 · 9 min</div>
+      </div>
+    </div>
+    <div class="alert-body">Korte spike na deur-opening tijdens shift-wissel. Auto-resolved.</div>
+  </div>
+
+  <div class="alert resolved">
+    <div class="alert-head">
+      <div>
+        <div class="alert-title">✓ Lab-vriezer A — opgelost</div>
+        <div class="alert-meta">LAB-01 · 06:15 → 06:30 · 15 min · door Mira P.</div>
+      </div>
+    </div>
+    <div class="alert-body">Compressor herstart. Bevestigd door technische dienst.</div>
+  </div>
+
+  <div class="alert resolved">
+    <div class="alert-head">
+      <div>
+        <div class="alert-title">✓ Vaccinkast 3 — opgelost</div>
+        <div class="alert-meta">VC-03 · 03:08 → 03:14 · 6 min</div>
+      </div>
+    </div>
+    <div class="alert-body">Deur-sensor flapping na schoonmaakronde. Geen actie nodig.</div>
+  </div>
+</div>
+
+<!-- ────────────────── WARMTEKAART ────────────────── -->
+<div class="view" id="view-heatmap">
+  <div class="topbar">
+    <div class="back" onclick="go('home')">‹ Home</div>
+    <div class="logo">Warmtekaart</div>
+  </div>
+
+  <div class="hero-eyebrow">17 SENSOREN · ÉÉN BLIK</div>
+  <h1 class="hero-h1" style="font-size:24px">Heel het<br>ziekenhuis</h1>
+
+  <div class="heatmap-grid">
+    <div class="heatcell ok"><div class="heatcell-temp">5.2°</div><div><div class="heatcell-name">BB-01</div><div class="heatcell-cat">Bloedbank</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">5.8°</div><div><div class="heatcell-name">BB-02</div><div class="heatcell-cat">Bloedbank</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">6.1°</div><div><div class="heatcell-name">BB-03</div><div class="heatcell-cat">Bloedbank</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">-78°</div><div><div class="heatcell-name">LAB-01</div><div class="heatcell-cat">Lab</div></div></div>
+    <div class="heatcell warn"><div class="heatcell-temp">-75°</div><div><div class="heatcell-name">LAB-02</div><div class="heatcell-cat">Lab</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">-79°</div><div><div class="heatcell-name">LAB-03</div><div class="heatcell-cat">Lab</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">-21°</div><div><div class="heatcell-name">VC-01</div><div class="heatcell-cat">Vaccin</div></div></div>
+    <div class="heatcell alarm"><div class="heatcell-temp">-16°</div><div><div class="heatcell-name">VC-02</div><div class="heatcell-cat">Vaccin</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">-22°</div><div><div class="heatcell-name">VC-03</div><div class="heatcell-cat">Vaccin</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">22.1°</div><div><div class="heatcell-name">MED-01</div><div class="heatcell-cat">Medicatie</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">22.6°</div><div><div class="heatcell-name">MED-02</div><div class="heatcell-cat">Medicatie</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">22.3°</div><div><div class="heatcell-name">MED-03</div><div class="heatcell-cat">Medicatie</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">3.8°</div><div><div class="heatcell-name">FAR-01</div><div class="heatcell-cat">Farmacie</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">4.5°</div><div><div class="heatcell-name">FAR-02</div><div class="heatcell-cat">Farmacie</div></div></div>
+    <div class="heatcell warn"><div class="heatcell-temp">7.9°</div><div><div class="heatcell-name">FAR-03</div><div class="heatcell-cat">Farmacie</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">-19°</div><div><div class="heatcell-name">VC-04</div><div class="heatcell-cat">Vaccin</div></div></div>
+    <div class="heatcell ok"><div class="heatcell-temp">-20°</div><div><div class="heatcell-name">VC-05</div><div class="heatcell-cat">Vaccin</div></div></div>
+  </div>
+</div>
+
+<!-- ────────────────── TRENDS ────────────────── -->
+<div class="view" id="view-trends">
+  <div class="topbar">
+    <div class="back" onclick="go('home')">‹ Home</div>
+    <div class="logo">Trends</div>
+  </div>
+
+  <div class="hero-eyebrow" style="color:#fde68a">7 DAGEN · BB-01</div>
+  <h1 class="hero-h1" style="font-size:24px">Bloedbank<br>koelkast 1</h1>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px">
+    <svg viewBox="0 0 280 130" style="width:100%;height:auto">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#10b981" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#10b981" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <line x1="0" y1="50" x2="280" y2="50" stroke="rgba(244,63,94,0.4)" stroke-dasharray="4,3" stroke-width="1"/>
+      <text x="2" y="46" fill="#fda4af" font-size="9" font-family="monospace">8°C MAX</text>
+      <line x1="0" y1="100" x2="280" y2="100" stroke="rgba(244,63,94,0.4)" stroke-dasharray="4,3" stroke-width="1"/>
+      <text x="2" y="96" fill="#fda4af" font-size="9" font-family="monospace">2°C MIN</text>
+      <path d="M0,75 L40,72 L80,68 L120,55 L120,85 L160,60 L200,70 L240,65 L280,73 L280,130 L0,130 Z" fill="url(#g)"/>
+      <path d="M0,75 L40,72 L80,68 L120,55 L120,85 L160,60 L200,70 L240,65 L280,73" stroke="#34d399" stroke-width="2" fill="none"/>
+    </svg>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--slate-500);font-family:monospace">
+      <span>Mon</span><span>Di</span><span>Wo</span><span>Do</span><span>Vr</span><span>Za</span><span>Zo</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+    <div class="stat ok"><div class="stat-num" style="font-size:16px">5.4°</div><div class="stat-lbl">Gem.</div></div>
+    <div class="stat warn"><div class="stat-num" style="font-size:16px">8.2°</div><div class="stat-lbl">Max</div></div>
+    <div class="stat ok"><div class="stat-num" style="font-size:16px">99.2%</div><div class="stat-lbl">Compliance</div></div>
+  </div>
+</div>
+
+<!-- ────────────────── BOTTOM NAV ────────────────── -->
+<div class="bottomnav">
+  <div class="navitem active" onclick="go('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+    Home
+  </div>
+  <div class="navitem" onclick="go('frigos')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14"/></svg>
+    Koelingen
+  </div>
+  <div class="navitem" onclick="go('alerts')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+    Alarmen
+  </div>
+  <div class="navitem" onclick="go('heatmap')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Kaart
+  </div>
+</div>
+
+<script>
+  function go(view) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    document.querySelectorAll('.navitem').forEach(n => n.classList.remove('active'));
+    const navIdx = ['home','frigos','alerts','heatmap'].indexOf(view);
+    if (navIdx >= 0) document.querySelectorAll('.navitem')[navIdx].classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
